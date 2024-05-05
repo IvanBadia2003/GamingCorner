@@ -4,7 +4,7 @@ using GamingCorner.Data;
 using GamingCorner.Business;
 using GamingCorner.Models;
 
-{
+
     public class UserService : IUserService
 {
 
@@ -18,17 +18,13 @@ using GamingCorner.Models;
     }
     public List<User> GetAll()
     {
-        var pizzas = _userRepository.GetAll();
-        // foreach (var pizza in pizzas)
-        // {
-        //     pizza.Ingredientes = _ingredientesRepository.GetIngredientesByPizzaId(pizza.Id);
-        // }
+        var users = _userRepository.GetAll();
         return users;
     }
 
     public User Get(int id)
     {
-        var pizza = _userRepository.Get(id);
+        var user = _userRepository.Get(id);
 
         // if (pizza != null)
         // {
@@ -63,7 +59,6 @@ using GamingCorner.Models;
 }
 
 
-        
-    }
+    
     
 
