@@ -15,21 +15,24 @@ public class User
     public string? Name { get; set; }
 
     [Required]
-    public string? Email { get; set;}
+    public string? Email { get; set; }
 
     [Required]
-    public string? Password { get; set;}
+    public string? Password { get; set; }
 
     [Required]
-    public string? PhoneNumber { get; set;}
+    public string? PhoneNumber { get; set; }
     [Required]
-    public bool Admin { get; set;}
+    public bool Admin { get; set; }
     [Required]
     public string? URL { get; set; }
 
-    public User(){}
+    public List<Transaction> transactions { get; set; } = new List<Transaction>();
 
-    public User(string name, string email, string password, string phoneNumber,bool admin, string url){
+    public User() { }
+
+    public User(string name, string email, string password, string phoneNumber, bool admin, string url)
+    {
         Name = name;
         Email = email;
         Password = password;

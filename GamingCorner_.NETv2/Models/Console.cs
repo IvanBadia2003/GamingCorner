@@ -32,9 +32,13 @@ public class Console
     [Required]
     public string? URL { get; set; }
 
-    public Console(){}
+    public List<Transaction> transactions { get; set; } = new List<Transaction>();
 
-    public Console(string name,  string platform, int stock, bool available, string characteristics, decimal price, string url){
+
+    public Console() { }
+
+    public Console(string name, string platform, int stock, bool available, string characteristics, decimal price, string url)
+    {
         Name = name;
         Platform = platform;
         Stock = stock;

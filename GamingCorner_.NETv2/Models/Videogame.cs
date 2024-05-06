@@ -38,9 +38,13 @@ public class Videogame
     [Required]
     public string? URL { get; set; }
 
-    public Videogame(){}
+    public List<Transaction> transactions { get; set; } = new List<Transaction>();
 
-    public Videogame(string name, int pegi, string description, string category, int stock, bool available, string platform, decimal price, string url){
+
+    public Videogame() { }
+
+    public Videogame(string name, int pegi, string description, string category, int stock, bool available, string platform, decimal price, string url)
+    {
         Name = name;
         Pegi = pegi;
         Description = description;
