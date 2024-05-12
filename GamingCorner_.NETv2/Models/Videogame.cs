@@ -38,7 +38,8 @@ public class Videogame
     [Required]
     public string? URL { get; set; }
 
-    public List<Transaction> transactions { get; set; } = new List<Transaction>();
+    public List<VideogameGenre> ListVideogameGenre { get; set; }
+    // public List<Transaction> transactions { get; set; } = new List<Transaction>();
 
 
     public Videogame() { }

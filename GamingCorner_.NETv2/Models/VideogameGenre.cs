@@ -5,19 +5,24 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class UserVideogame
+public class VideogameGenre
 {
-    [ForeignKey("User")]
-    public int UserId { get; set; }
-    public User user { get; set; }
-    
+    [ForeignKey("Genre")]
+    public int GenreId { get; set; }
+
+    public Genre? Genre { get; set; }
+
     [ForeignKey("Videogame")]
     public int VideogameId { get; set; }
-    public Videogame videogame{ get; set; }
-    public UserVideogame(){}
 
-    public UserVideogame(int userId, int videogameId){
-        UserId = userId;
+    public Videogame? Videogame { get; set; }
+
+
+    public VideogameGenre() { }
+
+    public VideogameGenre(int genreId, int videogameId)
+    {
+        GenreId = genreId;
         VideogameId = videogameId;
     }
 }

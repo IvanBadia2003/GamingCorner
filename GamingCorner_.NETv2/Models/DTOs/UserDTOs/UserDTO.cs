@@ -5,10 +5,8 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class User
+public class UserDTO
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int UserId { get; set; }
 
     [Required]
@@ -22,43 +20,39 @@ public class User
 
     [Required]
     public int PhoneNumber { get; set; }
-
+  
     [Required]
     public bool Admin { get; set; }
+        
     [Required]
     public string? ImageURL { get; set; }
-
+ 
     public List<Order> Orders { get; set; } = new List<Order>();
 
-    public User() { }
+    public UserDTO() { }
 
-    public User(string name, string email, string password, int phoneNumber, bool admin, string imageURL)
+    public UserDTO(int userId, string name, string email, string password, int phoneNumber, bool admin, string imageURL)
     {
+        UserId = userId;
         Name = name;
         Email = email;
         Password = password;
         PhoneNumber = phoneNumber;
         Admin = admin;
         ImageURL = imageURL;
-
     }
 
-    public User mapFromCreateDto(UserCreateDTO userCreateDTO)
+     public User ToUser()
     {
-        if (userCreateDTO == null)
+        return new User
         {
-            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
-            throw new ArgumentNullException(nameof(userCreateDTO));
-        }
-
-        var user = new User
-        {
-            Name = userCreateDTO.Name,
-            Email = userCreateDTO.Email,
-            Password = userCreateDTO.Password,
-            Admin = userCreateDTO.Admin,
+            UserId = this.UserId,
+            Name = this.Name,
+            Email = this.Email,
+            Password = this.Password,
+            PhoneNumber = this.PhoneNumber,
+            Admin = this.Admin,
+            ImageURL = this.ImageURL
         };
-
-        return user;
     }
 }

@@ -5,10 +5,10 @@ using GamingCorner.Models;
 
 public interface IUserService
 {
-    List<User> GetAll();
+    List<UserDTO> GetAll();
     // GetAll(int id);
-    void Add(User user);
-    User Get(int id);
-    void Update(User user);
+    void Add(UserCreateDTO userCreateDTO);
+    UserDTO Get(int id);
+    void Update(int id, UserUpdateDTO userUpdateDTO);
     void Delete(int id);
 }

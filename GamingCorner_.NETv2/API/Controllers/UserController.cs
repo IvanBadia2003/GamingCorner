@@ -16,14 +16,14 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<User>> GetAll() =>
+    public ActionResult<List<UserDTO>> GetAll() =>
     _userService.GetAll();
 
 
 
     [HttpGet]
     [Route("{id}")]
-    public ActionResult<User> Get(int id)
+    public ActionResult<UserDTO> Get(int id)
     {
         var user = _userService.Get(id);
 
@@ -38,28 +38,33 @@ public class UserController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult Create(User user)
+    public IActionResult Create([FromBody] UserCreateDTO userCreateDTO)
     {
-        _userService.Add(user);
-        return CreatedAtAction(nameof(Get), new { id = user.ObraId }, user);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        _userService.Add(userCreateDTO);
+        return Ok();
     }
 
 
 
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, User user)
+    public IActionResult Update(int id, [FromBody] UserUpdateDTO userUpdateDTO)
     {
-        if (id != user.ObraId)
-            return BadRequest();
+        if (!ModelState.IsValid) { return BadRequest(ModelState); }
 
-        var existingObra = _userService.Get(id);
-        if (existingObra is null)
+        try
+        {
+            _userService.Update(id, userUpdateDTO);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
             return NotFound();
-
-        _userService.Update(user);
-
-        return NoContent();
+        }
     }
 
 

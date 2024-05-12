@@ -16,40 +16,41 @@ using GamingCorner.Models;
         _userRepository = userRepository;
 
     }
-    public List<User> GetAll()
+    public List<UserDTO> GetAll()
     {
         var users = _userRepository.GetAll();
         return users;
     }
 
-    public User Get(int id)
+    public UserDTO Get(int id)
     {
         var user = _userRepository.Get(id);
-
-        // if (pizza != null)
-        // {
-        //     pizza.Ingredientes = _ingredientesRepository.GetIngredientesByPizzaId(pizza.Id);
-        // }
-
         return user;
     }
 
 
-    public void Add(User user)
+    public void Add(UserCreateDTO userCreateDTO)
     {
-        _userRepository.Add(user);
-
-        // foreach (var ingrediente in pizza.Ingredientes)
-        // {
-        //     _ingredientesRepository.AddIngredienteToPizza(ingrediente, pizza.Id);
-        // }
+        var user = new User();
+        var mappedUser = user.mapFromCreateDto(userCreateDTO);
+        _userRepository.Add(mappedUser);
     }
 
-    public void Update(User user)
+    public void Update(int id, UserUpdateDTO userUpdateDTO)
     {
-        _userRepository.Update(user);
+        var userDto = _userRepository.Get(id);
+        if(userDto == null)
+        {
+            throw new KeyNotFoundException($"User con Id {id} no encontrada.");
+        }
 
-        // _ingredientesRepository.UpdateIngredientesForPizza(pizza.Ingredientes, pizza.Id);
+        var user = userDto.ToUser();
+        user.Name = userUpdateDTO.Name;
+        user.Email = userUpdateDTO.Email;
+        user.Password = userUpdateDTO.Password;
+        user.PhoneNumber = userUpdateDTO.PhoneNumber;
+        user.ImageURL = userUpdateDTO.ImageURL;
+        _userRepository.Update(user);
     }
 
     public void Delete(int id)

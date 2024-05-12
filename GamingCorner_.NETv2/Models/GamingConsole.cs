@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class Console
+public class GamingConsole
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -30,14 +30,14 @@ public class Console
     public decimal Price { get; set; }
 
     [Required]
-    public string? URL { get; set; }
+    public string? ImageUrl { get; set; }
 
-    public List<Transaction> transactions { get; set; } = new List<Transaction>();
+    // public List<Transaction> transactions { get; set; } = new List<Transaction>();
 
 
-    public Console() { }
+    public GamingConsole() { }
 
-    public Console(string name, string platform, int stock, bool available, string characteristics, decimal price, string url)
+    public GamingConsole(string name, string platform, int stock, bool available, string characteristics, decimal price, string imageUrl)
     {
         Name = name;
         Platform = platform;
@@ -45,6 +45,6 @@ public class Console
         Available = available;
         Characteristics = characteristics;
         Price = price;
-        URL = url;
+        ImageUrl = imageUrl;
     }
 }
