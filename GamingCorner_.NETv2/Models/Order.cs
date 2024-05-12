@@ -9,8 +9,8 @@ public class Order
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
     public int OrderId { get; set; }
+    
     [ForeignKey("User")]
     public int UserId { get; set; }
 

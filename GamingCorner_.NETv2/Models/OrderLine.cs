@@ -11,8 +11,7 @@ public class OrderLine
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int OrderLineId { get; set; }
-    // [ForeignKey("User")]
-    // public int UserId { get; set; }
+
     [ForeignKey("Videogame")]
     public int VideogameId { get; set; }
     [ForeignKey("Console")]

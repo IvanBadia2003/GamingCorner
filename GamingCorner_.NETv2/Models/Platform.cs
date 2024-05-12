@@ -8,7 +8,8 @@ namespace GamingCorner.Models;
 public class Platform
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]    public int PlatformId { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]    
+    public int PlatformId { get; set; }
 
     public string? Name { get; set; }
 
