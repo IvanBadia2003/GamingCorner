@@ -3,25 +3,34 @@ using GamingCorner.Business;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 
 
-// var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
+
+
+
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
 
 var builder = WebApplication.CreateBuilder(args);
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(name: MyAllowSpecificOrigins,
-//                       policy  =>
-//                       {
-//                           policy.WithOrigins("http://tickett.retocsv.es:80")
-//                             .AllowAnyMethod()
-//                             .AllowAnyHeader();
-//                       });
-// });
+builder.WebHost.UseKestrel(options =>
+{
+    options.ListenAnyIP(5000); // Puerto que desees, por ejemplo, 8000
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://tickett.retocsv.es:80")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                      });
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,15 +43,15 @@ var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 
-
+// builder.Services.AddScoped<IObraService, ObraService>();
 // builder.Services.AddScoped<IObraService, ObraService>();
 // builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
 
 // builder.Services.AddScoped<ISeatService, SeatService>();
 // builder.Services.AddScoped<ISeatRepository, SeatEFRepository>();
 
-// builder.Services.AddScoped<IUserService, UserService>();
-// builder.Services.AddScoped<IUserRepository, UserEFRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();
@@ -62,7 +71,7 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 
-// app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(MyAllowSpecificOrigins);
 
 
 app.UseAuthorization();

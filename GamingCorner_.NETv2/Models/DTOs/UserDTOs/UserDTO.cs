@@ -7,6 +7,7 @@ namespace GamingCorner.Models;
 
 public class UserDTO
 {
+    [Key]
     public int UserId { get; set; }
 
     [Required]

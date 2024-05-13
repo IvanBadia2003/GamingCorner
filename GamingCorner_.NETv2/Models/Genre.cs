@@ -9,7 +9,6 @@ public class Genre
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
     public int GenreId { get; set; }
     
     public string? BackgroundImg { get; set; }
