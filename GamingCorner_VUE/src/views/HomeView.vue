@@ -1,9 +1,40 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import Tarjet from '@/components/Tarjet.vue';
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+
+  <section class="banner">
+
+  </section>
+
+  <section class="content">
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+    <Tarjet></Tarjet>
+  </section>
 </template>
+
+<style scoped>
+
+
+  .content {
+    height: 2000px;
+    background-color: beige;
+
+    display: grid;
+    grid-template-columns: 
+      repeat(
+        auto-fit,
+        minmax(400px, 1fr)
+      );
+    gap: 35px;
+  }
+</style>
+
