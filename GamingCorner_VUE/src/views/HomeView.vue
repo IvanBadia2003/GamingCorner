@@ -18,8 +18,6 @@ import Tarjet from '@/components/Tarjet.vue';
     <Tarjet></Tarjet>
     <Tarjet></Tarjet>
     <Tarjet></Tarjet>
-
-
   </section>
 </template>
 
