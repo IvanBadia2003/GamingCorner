@@ -17,18 +17,18 @@ namespace GamingCorner.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<VideogameGenre>()
-                .HasKey(v => new { v.VideogameId, v.GenreId });
+            modelBuilder.Entity<VideogameGender>()
+                .HasKey(v => new { v.VideogameId, v.GenderId });
 
-            modelBuilder.Entity<VideogameGenre>()
+            modelBuilder.Entity<VideogameGender>()
                 .HasOne(v => v.Videogame)
-                .WithMany(vl => vl.ListVideogameGenre)
+                .WithMany(vl => vl.ListVideogameGender)
                 .HasForeignKey(vli => vli.VideogameId);
 
-            modelBuilder.Entity<VideogameGenre>()
-                .HasOne(g => g.Genre)
-                .WithMany(vl => vl.ListVideogameGenre)
-                .HasForeignKey(vli => vli.GenreId);
+            modelBuilder.Entity<VideogameGender>()
+                .HasOne(g => g.Gender)
+                .WithMany(vl => vl.ListVideogameGender)
+                .HasForeignKey(vli => vli.GenderId);
             
             modelBuilder.Entity<Order>()
                 .HasOne(u => u.User)
@@ -53,8 +53,8 @@ namespace GamingCorner.Data
             modelBuilder.Entity<OrderLine>()
                 .HasKey(ol => new { ol.OrderLineId });
 
-            modelBuilder.Entity<Genre>()
-                .HasKey(ge => new { ge.GenreId });
+            modelBuilder.Entity<Gender>()
+                .HasKey(ge => new { ge.GenderId });
 
 
             modelBuilder.Entity<User>().HasData(
@@ -62,10 +62,22 @@ namespace GamingCorner.Data
                 new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = 123456789, Admin = true, ImageURL = "" },
                 new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = 987654321, Admin = false, ImageURL = "" }
             );
+
+            modelBuilder.Entity<Videogame>().HasData(
+                new Videogame { VideogameId = 1, Name = "Rocket League", Description = "Altos carros voladores", Category = "", Stock = 3, Pegi = 12, Available = true, Platform = "Steam", Price = 15, ImageURL = "" },   
+                new Videogame { VideogameId = 2, Name = "GTA 5", Description = "Gran Robo de Autos", Category = "", Stock = 7, Pegi = 18, Available = true, Platform = "Play Station", Price = 13, ImageURL = "" }   
+            );
+
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender { GenderId = 1, Name = "RPG", BackgroundImg = "", CharacterImg = "" },
+                new Gender { GenderId = 2, Name = "Shooter", BackgroundImg = "", CharacterImg = "" }
+            );
             
 
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Videogame> Videogames { get; set; }
+        public DbSet<Gender> Genders { get; set; }
     }
 }

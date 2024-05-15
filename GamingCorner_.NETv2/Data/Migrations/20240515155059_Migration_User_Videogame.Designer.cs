@@ -4,6 +4,7 @@ using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    partial class GamingCornerContextModelSnapshot : ModelSnapshot
+    [Migration("20240515155059_Migration_User_Videogame")]
+    partial class Migration_User_Videogame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,13 +62,13 @@ namespace GamingCorner.Data.Migrations
                     b.ToTable("GamingConsole");
                 });
 
-            modelBuilder.Entity("GamingCorner.Models.Gender", b =>
+            modelBuilder.Entity("GamingCorner.Models.Genre", b =>
                 {
-                    b.Property<int>("GenderId")
+                    b.Property<int>("GenreId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenderId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"), 1L, 1);
 
                     b.Property<string>("BackgroundImg")
                         .HasColumnType("nvarchar(max)");
@@ -77,25 +79,9 @@ namespace GamingCorner.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("GenderId");
+                    b.HasKey("GenreId");
 
-                    b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            GenderId = 1,
-                            BackgroundImg = "",
-                            CharacterImg = "",
-                            Name = "RPG"
-                        },
-                        new
-                        {
-                            GenderId = 2,
-                            BackgroundImg = "",
-                            CharacterImg = "",
-                            Name = "Shooter"
-                        });
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("GamingCorner.Models.Order", b =>
@@ -316,19 +302,19 @@ namespace GamingCorner.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GamingCorner.Models.VideogameGender", b =>
+            modelBuilder.Entity("GamingCorner.Models.VideogameGenre", b =>
                 {
                     b.Property<int>("VideogameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenderId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.HasKey("VideogameId", "GenderId");
+                    b.HasKey("VideogameId", "GenreId");
 
-                    b.HasIndex("GenderId");
+                    b.HasIndex("GenreId");
 
-                    b.ToTable("VideogameGender");
+                    b.ToTable("VideogameGenre");
                 });
 
             modelBuilder.Entity("GamingCorner.Models.Order", b =>
@@ -357,28 +343,28 @@ namespace GamingCorner.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GamingCorner.Models.VideogameGender", b =>
+            modelBuilder.Entity("GamingCorner.Models.VideogameGenre", b =>
                 {
-                    b.HasOne("GamingCorner.Models.Gender", "Gender")
-                        .WithMany("ListVideogameGender")
-                        .HasForeignKey("GenderId")
+                    b.HasOne("GamingCorner.Models.Genre", "Genre")
+                        .WithMany("ListVideogameGenre")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GamingCorner.Models.Videogame", "Videogame")
-                        .WithMany("ListVideogameGender")
+                        .WithMany("ListVideogameGenre")
                         .HasForeignKey("VideogameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Gender");
+                    b.Navigation("Genre");
 
                     b.Navigation("Videogame");
                 });
 
-            modelBuilder.Entity("GamingCorner.Models.Gender", b =>
+            modelBuilder.Entity("GamingCorner.Models.Genre", b =>
                 {
-                    b.Navigation("ListVideogameGender");
+                    b.Navigation("ListVideogameGenre");
                 });
 
             modelBuilder.Entity("GamingCorner.Models.Order", b =>
@@ -393,7 +379,7 @@ namespace GamingCorner.Data.Migrations
 
             modelBuilder.Entity("GamingCorner.Models.Videogame", b =>
                 {
-                    b.Navigation("ListVideogameGender");
+                    b.Navigation("ListVideogameGenre");
 
                     b.Navigation("Order_lines");
                 });

@@ -12,16 +12,16 @@ public class Videogame
     public int VideogameId { get; set; }
 
     [Required]
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     [Required]
     public int Pegi { get; set; }
 
     [Required]
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     [Required]
-    public string? Category { get; set; }
+    public string Category { get; set; }
 
     [Required]
     public int Stock { get; set; }
@@ -30,21 +30,22 @@ public class Videogame
     public bool Available { get; set; }
 
     [Required]
-    public string? Platform { get; set; }
+    public string Platform { get; set; }
 
     [Required]
     public decimal Price { get; set; }
 
     [Required]
-    public string? URL { get; set; }
+    public string ImageURL { get; set; }
 
-    public List<VideogameGenre> ListVideogameGenre { get; set; }
-    // public List<Transaction> transactions { get; set; } = new List<Transaction>();
+    public List<VideogameGender> ListVideogameGender { get; set; }
+
+    public List<OrderLine> Order_lines { get; set; } = new List<OrderLine>();
 
 
     public Videogame() { }
 
-    public Videogame(string name, int pegi, string description, string category, int stock, bool available, string platform, decimal price, string url)
+    public Videogame(string name, int pegi, string description, string category, int stock, bool available, string platform, decimal price, string imageURL)
     {
         Name = name;
         Pegi = pegi;
@@ -54,6 +55,29 @@ public class Videogame
         Available = available;
         Platform = platform;
         Price = price;
-        URL = url;
+        ImageURL = imageURL;
+    }
+
+    public Videogame mapFromCreateDto(VideogameCreateDTO videogameCreateDTO)
+    {
+        if (videogameCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(videogameCreateDTO));
+        }
+
+        var videogame = new Videogame
+        {
+            Name = videogameCreateDTO.Name,
+            Pegi = videogameCreateDTO.Pegi,
+            Description = videogameCreateDTO.Description,
+            Stock = videogameCreateDTO.Stock,
+            Available = videogameCreateDTO.Available,
+            Platform = videogameCreateDTO.Platform,
+            Price = videogameCreateDTO.Price,
+            ImageURL = videogameCreateDTO.ImageURL
+        };
+
+        return videogame;
     }
 }

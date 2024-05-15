@@ -30,18 +30,6 @@ public class UserDTO
  
     public List<Order> Orders { get; set; } = new List<Order>();
 
-    public UserDTO() { }
-
-    public UserDTO(int userId, string name, string email, string password, int phoneNumber, bool admin, string imageURL)
-    {
-        UserId = userId;
-        Name = name;
-        Email = email;
-        Password = password;
-        PhoneNumber = phoneNumber;
-        Admin = admin;
-        ImageURL = imageURL;
-    }
 
      public User ToUser()
     {

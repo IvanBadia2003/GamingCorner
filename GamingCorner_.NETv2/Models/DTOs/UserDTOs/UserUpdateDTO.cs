@@ -23,14 +23,4 @@ public class UserUpdateDTO
 
     public string? ImageURL { get; set; }
 
-    public UserUpdateDTO() { }
-
-    public UserUpdateDTO(string name, string email, string password, int phoneNumber, string imageURL)
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-        PhoneNumber = phoneNumber;
-        ImageURL = imageURL;
-    }
 }

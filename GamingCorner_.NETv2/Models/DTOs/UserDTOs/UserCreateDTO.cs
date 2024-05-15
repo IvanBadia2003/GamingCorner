@@ -24,13 +24,4 @@ public class UserCreateDTO
  
     public List<Order> Orders { get; set; } = new List<Order>();
 
-    public UserCreateDTO() { }
-
-    public UserCreateDTO(string name, string email, string password, bool admin)
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-        Admin = admin;
-    }
 }

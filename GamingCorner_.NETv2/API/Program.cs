@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using GamingCorner.Models;
 
 
 
@@ -47,8 +48,11 @@ var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 // builder.Services.AddScoped<IObraService, ObraService>();
 // builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
 
-// builder.Services.AddScoped<ISeatService, SeatService>();
-// builder.Services.AddScoped<ISeatRepository, SeatEFRepository>();
+builder.Services.AddScoped<IVideogameService, VideogameService>();
+builder.Services.AddScoped<IVideogameRepository, VideogameEFRepository>();
+
+builder.Services.AddScoped<IGenderService, GenderService>();
+builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();

@@ -5,12 +5,12 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class VideogameGenre
+public class VideogameGender
 {
-    [ForeignKey("Genre")]
-    public int GenreId { get; set; }
+    [ForeignKey("Gender")]
+    public int GenderId { get; set; }
 
-    public Genre? Genre { get; set; }
+    public Gender? Gender { get; set; }
 
     [ForeignKey("Videogame")]
     public int VideogameId { get; set; }
@@ -18,11 +18,11 @@ public class VideogameGenre
     public Videogame? Videogame { get; set; }
 
 
-    public VideogameGenre() { }
+    public VideogameGender() { }
 
-    public VideogameGenre(int genreId, int videogameId)
+    public VideogameGender(int genderId, int videogameId)
     {
-        GenreId = genreId;
+        GenderId = genderId;
         VideogameId = videogameId;
     }
 }
