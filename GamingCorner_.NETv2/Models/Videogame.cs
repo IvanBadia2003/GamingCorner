@@ -80,4 +80,26 @@ public class Videogame
 
         return videogame;
     }
+
+    public VideogameDTO MapToDTO()
+    {
+        var videogameDto = new VideogameDTO
+        {
+            VideogameId = this.VideogameId,
+            Name = this.Name,
+            Pegi = this.Pegi,
+            Description = this.Description,
+            Stock = this.Stock,
+            Available = this.Available,
+            Platform = this.Platform,
+            Price = this.Price,
+            ImageURL = this.ImageURL,
+            ListVideogameGender = this.ListVideogameGender.Select(g => new VideogameGenderDTO
+            {
+                GenderId = g.GenderId,
+                VideogameId = g.VideogameId
+            }).ToList()
+        };
+        return videogameDto;
+    }
 }

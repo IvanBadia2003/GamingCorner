@@ -72,6 +72,12 @@ namespace GamingCorner.Data
                 new Gender { GenderId = 1, Name = "RPG", BackgroundImg = "", CharacterImg = "" },
                 new Gender { GenderId = 2, Name = "Shooter", BackgroundImg = "", CharacterImg = "" }
             );
+
+            modelBuilder.Entity<VideogameGender>().HasData(
+                new VideogameGender { GenderId = 1, VideogameId = 2 },
+                new VideogameGender { GenderId = 2, VideogameId = 1 },
+                new VideogameGender { GenderId = 2, VideogameId = 2 }
+            );
             
 
         }
@@ -79,5 +85,6 @@ namespace GamingCorner.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Videogame> Videogames { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<VideogameGender> VideogameGenders { get; set; }
     }
 }

@@ -57,6 +57,9 @@ builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 
+builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
+builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
+
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();
 

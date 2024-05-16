@@ -34,7 +34,7 @@ public class VideogameDTO
     [Required]
     public string? ImageURL { get; set; }
  
-    // public List<VideogameGenre> ListVideogameGenre { get; set; }
+    public List<VideogameGenderDTO> ListVideogameGender { get; set; }
 
     public List<OrderLine> Order_lines { get; set; } = new List<OrderLine>();
 
@@ -49,7 +49,11 @@ public class VideogameDTO
             Stock = this.Stock,
             Available = this.Available,
             Platform = this.Platform,
-            ImageURL = this.ImageURL
+            ImageURL = this.ImageURL,
+            ListVideogameGender = this.ListVideogameGender != null ? this.ListVideogameGender.Select(g => new VideogameGender
+            {
+                Gender = new Gender {GenderId = g.GenderId}
+            }).ToList() : null
         };
     }
 }
