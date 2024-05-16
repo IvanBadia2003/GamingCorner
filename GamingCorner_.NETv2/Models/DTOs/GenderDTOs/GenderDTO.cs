@@ -16,7 +16,7 @@ public class GenderDTO
 
     public string? CharacterImg { get; set; }
 
-    // public List<VideogameGender> ListVideogameGender { get; set; }
+    public List<VideogameGenderDTO> ListVideogameGender { get; set; }
 
 
      public Gender ToGenre()

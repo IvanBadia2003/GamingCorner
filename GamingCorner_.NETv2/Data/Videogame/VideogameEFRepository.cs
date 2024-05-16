@@ -54,18 +54,18 @@ public class VideogameEFRepository : IVideogameRepository
 
 
     public VideogameDTO Get(int id)
-        {
-            var videogame = _context.Videogames
-                .Include(vg => vg.ListVideogameGender)
-                    .ThenInclude(g => g.Gender)
-                .Where(videogame => videogame.VideogameId == id)
-                .FirstOrDefault();
+    {
+        var videogame = _context.Videogames
+            .Include(vg => vg.ListVideogameGender)
+                .ThenInclude(g => g.Gender)
+            .Where(videogame => videogame.VideogameId == id)
+            .FirstOrDefault();
 
-            if (videogame != null)
+        if (videogame != null)
+        {
+            var videogameDto = new VideogameDTO
             {
-                var videogameDto = new VideogameDTO
-                {
-                    VideogameId = videogame.VideogameId,
+                VideogameId = videogame.VideogameId,
                 Name = videogame.Name,
                 Description = videogame.Description,
                 Pegi = videogame.Pegi,
@@ -75,21 +75,21 @@ public class VideogameEFRepository : IVideogameRepository
                 Price = videogame.Price,
                 ImageURL = videogame.ImageURL,
                 ListVideogameGender = videogame.ListVideogameGender
-                        .Where(bo => bo != null && bo.Gender != null)
-                        .Select(bo => new VideogameGenderDTO
-                        {
-                            GenderId = bo.GenderId
-                        }).ToList()
-                };
+                    .Where(bo => bo != null && bo.Gender != null)
+                    .Select(bo => new VideogameGenderDTO
+                    {
+                        GenderId = bo.GenderId
+                    }).ToList()
+            };
 
-                return videogameDto;
-            }
-            else
-            {
-                return null; // Devuelve null si no se encuentra la obra
-            }
-
+            return videogameDto;
         }
+        else
+        {
+            return null; // Devuelve null si no se encuentra la obra
+        }
+
+    }
 
     public void Update(Videogame videogame)
     {

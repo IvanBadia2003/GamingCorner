@@ -50,6 +50,8 @@ public class GenderEFRepository : IGenderRepository
     public GenderDTO Get(int id)
     {
         var gender = _context.Genders
+            .Include(vg => vg.ListVideogameGender)
+                .ThenInclude(v => v.Videogame)
             .Where(gender => gender.GenderId == id)
             .FirstOrDefault();
 
@@ -61,6 +63,12 @@ public class GenderEFRepository : IGenderRepository
                 Name = gender.Name,
                 BackgroundImg = gender.BackgroundImg,
                 CharacterImg = gender.CharacterImg,
+                ListVideogameGender = gender.ListVideogameGender
+                    .Where(bo => bo != null && bo.Videogame != null)
+                    .Select(bo => new VideogameGenderDTO
+                    {
+                        VideogameId = bo.VideogameId
+                    }).ToList()
             };
             return genderDto;
         }
