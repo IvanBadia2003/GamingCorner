@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Tarjet from '@/components/Tarjet.vue';
 
 </script>
 
@@ -10,14 +9,7 @@ import Tarjet from '@/components/Tarjet.vue';
   </section>
 
   <section class="content">
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
-    <Tarjet></Tarjet>
+
   </section>
 </template>
 

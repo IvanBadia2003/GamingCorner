@@ -18,13 +18,18 @@ const HeaderStore = useHeaderStore();
 
         <div class="logo">
 
-            <IconLogo />
+            <RouterLink :to="'/'">
+
+                <IconLogo />
+            </RouterLink>
         </div>
 
         <nav class="menu">
             <div class="menu-second">
                 <ul>
-                    <li>Catálogo</li>
+                    <li>
+                        <RouterLink :to="'/grid'">Catálogo</RouterLink>
+                    </li>
                     <li>Segunda Mano</li>
                     <li>Soporte</li>
                 </ul>
@@ -80,8 +85,13 @@ const HeaderStore = useHeaderStore();
         <div class="icons-container">
             <div class="icons">
 
-                <IconUser />
-                <IconCart />
+                <RouterLink :to="'/login'">
+                    <IconUser />
+                </RouterLink>
+                <RouterLink :to="'/login'">
+                    <IconCart />
+                </RouterLink>
+
             </div>
         </div>
 
@@ -113,13 +123,12 @@ $secondlyFont: 'Montserrat';
     align-items: center;
 
     width: 100%;
-    
+
     top: 0;
     height: 155px;
 
     transition: .2s;
     z-index: 2;
-    position: fixed;
 
     animation: scrollHeader both;
     animation-timeline: scroll(root);
@@ -129,6 +138,7 @@ $secondlyFont: 'Montserrat';
         height: auto;
         width: 15%;
         margin-left: 15px;
+
         img {
             width: 100%;
         }
