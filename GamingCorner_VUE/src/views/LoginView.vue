@@ -1,5 +1,21 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { useUserStore } from '@/stores/UserStore';
 
+import { useRouter } from 'vue-router';
+const userStore = useUserStore();
+const username = ref('');
+const password = ref('');
+const router = useRouter();
+
+onMounted(() => {
+  userStore.fetchUsers();
+})
+
+const login = () => {
+  userStore.login(username.value, password.value);
+  router.push('/profile')
+};
 </script>
 
 <template>
@@ -7,18 +23,18 @@
     <div class="container">
       <div class="form-container">
         <h2>Iniciar Sesión</h2>
-        <form>
+        <form @submit.prevent="login">
           <div class="campo">
-            <label for="email">Email</label>
-            <input type="email" id="email" required>
+            <label for="usuario">Usuario</label>
+            <input type="text" v-model="username" placeholder="Username" required>
           </div>
 
           <div class="campo">
             <label for="password">Contraseña</label>
-            <input type="password" id="password" required>
+            <input type="password" v-model="password" id="password" required>
           </div>
 
-          <button type="submit">Registrarse</button>
+          <button type="submit">Iniciar Sesión</button>
         </form>
       </div>
 
@@ -68,12 +84,13 @@
 .content {
   width: 100%;
   text-align: start;
+
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 50px;
-    
+
     .form-container {
       width: 100%;
       max-width: 400px;
@@ -81,27 +98,27 @@
       padding: 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
-  
+
       h2 {
         font-size: 1.5rem;
         margin-bottom: 20px;
         text-align: center;
       }
-  
+
       form {
         display: flex;
         flex-direction: column;
-  
+
         .campo {
           margin-bottom: 15px;
           max-width: 90%;
           position: relative;
-  
+
           label {
             font-weight: bold;
             margin-bottom: 5px;
           }
-  
+
           input[type='email'],
           input[type='password'],
           input[type='text'],
@@ -113,7 +130,7 @@
             font-size: 1rem;
           }
         }
-  
+
         button[type='submit'] {
           width: 100%;
           padding: 10px;
@@ -124,7 +141,7 @@
           font-size: 1rem;
           cursor: pointer;
           transition: background-color 0.3s;
-  
+
           &:hover {
             background-color: #0056b3;
           }
@@ -136,5 +153,4 @@
 
 
 }
-
 </style>

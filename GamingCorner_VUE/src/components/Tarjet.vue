@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+const props = defineProps<{
+  idGame: number,
+  name: string,
+  pegi: number,
+  description: string,
+  category: string,
+  stock: number,
+  available: boolean,
+  platform: string,
+  price: number,
+  image: string
+}>()
+
+
 const isSelected = ref(false)
 
 
@@ -17,12 +31,12 @@ const isSelected = ref(false)
     </div>
     <div class="center">
       <div class="prevImage" ref="prevImage">
-        <img class="cardContainer" src="https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png" alt="">
+        <img class="cardContainer" :src="image" alt="">
         <div class="btnImg" @click="isSelected = true"><i class="fa-solid fa-plus"></i></div>
       </div>
     </div>
     <div class="slideInf" :class="{ 'viewInf': isSelected }">
-      <div class="text-menu">Assassins Creed</div>
+      <div class="text-menu">{{name}}</div>
       <div class="btn-menu-cont">
         <RouterLink :to="'/description'">
           <div class="btn1">
