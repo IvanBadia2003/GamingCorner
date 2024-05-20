@@ -30,7 +30,9 @@ public class Videogame
     public bool Available { get; set; }
 
     [Required]
-    public string Platform { get; set; }
+    public int PlatformId { get; set; }
+
+    public Platform Platform { get; set; }
 
     [Required]
     public decimal Price { get; set; }
@@ -45,7 +47,7 @@ public class Videogame
 
     public Videogame() { }
 
-    public Videogame(string name, int pegi, string description, string category, int stock, bool available, string platform, decimal price, string imageURL)
+    public Videogame(string name, int pegi, string description, string category, int stock, bool available, int platformId, decimal price, string imageURL)
     {
         Name = name;
         Pegi = pegi;
@@ -53,7 +55,7 @@ public class Videogame
         Category = category;
         Stock = stock;
         Available = available;
-        Platform = platform;
+        PlatformId = platformId;
         Price = price;
         ImageURL = imageURL;
     }
@@ -73,7 +75,7 @@ public class Videogame
             Description = videogameCreateDTO.Description,
             Stock = videogameCreateDTO.Stock,
             Available = videogameCreateDTO.Available,
-            Platform = videogameCreateDTO.Platform,
+            PlatformId = videogameCreateDTO.PlatformId,
             Price = videogameCreateDTO.Price,
             ImageURL = videogameCreateDTO.ImageURL
         };

@@ -5,19 +5,16 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class VideogameDTO
+public class ConsoleDTO
 {
     [Key]
-    public int VideogameId { get; set; }
+    public int ConsoleId { get; set; }
 
     [Required]
     public string? Name { get; set; }
 
     [Required]
-    public int Pegi { get; set; }
-
-    [Required]
-    public string? Description { get; set; }
+    public string? Specifications { get; set; }
   
     [Required]
     public int Stock { get; set; }
@@ -33,27 +30,20 @@ public class VideogameDTO
 
     [Required]
     public string? ImageURL { get; set; }
- 
-    public List<VideogameGenderDTO> ListVideogameGender { get; set; }
 
     public List<OrderLine> Order_lines { get; set; } = new List<OrderLine>();
 
-     public Videogame ToVideogame()
+     public Console_ ToConsole()
     {
-        return new Videogame
+        return new Console_
         {
-            VideogameId = this.VideogameId,
+            ConsoleId = this.ConsoleId,
             Name = this.Name,
-            Pegi = this.Pegi,
-            Description = this.Description,
+            Specifications = this.Specifications,
             Stock = this.Stock,
             Available = this.Available,
             PlatformId = this.PlatformId,
             ImageURL = this.ImageURL,
-            ListVideogameGender = this.ListVideogameGender != null ? this.ListVideogameGender.Select(g => new VideogameGender
-            {
-                Gender = new Gender {GenderId = g.GenderId}
-            }).ToList() : null
-        }; 
+        };
     }
 }

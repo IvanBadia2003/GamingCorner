@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using GamingCorner.Models;
 using System.Security.Cryptography.X509Certificates;
+using System.IO.Compression;
 
 namespace GamingCorner.Data
 {
@@ -35,6 +36,11 @@ namespace GamingCorner.Data
                 .WithMany(o => o.Orders)
                 .HasForeignKey(u => u.UserId );
 
+            modelBuilder.Entity<Videogame>()
+                .HasOne (p => p.Platform)
+                .WithMany(v => v.videogames)
+                .HasForeignKey(p => p.PlatformId);
+
             modelBuilder.Entity<User>()
                 .HasKey(u => new { u.UserId });
 
@@ -63,9 +69,20 @@ namespace GamingCorner.Data
                 new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = 987654321, Admin = false, ImageURL = "" }
             );
 
+            modelBuilder.Entity<Platform>().HasData(
+                new Platform { PlatformId = 1, Name = "Steam"},
+                new Platform { PlatformId = 2, Name = "Play Station"},
+                new Platform { PlatformId = 3, Name = "Xbox"}
+            );
+
+            modelBuilder.Entity<Console_>().HasData(
+                new Console_ { ConsoleId = 1, Name = "Play Station 4", Specifications = "Ta bien", PlatformId = 2, Price = 300, Stock = 16, Available = true, ImageURL = ""},
+                new Console_ { ConsoleId = 1, Name = "Xbox 360", Specifications = "Ta bien pero no tanto", PlatformId = 3, Price = 265, Stock = 5, Available = true, ImageURL = ""}
+            );
+
             modelBuilder.Entity<Videogame>().HasData(
-                new Videogame { VideogameId = 1, Name = "Rocket League", Description = "Altos carros voladores", Category = "", Stock = 3, Pegi = 12, Available = true, Platform = "Steam", Price = 15, ImageURL = "" },   
-                new Videogame { VideogameId = 2, Name = "GTA 5", Description = "Gran Robo de Autos", Category = "", Stock = 7, Pegi = 18, Available = true, Platform = "Play Station", Price = 13, ImageURL = "" }   
+                new Videogame { VideogameId = 1, Name = "Rocket League", Description = "Altos carros voladores", Category = "", Stock = 3, Pegi = 12, Available = true, PlatformId = 1, Price = 15, ImageURL = "" },   
+                new Videogame { VideogameId = 2, Name = "GTA 5", Description = "Gran Robo de Autos", Category = "", Stock = 7, Pegi = 18, Available = true, PlatformId = 2, Price = 13, ImageURL = "" }   
             );
 
             modelBuilder.Entity<Gender>().HasData(
@@ -86,5 +103,7 @@ namespace GamingCorner.Data
         public DbSet<Videogame> Videogames { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<VideogameGender> VideogameGenders { get; set; }
+        public DbSet<Platform> Platforms { get; set; }
+        public DbSet<Console_> Consoles { get; set; }
     }
 }

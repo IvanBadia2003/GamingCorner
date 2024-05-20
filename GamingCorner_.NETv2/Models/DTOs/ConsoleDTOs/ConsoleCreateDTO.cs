@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class VideogameCreateDTO
+public class ConsoleCreateDTO
 {
 
 
@@ -14,10 +14,7 @@ public class VideogameCreateDTO
     public string? Name { get; set; }
 
     [Required]
-    public int Pegi { get; set; }
-
-    [Required]
-    public string? Description { get; set; }
+    public string? Specifications { get; set; }
 
     [Required]
     public int Stock { get; set; }

@@ -6,12 +6,12 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace GamingCorner.Models;
 
-public class VideogameUpdateDTO
+public class ConsoleUpdateDTO
 {
 
 
 
-    public string Name { get; set; }
+
     public int Stock { get; set; }
 
     public bool Available { get; set; }

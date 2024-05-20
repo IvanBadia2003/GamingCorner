@@ -34,7 +34,7 @@ public class VideogameEFRepository : IVideogameRepository
                 Pegi = v.Pegi,
                 Stock = v.Stock,
                 Available = v.Available,
-                Platform = v.Platform,
+                PlatformId = v.PlatformId,
                 Price = v.Price,
                 ImageURL = v.ImageURL,
             }).ToList();
@@ -71,7 +71,7 @@ public class VideogameEFRepository : IVideogameRepository
                 Pegi = videogame.Pegi,
                 Stock = videogame.Stock,
                 Available = videogame.Available,
-                Platform = videogame.Platform,
+                PlatformId = videogame.PlatformId,
                 Price = videogame.Price,
                 ImageURL = videogame.ImageURL,
                 ListVideogameGender = videogame.ListVideogameGender
