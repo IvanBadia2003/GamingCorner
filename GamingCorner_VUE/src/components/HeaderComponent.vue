@@ -19,7 +19,6 @@ const HeaderStore = useHeaderStore();
         <div class="logo">
 
             <RouterLink :to="'/'">
-
                 <IconLogo />
             </RouterLink>
         </div>
@@ -84,14 +83,12 @@ const HeaderStore = useHeaderStore();
 
         <div class="icons-container">
             <div class="icons">
-
                 <RouterLink :to="'/login'">
                     <IconUser />
                 </RouterLink>
                 <RouterLink :to="'/login'">
                     <IconCart />
                 </RouterLink>
-
             </div>
         </div>
 
@@ -121,14 +118,15 @@ $secondlyFont: 'Montserrat';
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     width: 100%;
 
     top: 0;
-    height: 155px;
+    height: 175px;
 
     transition: .2s;
-    z-index: 2;
+    z-index: 500;
 
     animation: scrollHeader both;
     animation-timeline: scroll(root);
@@ -164,8 +162,13 @@ $secondlyFont: 'Montserrat';
 
                 ul {
                     @include links();
+                    border: 1px solid white;
+                    border-radius: 33px;
+                    padding: 5px;
+
 
                     li {
+
                         padding: {
                             left: 5px;
                             right: 5px;
@@ -173,13 +176,19 @@ $secondlyFont: 'Montserrat';
                         }
 
                     }
+
                 }
 
                 .submenu {
                     position: relative;
                     left: 50%;
                     transform: translateX(-50%);
+                    border-radius: 10px;
+                    backdrop-filter: blur(60px) saturate(100%);
+                    background-color: rgba(72, 118, 235, .75);
                     width: 130%;
+
+
                 }
             }
 
@@ -230,6 +239,23 @@ $secondlyFont: 'Montserrat';
         }
 
         .menu-second {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+
+            ul {
+                @include links();
+
+                li {
+                    padding: {
+                        left: 5px;
+                        right: 5px;
+
+                    }
+
+                }
+            }
+
             animation: scrollSecondMenu both;
             animation-timeline: scroll(root);
             animation-range: 0 50px;
@@ -242,7 +268,6 @@ $secondlyFont: 'Montserrat';
 
     .icons-container {
 
-        margin-right: 15px;
 
         .icons {
             display: flex;
@@ -250,22 +275,136 @@ $secondlyFont: 'Montserrat';
             align-items: center;
             padding: 5px;
 
-            width: auto;
+            width: 70%;
 
             border: 3px white solid;
             border-radius: 33px;
 
             background-color: #4876EB;
 
-            /* CONTINUAR CON EL DIV DE LOS ICONOS */
             img {
-                width: 30%;
+                width: 60%;
             }
         }
 
 
     }
 }
+
+
+
+
+
+
+@media screen and (min-width: 720px) {
+    .header-container {
+        background-color: red;
+
+        .logo {
+
+            img {
+
+                max-width: 70%;
+            }
+        }
+
+        .menu {
+            width: 50%;
+
+            .menu-first {
+                width: 100%;
+                .categories {
+                    width: 100%;
+
+                    ul {
+                        width: 100%;
+
+                        li {
+
+                            min-width: 20%;
+                        }
+
+                    }
+
+                    .submenu {
+                    }
+                }
+
+
+                .search-container {
+
+
+                    .search {
+
+                        img {
+
+                        }
+
+                        &-input {
+
+                        }
+                    }
+                }
+
+                .search:hover input {
+                    width: 350px;
+                }
+            }
+
+            .menu-second {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+
+                ul {
+                    @include links();
+
+                    li {
+                        padding: {
+                            left: 5px;
+                            right: 5px;
+
+                        }
+
+                    }
+                }
+
+                animation: scrollSecondMenu both;
+                animation-timeline: scroll(root);
+                animation-range: 0 50px;
+
+                ul {
+                    @include links();
+                }
+            }
+        }
+
+        .icons-container {
+
+
+            .icons {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                padding: 5px;
+
+                width: 70%;
+
+                border: 3px white solid;
+                border-radius: 33px;
+
+                background-color: #4876EB;
+
+                img {
+                    width: 60%;
+                }
+            }
+
+
+        }
+    }
+}
+
 
 
 

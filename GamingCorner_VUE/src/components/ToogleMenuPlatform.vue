@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import IconEpicGames from './icons/IconEpicGames.vue';
+import IconSteam from './icons/IconSteam.vue';
+import IconUbisoft from './icons/IconUbisoft.vue';
+
 
 defineProps<{
   title: string
@@ -13,9 +17,9 @@ defineProps<{
   </div>
   <div class="icons">
     <ul>
-      <li>steam</li>
-      <li>ubisoft</li>
-      <li>Epic games</li>
+      <li><IconSteam class="icon"/></li>
+      <li><IconUbisoft class="icon"/></li>
+      <li><IconEpicGames class="icon"/></li>
     </ul>
   </div>
 
@@ -38,15 +42,23 @@ defineProps<{
 .icons {
   width: 100%;
   height: auto;
-  background-color: #fff;
   display: flex;
 
 
   ul {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    list-style: none;
+    padding: 0;
+    li {
+      .icon {
+        max-width: 90px;
+        height: auto;
+      }
+    }
   }
 }
+
 </style>
