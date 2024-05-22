@@ -1,9 +1,18 @@
 <script setup lang="ts">
+    import { useGenderStore } from '@/stores/GenderStore';
+    import { useFilterStore } from '@/stores/FilterStore';
+    import { ref } from 'vue';
+
+
 var props = defineProps<{
   title: string
 
 }>()
 
+const GenderStore = useGenderStore();
+const FilterStore = useFilterStore();
+
+const genderSelected = ref('');
 </script>
 
 <template>
@@ -12,27 +21,30 @@ var props = defineProps<{
             {{ props.title }} 
         </div>
         <div v-if="$props.title == 'Género'" class="category-filters">
-            filtros para genero
+            filtros para {{title}}
+            <select v-model="genderSelected" name="genders" id="genders">
+                <option v-for="gender in GenderStore.genders">{{gender.name}}</option>
+            </select>
 
         </div>
         <div v-if="$props.title == 'Plataforma'" class="category-filters">
-            filtros para plataform
+            filtros para {{title}}
 
         </div>
         <div v-if="$props.title == 'Sistema'" class="category-filters">
-            filtros para Sistema
+            filtros para {{title}}
 
         </div>
-        <div v-if="$props.title == 'Precio'" class="category-filters">
-            filtros para Precio
+        <div v-if="$props.title == 'Precio'" class="category-filters ">
+            filtros para {{title}}
 
         </div>
         <div v-if="$props.title == 'Mano'" class="category-filters">
-            filtros para Mano
+            filtros para {{title}}
 
         </div>
         <div v-if="$props.title == 'Ordenar por'" class="category-filters">
-            filtros para Ordenar 
+            filtros para {{title}} 
 
         </div>
     </div>
@@ -41,9 +53,34 @@ var props = defineProps<{
 <style scoped lang="scss">
 
 .category-container {
-    border: 1px solid red;
+    border-bottom: 3px solid orange;
     width: 100%;
-    height: calc(100%/6);
+    height: auto;
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    
+    .category-name {
+        height: 50px;
+    }
+
+    .category-filters {
+        transition: .8s;
+        height: 50px;
+        &:hover {
+            height: 100px;
+        }
+    }
+    
+    &:last-child {
+        border-bottom: none;
+    }
+
+
 }
 
 </style>
