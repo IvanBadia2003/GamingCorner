@@ -13,10 +13,6 @@ public class Platform
 
     public string? Name { get; set; }
 
-    public Videogame Videogame{ get; set; }
-
-    public Console_ Console { get; set; }
-
     public List<Videogame> videogames {get; set;} = new List<Videogame>();
     public List<Console_> consoles {get; set;} = new List<Console_>();
 
@@ -25,5 +21,21 @@ public class Platform
     public Platform(string name)
     {
         Name = name;
+    }
+
+    public Platform mapFromCreateDto(PlatformCreateDTO platformCreateDTO)
+    {
+        if (platformCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(platformCreateDTO));
+        }
+
+        var platform = new Platform
+        {
+           Name = platformCreateDTO.Name,
+        };
+
+        return platform;
     }
 }

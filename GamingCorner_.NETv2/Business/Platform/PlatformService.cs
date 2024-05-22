@@ -16,24 +16,24 @@ using GamingCorner.Models;
         _platformRepository = platformRepository;
 
     }
-    public List<GenderDTO> GetAll()
+    public List<PlatformDTO> GetAll()
     {
-        var genders = _genderRepository.GetAll();
-        return genders;
+        var platforms = _platformRepository.GetAll();
+        return platforms;
     }
 
-    public GenderDTO Get(int id)
+    public PlatformDTO Get(int id)
     {
-        var gender = _genderRepository.Get(id);
-        return gender;
+        var platform = _platformRepository.Get(id);
+        return platform;
     }
 
 
-    public void Add(GenderCreateDTO genderCreateDTO)
+    public void Add(PlatformCreateDTO platformCreateDTO)
     {
-        var gender = new Gender();
-        var mappedGender = gender.mapFromCreateDto(genderCreateDTO);
-        _genderRepository.Add(mappedGender);
+        var platform = new Platform();
+        var mappedPlatform = platform.mapFromCreateDto(platformCreateDTO);
+        _platformRepository.Add(mappedPlatform);
     }
 
     // public void Update(int id, VideogameUpdateDTO videogameUpdateDTO)
@@ -53,7 +53,7 @@ using GamingCorner.Models;
 
     public void Delete(int id)
     {
-        _genderRepository.Delete(id);
+        _platformRepository.Delete(id);
     }
 }
 

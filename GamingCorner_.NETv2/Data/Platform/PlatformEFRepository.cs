@@ -47,33 +47,33 @@ public class PlatformEFRepository : IPlatformRepository
 
     public PlatformDTO Get(int id)
     {
-        var platform = _context.Genders
-            .Include(vg => vg.ListVideogameGender)
-                .ThenInclude(v => v.Videogame)
-            .Where(gender => gender.GenderId == id)
-            .FirstOrDefault();
+        // var platform = _context.Genders
+        //     .Include(vg => vg.ListVideogameGender)
+        //         .ThenInclude(v => v.Videogame)
+        //     .Where(gender => gender.GenderId == id)
+        //     .FirstOrDefault();
 
-        if (gender != null)
-        {
-            var genderDto = new GenderDTO
-            {
-                GenderId = gender.GenderId,
-                Name = gender.Name,
-                BackgroundImg = gender.BackgroundImg,
-                CharacterImg = gender.CharacterImg,
-                ListVideogameGender = gender.ListVideogameGender
-                    .Where(bo => bo != null && bo.Videogame != null)
-                    .Select(bo => new VideogameGenderDTO
-                    {
-                        VideogameId = bo.VideogameId
-                    }).ToList()
-            };
-            return genderDto;
-        }
-        else
-        {
+        // if (gender != null)
+        // {
+        //     var genderDto = new GenderDTO
+        //     {
+        //         GenderId = gender.GenderId,
+        //         Name = gender.Name,
+        //         BackgroundImg = gender.BackgroundImg,
+        //         CharacterImg = gender.CharacterImg,
+        //         ListVideogameGender = gender.ListVideogameGender
+        //             .Where(bo => bo != null && bo.Videogame != null)
+        //             .Select(bo => new VideogameGenderDTO
+        //             {
+        //                 VideogameId = bo.VideogameId
+        //             }).ToList()
+        //     };
+        //     return genderDto;
+        // }
+        // else
+        // {
             return null;
-        }
+        // }
     }
 
     // public void Update(Gender gender)

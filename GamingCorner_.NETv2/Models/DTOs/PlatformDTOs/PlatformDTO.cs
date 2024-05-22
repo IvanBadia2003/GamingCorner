@@ -12,6 +12,8 @@ public class PlatformDTO
 
     public string? Name { get; set; }
 
+    public List<Videogame> videogames {get; set;} = new List<Videogame>();
+    public List<Console_> consoles {get; set;} = new List<Console_>();
 
      public Platform ToPlatform()
     {

@@ -27,6 +27,10 @@ public class GenderDTO
             Name = this.Name,
             CharacterImg = this.CharacterImg,
             BackgroundImg = this.BackgroundImg,
+            ListVideogameGender = this.ListVideogameGender != null ? this.ListVideogameGender.Select(g => new VideogameGender
+            {
+                Videogame = new Videogame {VideogameId = g.VideogameId}
+            }).ToList() : null
         };
     }
 }
