@@ -45,9 +45,10 @@ using GamingCorner.Models;
         }
 
         var videogame = videogameDto.ToVideogame();
-        videogame.Stock = videogameDto.Stock;
-        videogame.Available = videogameDto.Available;
-        videogame.Price = videogameDto.Price;
+        videogame.Name = videogameUpdateDTO.Name;
+        videogame.Stock = videogameUpdateDTO.Stock;
+        videogame.Available = videogameUpdateDTO.Available;
+        videogame.Price = videogameUpdateDTO.Price;
         _videogameRepository.Update(videogame);
     }
 

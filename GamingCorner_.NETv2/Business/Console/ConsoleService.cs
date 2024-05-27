@@ -45,9 +45,9 @@ using GamingCorner.Models;
         }
 
         var console = consoleDto.ToConsole();
-        console.Stock = consoleDto.Stock;
-        console.Available = consoleDto.Available;
-        console.Price = consoleDto.Price;
+        console.Stock = consoleUpdateDTO.Stock;
+        console.Available = consoleUpdateDTO.Available;
+        console.Price = consoleUpdateDTO.Price;
         _consoleRepository.Update(console);
     }
 

@@ -21,9 +21,6 @@ public class Videogame
     public string Description { get; set; }
 
     [Required]
-    public string Category { get; set; }
-
-    [Required]
     public int Stock { get; set; }
 
     [Required]
@@ -47,12 +44,11 @@ public class Videogame
 
     public Videogame() { }
 
-    public Videogame(string name, int pegi, string description, string category, int stock, bool available, int platformId, decimal price, string imageURL)
+    public Videogame(string name, int pegi, string description, int stock, bool available, int platformId, decimal price, string imageURL)
     {
         Name = name;
         Pegi = pegi;
         Description = description;
-        Category = category;
         Stock = stock;
         Available = available;
         PlatformId = platformId;
