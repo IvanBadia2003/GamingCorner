@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import GridView from '../views/GridView.vue'
 import LoginView from '../views/LoginView.vue'
 import DescriptionView from '../views/DescriptionView.vue'
+import AdminView from '../views/AdminView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +28,11 @@ const router = createRouter({
       path: '/description',
       name: 'description',
       component: DescriptionView
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView
     }
     ]
 })
