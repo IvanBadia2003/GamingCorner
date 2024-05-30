@@ -24,7 +24,7 @@ public class Order
     public string? Address { get; set; }
     public string? BillingAddress { get; set; }
 
-    public List<OrderLine> Order_Lines { get; set; } = new List<OrderLine>();
+    public List<OrderLine> Order_Lines_Order { get; set; } = new List<OrderLine>();
 
 
     public Order() { }

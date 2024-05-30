@@ -4,6 +4,7 @@ using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    partial class GamingCornerContextModelSnapshot : ModelSnapshot
+    [Migration("20240522090820_InitialCreate5")]
+    partial class InitialCreate5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,6 +367,10 @@ namespace GamingCorner.Data.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -400,6 +406,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 1,
                             Available = true,
+                            Category = "Deportes",
                             Description = "Altos carros voladores",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.webp",
                             Name = "Rocket League",
@@ -412,6 +419,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 2,
                             Available = true,
+                            Category = "Acción",
                             Description = "Gran Robo de Autos",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1twh.webp",
                             Name = "GTA 5",
@@ -424,6 +432,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 3,
                             Available = true,
+                            Category = "RPG",
                             Description = "Aventura épica en un mundo de fantasía",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lgo.webp",
                             Name = "The Witcher 3",
@@ -436,6 +445,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 4,
                             Available = true,
+                            Category = "Aventura",
                             Description = "Juego de construcción y aventuras",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2b4k.webp",
                             Name = "Minecraft",
@@ -448,6 +458,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 5,
                             Available = true,
+                            Category = "Acción",
                             Description = "Juego de supervivencia y construcción",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2ekt.webp",
                             Name = "Fortnite",
@@ -460,6 +471,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 6,
                             Available = true,
+                            Category = "Acción",
                             Description = "Juego de disparos en equipo",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co7v86.webp",
                             Name = "Overwatch",
@@ -472,6 +484,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 7,
                             Available = true,
+                            Category = "Deportes",
                             Description = "Simulación de fútbol",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co3wm2.webp",
                             Name = "FIFA 21",
@@ -484,6 +497,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 8,
                             Available = true,
+                            Category = "RPG",
                             Description = "Aventura en un mundo futurista",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co64re.webp",
                             Name = "Cyberpunk 2077",
@@ -496,6 +510,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 9,
                             Available = true,
+                            Category = "Acción",
                             Description = "Aventura en el Viejo Oeste",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1q1f.webp",
                             Name = "Red Dead Redemption 2",
@@ -508,6 +523,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 10,
                             Available = true,
+                            Category = "Aventura",
                             Description = "Aventura de vikingos",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rrw.webp",
                             Name = "Assassin's Creed Valhalla",
@@ -520,6 +536,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 11,
                             Available = true,
+                            Category = "Acción",
                             Description = "Juego de disparos en primera persona",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rsg.webp",
                             Name = "Call of Duty: Modern Warfare",
@@ -532,6 +549,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 12,
                             Available = true,
+                            Category = "Aventura",
                             Description = "Aventura en un mundo postapocalíptico",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2una.webp",
                             Name = "Horizon Zero Dawn",
@@ -544,6 +562,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 13,
                             Available = true,
+                            Category = "Simulación",
                             Description = "Simulación de granja",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/xrpmydnu9rpxvxfjkiu7.webp",
                             Name = "Stardew Valley",
@@ -556,6 +575,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 14,
                             Available = true,
+                            Category = "Multijugador",
                             Description = "Juego de deducción social",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co6kqt.webp",
                             Name = "Among Us",
@@ -568,6 +588,7 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 15,
                             Available = true,
+                            Category = "Aventura",
                             Description = "Aventura en el mundo de Hyrule",
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_small/co4n26.png",
                             Name = "The Legend of Zelda: Breath of the Wild",

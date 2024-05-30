@@ -60,6 +60,12 @@ builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
 builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
 
+builder.Services.AddScoped<IPlatformService, PlatformService>();
+builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
+
+builder.Services.AddScoped<IConsoleService, ConsoleService>();
+builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
+
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();
 

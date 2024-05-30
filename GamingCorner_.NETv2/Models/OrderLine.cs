@@ -31,4 +31,24 @@ public class OrderLine
         SubtotalPrice = subtotalPrice;
         Quantity = quantity;
     }
+
+    public OrderLine mapFromCreateDto(OrderLineCreateDTO orderLineCreateDTO)
+    {
+        if (orderLineCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(orderLineCreateDTO));
+        }
+
+        var orderLine = new OrderLine
+        {
+            VideogameId = orderLineCreateDTO.VideogameId,
+            ConsoleId = orderLineCreateDTO.ConsoleId,
+            OrderId = orderLineCreateDTO.OrderId,
+            SubtotalPrice = orderLineCreateDTO.SubtotalPrice,
+            Quantity = orderLineCreateDTO.Quantity
+        };
+
+        return orderLine;
+    }
 }

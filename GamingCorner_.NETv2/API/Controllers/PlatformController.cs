@@ -7,30 +7,30 @@ namespace GamingCorner.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GenderController : ControllerBase
+public class PlatformController : ControllerBase
 {
-    private readonly IGenderService _genderService;
-    public GenderController(IGenderService genderService)
+    private readonly IPlatformService _platformService;
+    public PlatformController(IPlatformService platformService)
     {
-        _genderService = genderService;
+        _platformService = platformService;
     }
 
     [HttpGet]
-    public ActionResult<List<GenderDTO>> GetAll() =>
-    _genderService.GetAll();
+    public ActionResult<List<PlatformDTO>> GetAll() =>
+    _platformService.GetAll();
 
 
 
     [HttpGet]
     [Route("{id}")]
-    public ActionResult<GenderDTO> Get(int id)
+    public ActionResult<PlatformDTO> Get(int id)
     {
-        var gender = _genderService.Get(id);
+        var platform = _platformService.Get(id);
 
-        if (gender == null){
+        if (platform == null){
             return NotFound();
         }else{
-            return gender;
+            return platform;
         }
     }
 
@@ -38,13 +38,13 @@ public class GenderController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult Create([FromBody] GenderCreateDTO genderCreateDTO)
+    public IActionResult Create([FromBody] PlatformCreateDTO platformCreateDTO)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        _genderService.Add(genderCreateDTO);
+        _platformService.Add(platformCreateDTO);
         return Ok();
     }
 
@@ -73,12 +73,12 @@ public class GenderController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var user = _genderService.Get(id);
+        var platform = _platformService.Get(id);
 
-        if (user is null)
+        if (platform is null)
             return NotFound();
 
-        _genderService.Delete(id);
+        _platformService.Delete(id);
 
         return NoContent();
     }
