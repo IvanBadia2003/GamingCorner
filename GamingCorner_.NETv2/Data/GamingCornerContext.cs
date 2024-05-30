@@ -134,5 +134,6 @@ namespace GamingCorner.Data
         public DbSet<VideogameGender> VideogameGenders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Console_> Consoles { get; set; }
+        public DbSet<OrderLine> OrderLines { get; set; }
     }
 }

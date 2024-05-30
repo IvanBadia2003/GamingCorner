@@ -39,7 +39,7 @@ public class Videogame
 
     public List<VideogameGender> ListVideogameGender { get; set; }
 
-    public List<OrderLine> Order_lines { get; set; } = new List<OrderLine>();
+    public List<OrderLine> Order_lines_Videogame { get; set; } = new List<OrderLine>();
 
 
     public Videogame() { }
