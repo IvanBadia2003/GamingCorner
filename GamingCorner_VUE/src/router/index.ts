@@ -4,6 +4,7 @@ import GridView from '../views/GridView.vue'
 import LoginView from '../views/LoginView.vue'
 import DescriptionView from '../views/DescriptionView.vue'
 import AdminView from '../views/AdminView.vue'
+import CartView from '../views/CartView.vue'
 
 
 const router = createRouter({
@@ -25,7 +26,7 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/description',
+      path: '/description/:id',
       name: 'description',
       component: DescriptionView
     },
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView
     }
     ]
 })

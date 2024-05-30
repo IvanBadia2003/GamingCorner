@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+const props = defineProps<{
+  idGame: number,
+  name: string,
+  pegi: number,
+  description: string,
+  category: string,
+  stock: number,
+  available: boolean,
+  platform: string,
+  price: number,
+  image: string
+}>()
+
+
 const isSelected = ref(false)
 
 
@@ -17,14 +31,14 @@ const isSelected = ref(false)
     </div>
     <div class="center">
       <div class="prevImage" ref="prevImage">
-        <img class="cardContainer" src="https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png" alt="">
+        <img class="cardContainer" :src="image" alt="">
         <div class="btnImg" @click="isSelected = true"><i class="fa-solid fa-plus"></i></div>
       </div>
     </div>
     <div class="slideInf" :class="{ 'viewInf': isSelected }">
-      <div class="text-menu">Assassins Creed</div>
+      <div class="text-menu">{{name}}</div>
       <div class="btn-menu-cont">
-        <RouterLink :to="'/description'">
+        <RouterLink :to="{ name: 'description', params: { id: idGame } }">
           <div class="btn1">
             <i class="fa-solid fa-shopping-cart"></i>
           </div>
@@ -34,6 +48,7 @@ const isSelected = ref(false)
     </div>
   </div>
 </template>
+
 
 <style scoped lang="scss">
 .cardContainer {
@@ -49,19 +64,7 @@ const isSelected = ref(false)
 
 }
 
-.frame {
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  margin-top: -200px;
-  margin-left: -200px;
-  border-radius: 2px;
-  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-family: "Open Sans", Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
 
   .center {
     position: relative;
@@ -75,7 +78,7 @@ const isSelected = ref(false)
     align-items: center;
     justify-content: center;
   }
-}
+
 
 .prevImage {
   background-position: center;

@@ -2,10 +2,10 @@ import { defineStore } from 'pinia';
 import type { ListFormat } from 'typescript';
 import { computed, reactive, ref } from 'vue';
 
-interface Gender    {
+interface Gender {
     genderId: number,
     videogameId: number
-  }
+}
 
 interface Game {
     videogameId: number;
@@ -34,7 +34,23 @@ export const useGameStore = defineStore('GameStore', () => {
     // State
     const games = reactive(new Array<Game>);
     const selectedGameId = ref<number>(-1); // Inicializa con un valor que represente que no hay ninguna obra seleccionada
-
+    const game = reactive<Game>({
+        videogameId: 0,
+        name: '',
+        pegi: 0,
+        description: '',
+        category: '',
+        stock: 0,
+        available: false,
+        platform: '',
+        price: 0,
+        imageURL: '',
+        listVideogameGender: { 
+          genderId: 0,
+          videogameId: 0
+        }
+      });
+    
     // Getter
     // calcula la cantidad de funciones que hay
     const calcularCantidad = computed(() => games.length);
@@ -72,6 +88,22 @@ export const useGameStore = defineStore('GameStore', () => {
         selectedGameId.value = id; // Almacena el ID de la obra buscada
         return games.find(i => i.videogameId === id);
     }
+
+    async function fetchGamesById (id: number) {
+        try {
+            const response = await fetch('http://localhost:5000/Videogame/' + id);
+            console.log("Fetch de un juego hecho desde GameStore.ts");
+
+            const gameData = await response.json();
+
+            // Actualiza el estado del juego
+            Object.assign(game, gameData);
+        } catch (error) {
+            console.error('Error al obtener los detalles del juego:', error);
+        }
+    };
+
+    
 
     // eliminar obra
     async function deleteGame(id: number, name: string) {
@@ -149,27 +181,27 @@ export const useGameStore = defineStore('GameStore', () => {
         }
     }
 
-/*     function filterGamesByGenre(genres: string[]) {
-        console.log('Busco por género en la store');
-        console.log(genres);
+    /*     function filterGamesByGenre(genres: string[]) {
+            console.log('Busco por género en la store');
+            console.log(genres);
+    
+            // Verifica si no se han seleccionado géneros
+            if (genres.length < 2) {
+                console.log('Ningún género seleccionado');
+                // Si no se ha seleccionado ningún género, devuelve todas las funciones sin filtrar
+                return games;
+    
+            } else {
+                // Filtra las funciones que coinciden con al menos uno de los géneros seleccionados
+                const GamesFiltered = games.filter(func => {
+                    // Verifica si la función tiene al menos uno de los géneros seleccionados
+                    return func.genero && genres.some(genre => func.genero?.toLowerCase() === genre.toLowerCase());
+                });
+                return GamesFiltered;
+    
+            }
+        } */
 
-        // Verifica si no se han seleccionado géneros
-        if (genres.length < 2) {
-            console.log('Ningún género seleccionado');
-            // Si no se ha seleccionado ningún género, devuelve todas las funciones sin filtrar
-            return games;
 
-        } else {
-            // Filtra las funciones que coinciden con al menos uno de los géneros seleccionados
-            const GamesFiltered = games.filter(func => {
-                // Verifica si la función tiene al menos uno de los géneros seleccionados
-                return func.genero && genres.some(genre => func.genero?.toLowerCase() === genre.toLowerCase());
-            });
-            return GamesFiltered;
-
-        }
-    } */
-
-
-    return { games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, formatoFecha, filterGamesByTitle /* filterGamesByGenre */ };
+    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, formatoFecha, filterGamesByTitle, fetchGamesById /* filterGamesByGenre */ };
 });

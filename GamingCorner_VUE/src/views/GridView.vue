@@ -3,6 +3,10 @@ import Filter from '@/components/Filter.vue';
 import Tarjet from '@/components/Tarjet.vue';
 
 import { useFilterStore } from '@/stores/FilterStore';
+import { useGameStore } from '@/stores/GameStore';
+
+const GameStore = useGameStore();
+GameStore.fetchGames();
 
 const FilterStore = useFilterStore();
 </script>
@@ -12,24 +16,14 @@ const FilterStore = useFilterStore();
         <button class="filterButton" @click="FilterStore.toggleFilter = !FilterStore.toggleFilter">Filtros</button>
         <div class="grid-container">
             <div class="grid">
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
-                <Tarjet></Tarjet>
+                <Tarjet v-for="game in GameStore.games" :key="game.videogameId" :idGame="game.videogameId"
+                    :name="game.name" :pegi="game.pegi" :description="game.description" :category="game.category"
+                    :stock="game.stock" :available="game.available" :platform="game.platform" :price="game.price"
+                    :image="game.imageURL"></Tarjet>
+
             </div>
-                <Filter/>
+
+            <Filter />
 
         </div>
 
@@ -50,7 +44,7 @@ const FilterStore = useFilterStore();
 
     .filterButton {
         margin-top: 10px;
-    
+
     }
 
     .grid-container {
@@ -58,21 +52,22 @@ const FilterStore = useFilterStore();
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
+
         .grid {
             margin: 9%;
-    
+
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 32px;
-    
+
             @media screen and (min-width: 720px) {
                 grid-template-columns: repeat(3, 1fr);
                 /* Máximo 4 columnas */
                 gap: 40px;
                 row-gap: 80px;
-                
+
             }
-    
+
             @media screen and (min-width: 1250px) {
                 grid-template-columns: repeat(4, 1fr);
                 /* Máximo 4 columnas */
