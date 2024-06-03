@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores/UserStore';
+import { computed, ref } from 'vue';
+
+
+const userStore = useUserStore();
+const email = ref('');
+const password = ref('');
 
 </script>
 
@@ -7,15 +14,15 @@
     <div class="container">
       <div class="form-container">
         <h2>Iniciar Sesión</h2>
-        <form>
+        <form @submit.prevent="userStore.login(email, password)">
           <div class="campo">
             <label for="email">Email</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" v-model="email" required>
           </div>
 
           <div class="campo">
             <label for="password">Contraseña</label>
-            <input type="password" id="password" required>
+            <input type="password" id="password" v-model="password" required>
           </div>
 
           <button type="submit">Registrarse</button>
