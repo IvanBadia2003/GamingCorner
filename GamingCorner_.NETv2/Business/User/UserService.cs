@@ -57,6 +57,12 @@ using GamingCorner.Models;
     {
         _userRepository.Delete(id);
     }
+
+     public UserDTO Login(string email, string password)
+    {
+        var user = _userRepository.Login(email, password);
+        return user;
+    }
 }
 
 

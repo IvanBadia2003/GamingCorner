@@ -103,6 +103,33 @@ public class UserEFRepository : IUserRepository
 
     }
 
+    public UserDTO Login(string email, string password)
+    {
+
+        var user = _context.Users
+            .Where(user => user.Email == email && user.Password == password)
+            .FirstOrDefault();
+
+        if (user != null)
+        {
+            var userDto = new UserDTO
+            {
+                UserId = user.UserId,
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password,
+                PhoneNumber = user.PhoneNumber,
+                Admin = user.Admin,
+                ImageURL = user.ImageURL,
+            };
+            return userDto;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void SaveChanges()
     {
         _context.SaveChanges();

@@ -20,7 +20,7 @@ public class UserDTO
     public string? Password { get; set; }
 
     [Required]
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
   
     [Required]
     public bool Admin { get; set; }

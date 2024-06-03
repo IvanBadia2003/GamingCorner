@@ -21,7 +21,7 @@ public class User
     public string? Password { get; set; }
 
     [Required]
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     [Required]
     public bool Admin { get; set; }
@@ -32,7 +32,7 @@ public class User
 
     public User() { }
 
-    public User(string name, string email, string password, int phoneNumber, bool admin, string imageURL)
+    public User(string name, string email, string password, string phoneNumber, bool admin, string imageURL)
     {
         Name = name;
         Email = email;
