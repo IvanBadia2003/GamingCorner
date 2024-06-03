@@ -10,7 +10,7 @@ const FilterStore = useFilterStore();
 </script>
 
 <template>
-    <aside class="filter-container" v-show="FilterStore.toggleFilter">
+    <aside class="filter-container" v-if="FilterStore.toggleFilter">
         <FilterCategory title="Género" />
         <FilterCategory title="Plataforma" />
         <FilterCategory title="Sistema" />
@@ -22,15 +22,31 @@ const FilterStore = useFilterStore();
 
 <style scoped lang="scss">
 .filter-container {
-    transition: 0.2s ease;
+    transition: .2s;
     width: 100%;
-    height: 70vh;
+    height: auto;
+
 
     position: fixed;
     bottom: 0;
-    left: 0;
+    right: 0;
     z-index: 12;
 
-    background-color: blue;
+    border-radius: 50px 50px 0 0;
+    border: 2px solid orange;
+    background-color: #a09c9c;
+
+    @media screen and (min-width: 720px) {
+        display: block;
+        width: 30%;
+        position: relative;
+        margin: 9% 0;
+        border-radius: 50px ;
+
+
+
+
+
+    }
 }
 </style>
