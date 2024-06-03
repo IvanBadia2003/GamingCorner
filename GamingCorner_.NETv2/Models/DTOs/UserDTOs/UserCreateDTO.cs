@@ -17,11 +17,5 @@ public class UserCreateDTO
 
     [Required]
     public string? Password { get; set; }
-
-  
-    [Required]
-    public bool Admin { get; set; }
  
-    public List<Order> Orders { get; set; } = new List<Order>();
-
 }

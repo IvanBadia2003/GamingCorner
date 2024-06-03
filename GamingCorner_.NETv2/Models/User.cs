@@ -56,7 +56,6 @@ public class User
             Name = userCreateDTO.Name,
             Email = userCreateDTO.Email,
             Password = userCreateDTO.Password,
-            Admin = userCreateDTO.Admin,
         };
 
         return user;
