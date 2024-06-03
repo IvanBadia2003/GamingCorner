@@ -27,9 +27,12 @@ public class ConsoleController : ControllerBase
     {
         var console = _consoleService.Get(id);
 
-        if (console == null){
+        if (console == null)
+        {
             return NotFound();
-        }else{
+        }
+        else
+        {
             return console;
         }
     }
@@ -82,4 +85,6 @@ public class ConsoleController : ControllerBase
 
         return NoContent();
     }
+
+    
 }

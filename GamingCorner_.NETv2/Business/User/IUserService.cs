@@ -11,4 +11,6 @@ public interface IUserService
     UserDTO Get(int id);
     void Update(int id, UserUpdateDTO userUpdateDTO);
     void Delete(int id);
+
+    UserDTO Login(string email, string password);
 }

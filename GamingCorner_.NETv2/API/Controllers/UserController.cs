@@ -27,9 +27,12 @@ public class UserController : ControllerBase
     {
         var user = _userService.Get(id);
 
-        if (user == null){
+        if (user == null)
+        {
             return NotFound();
-        }else{
+        }
+        else
+        {
             return user;
         }
     }
@@ -81,5 +84,25 @@ public class UserController : ControllerBase
         _userService.Delete(id);
 
         return NoContent();
+    }
+
+    [HttpPost("login")] // Ruta del endpoint para el inicio de sesión
+    public IActionResult Login([FromBody] UserLoginDTO userLoginDTO)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        // Llama al servicio de autenticación para manejar el inicio de sesión
+        var user = _userService.Login(userLoginDTO.Email, userLoginDTO.Password);
+
+        if (user == null)
+        {
+            return Unauthorized(); // Devuelve un Unauthorized si las credenciales son inválidas
+        }
+
+        // Devuelve un Ok con el objeto UserDTO si el inicio de sesión es exitoso
+        return Ok(user);
     }
 }

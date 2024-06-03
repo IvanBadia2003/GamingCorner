@@ -53,6 +53,12 @@ using GamingCorner.Models;
         _userRepository.Update(user);
     }
 
+      public UserDTO Login(string email, string password)
+    {
+        var user = _userRepository.Login(email, password);
+        return user;
+    }
+
     public void Delete(int id)
     {
         _userRepository.Delete(id);
