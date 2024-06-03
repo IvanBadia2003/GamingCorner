@@ -9,20 +9,22 @@ interface User{
     phoneNumber: number,
     admin: boolean,
     imageURL: string,
-    orders: Array<number>
+    orders: Array<number>,
+    isAuthenticated: boolean
 }
 export const useUserStore = defineStore('userStore', () => {
 
     // State
     const user = reactive<User>({
-        userId: 2,
+        userId: 0,
         name: "",
         email: "",
         password: "",
-        phoneNumber: 123456789,
-        admin: true,
+        phoneNumber: 0,
+        admin: false,
         imageURL: "",
-        orders: []
+        orders: [],
+        isAuthenticated: false
       });
 
     // Funciones
@@ -39,6 +41,8 @@ export const useUserStore = defineStore('userStore', () => {
 
         if (response.ok) {
             const user:User = await response.json();
+            user.isAuthenticated = true;
+
 
 
             window.location.href = '/';
@@ -49,9 +53,9 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
     function logout(){
-
+        user.isAuthenticated = false;
     }
 
 
-    return {login}
+    return {user, login, logout}
 })
