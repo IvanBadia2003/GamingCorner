@@ -20,19 +20,16 @@ public class User
     [Required]
     public string? Password { get; set; }
 
-    [Required]
-    public int PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
-    [Required]
-    public bool Admin { get; set; }
-    [Required]
-    public string? ImageURL { get; set; }
+    public bool Admin { get; set; } = false;
+    public string? ImageURL { get; set; } =  null;
 
     public List<Order> Orders { get; set; } = new List<Order>();
 
     public User() { }
 
-    public User(string name, string email, string password, int phoneNumber, bool admin, string imageURL)
+    public User(string name, string email, string password, string phoneNumber, bool admin = false, string? imageURL = null)
     {
         Name = name;
         Email = email;
@@ -40,7 +37,6 @@ public class User
         PhoneNumber = phoneNumber;
         Admin = admin;
         ImageURL = imageURL;
-
     }
 
     public User mapFromCreateDto(UserCreateDTO userCreateDTO)
@@ -56,6 +52,9 @@ public class User
             Name = userCreateDTO.Name,
             Email = userCreateDTO.Email,
             Password = userCreateDTO.Password,
+            PhoneNumber = userCreateDTO.PhoneNumber,
+            Admin = userCreateDTO.Admin = false,
+            ImageURL = userCreateDTO.ImageURL,
         };
 
         return user;

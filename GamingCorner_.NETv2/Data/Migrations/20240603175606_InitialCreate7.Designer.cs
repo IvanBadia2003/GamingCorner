@@ -4,6 +4,7 @@ using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    partial class GamingCornerContextModelSnapshot : ModelSnapshot
+    [Migration("20240603175606_InitialCreate7")]
+    partial class InitialCreate7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,6 +305,7 @@ namespace GamingCorner.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -313,8 +316,8 @@ namespace GamingCorner.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
@@ -329,7 +332,7 @@ namespace GamingCorner.Data.Migrations
                             ImageURL = "",
                             Name = "Diego",
                             Password = "12345",
-                            PhoneNumber = "601112734"
+                            PhoneNumber = 601112734
                         },
                         new
                         {
@@ -339,7 +342,7 @@ namespace GamingCorner.Data.Migrations
                             ImageURL = "",
                             Name = "Ivan",
                             Password = "12345",
-                            PhoneNumber = "123456789"
+                            PhoneNumber = 123456789
                         },
                         new
                         {
@@ -349,7 +352,7 @@ namespace GamingCorner.Data.Migrations
                             ImageURL = "",
                             Name = "Adrian",
                             Password = "00000",
-                            PhoneNumber = "987654321"
+                            PhoneNumber = 987654321
                         });
                 });
 

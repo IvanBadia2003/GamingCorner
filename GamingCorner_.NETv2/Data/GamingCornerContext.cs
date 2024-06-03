@@ -64,9 +64,9 @@ namespace GamingCorner.Data
 
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Name = "Diego", Email = "diego@gmail.com", Password = "12345", PhoneNumber = 601112734, Admin = true, ImageURL = "" },
-                new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = 123456789, Admin = true, ImageURL = "" },
-                new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = 987654321, Admin = false, ImageURL = "" }
+                new User { UserId = 1, Name = "Diego", Email = "diego@gmail.com", Password = "12345", PhoneNumber = "601112734", Admin = true, ImageURL = ""},
+                new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = "123456789", Admin = true, ImageURL = ""},
+                new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = "987654321", Admin = false, ImageURL = ""}
             );
 
             modelBuilder.Entity<Platform>().HasData(

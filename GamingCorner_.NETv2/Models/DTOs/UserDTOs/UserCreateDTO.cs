@@ -17,5 +17,11 @@ public class UserCreateDTO
 
     [Required]
     public string? Password { get; set; }
- 
+
+    public bool Admin { get; set; } = false;
+    public string? PhoneNumber { get; set; }
+
+    public string? ImageURL { get; set; } // Permitir valores nulos
+
+
 }
