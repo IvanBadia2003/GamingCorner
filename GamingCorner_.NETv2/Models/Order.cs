@@ -36,4 +36,25 @@ public class Order
         Address = address;
         BillingAddress = billingAddress;
     }
+
+    public Order mapFromCreateDto(OrderCreateDTO orderCreateDTO)
+    {
+        if (orderCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(orderCreateDTO));
+        }
+
+        var order = new Order
+        {
+            OrderId = orderCreateDTO.OrderId,
+            UserId = orderCreateDTO.UserId,
+            TotalPrice = orderCreateDTO.TotalPrice,
+            Date = orderCreateDTO.Date,
+            Address = orderCreateDTO.Address,
+            BillingAddress = orderCreateDTO.BillingAddress,
+        };
+
+        return order;
+    }
 }

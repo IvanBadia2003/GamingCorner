@@ -9,11 +9,13 @@ using GamingCorner.Models;
 {
 
     private readonly IOrderLineRepository _orderLineRepository;
+    private readonly IOrderService _orderService;
 
 
-    public OrderLineService(IOrderLineRepository orderLineRepository)
+    public OrderLineService(IOrderLineRepository orderLineRepository, IOrderService orderService)
     {
         _orderLineRepository = orderLineRepository;
+        _orderService = orderService;
 
     }
     public List<OrderLineDTO> GetAll()
@@ -33,6 +35,15 @@ using GamingCorner.Models;
     {
         var orderLine = new OrderLine();
         var mappedOrderLine = orderLine.mapFromCreateDto(orderLineCreateDTO);
+
+        // var existingOrder = _orderService.Get(mappedOrderLine.OrderId);
+
+        // if(existingOrder == null){
+        //     var newOrder = new OrderCreateDTO
+        //     {
+        //         UserId = orderLineCreateDTO.UserId,
+        //     }
+        // }
         _orderLineRepository.Add(mappedOrderLine);
     }
 
