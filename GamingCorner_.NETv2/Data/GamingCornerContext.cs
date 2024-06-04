@@ -133,6 +133,7 @@ namespace GamingCorner.Data
         public DbSet<VideogameOrder> VideogameOrders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Console_> Consoles { get; set; }
+        public DbSet<SecondHand> SecondHands { get; set; }
         
     }
 }

@@ -10,11 +10,11 @@ public class Order
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int OrderId { get; set; }
-    
+
     [ForeignKey("User")]
     public int UserId { get; set; }
 
-    public User User{ get; set; }
+    public User User { get; set; }
     // [ForeignKey("Videogame")]
     // public int VideogameId { get; set; }
     // [ForeignKey("Console")]
@@ -24,7 +24,8 @@ public class Order
     public string? Address { get; set; }
     public string? BillingAddress { get; set; }
 
-    public List<OrderLine> Order_Lines_Order { get; set; } = new List<OrderLine>();
+    public List<VideogameOrder> Videogame_Order { get; set; } = new List<VideogameOrder>();
+    public List<ConsoleOrder> Console_Order { get; set; } = new List<ConsoleOrder>();
 
 
     public Order() { }

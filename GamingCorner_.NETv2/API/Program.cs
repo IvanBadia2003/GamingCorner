@@ -66,6 +66,12 @@ builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
 builder.Services.AddScoped<IConsoleService, ConsoleService>();
 builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
 
+builder.Services.AddScoped<IConsoleOrderService, ConsoleOrderService>();
+builder.Services.AddScoped<IConsoleOrderRepository, ConsoleOrderEFRepository>();
+
+builder.Services.AddScoped<IVideogameOrderService, VideogameOrderService>();
+builder.Services.AddScoped<IVideogameOrderRepository, VideogameOrderEFRepository>();
+
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();
 

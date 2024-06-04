@@ -34,12 +34,11 @@ public class Console_
     [Required]
     public string ImageURL { get; set; }
 
-    public List<OrderLine> Order_lines_Console { get; set; } = new List<OrderLine>();
-
+    public List<ConsoleOrder> Console_Order { get; set; } = new List<ConsoleOrder>();
 
     public Console_() { }
 
-    public Console_(string name,int platformId, string specifications, int stock, bool available, decimal price, string imageURL)
+    public Console_(string name, int platformId, string specifications, int stock, bool available, decimal price, string imageURL)
     {
         Name = name;
         PlatformId = platformId;
