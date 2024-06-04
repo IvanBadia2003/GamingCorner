@@ -1,14 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Diagnostics.Contracts;
 using System.Reflection.Metadata;
-using System.Security.Cryptography.X509Certificates;
 
 namespace GamingCorner.Models;
 
-public class OrderLineUpdateDTO
+public class VideogameOrderCreateDTO
 {
-    public decimal SubtotalPrice { get; set; }
-    public int Quantity { get; set; }
 
+
+    public int OrderId { get; set; }
+    public int VideogameId { get; set; }
 }

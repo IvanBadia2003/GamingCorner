@@ -56,9 +56,6 @@ namespace GamingCorner.Data
             modelBuilder.Entity<Order>()
                 .HasKey(or => new { or.OrderId });
 
-            modelBuilder.Entity<OrderLine>()
-                .HasKey(ol => new { ol.OrderLineId });
-
             modelBuilder.Entity<Gender>()
                 .HasKey(ge => new { ge.GenderId });
 
@@ -132,8 +129,10 @@ namespace GamingCorner.Data
         public DbSet<Videogame> Videogames { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<VideogameGender> VideogameGenders { get; set; }
+        public DbSet<ConsoleOrder> ConsoleOrders { get; set; }
+        public DbSet<VideogameOrder> VideogameOrders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Console_> Consoles { get; set; }
-        public DbSet<OrderLine> OrderLines { get; set; }
+        
     }
 }
