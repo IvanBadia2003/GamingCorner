@@ -65,12 +65,12 @@ p {
     left: 0;
     width: 100%;
     height: 60px;
-    background: linear-gradient(to bottom, rgba(45, 62, 139, 0) 0%, rgba(45, 62, 139, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 69, 0, 0.1) 0%, rgba(100, 100, 100, 1) 100%);
     pointer-events: none;
 }
 
 button {
-    background-color: #3498db;
+    background-color: orange;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -79,7 +79,7 @@ button {
     border-radius: 5px;
 
     &:hover {
-        background-color: #2980b9;
+        background-color: orange;
     }
 }
 

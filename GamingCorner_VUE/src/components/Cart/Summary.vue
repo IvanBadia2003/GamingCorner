@@ -1,5 +1,10 @@
 <script setup lang="ts">
-// No se requiere ningún script específico para esta funcionalidad
+
+import { useCartStore } from '@/stores/CartStore';
+
+const cartStore = useCartStore();
+
+
 </script>
 
 <template>
@@ -20,7 +25,7 @@
                     </div>
                     <div class="fila total">
                         <div class="etiqueta">Total</div>
-                        <div class="valor">67.96€</div>
+                        <div class="valor">{{ cartStore.totalPrice }}</div>
                     </div>
                 </div>
                 <router-link :to="'/'" class="buy__button">
@@ -58,7 +63,7 @@
             align-items: center;
 
             .buy__info {
-                background-color: #3a7dd1;
+                background-color: orange;
                 color: white;
                 padding: 5px;
                 border-radius: 10px;
@@ -94,7 +99,7 @@
             .buy__button {
                 margin-top: 15px;
                 width: 100%;
-                background-color: #3a7dd1;
+                background-color: orange;
                 color: white;
                 padding: 15px 0;
                 border-radius: 10px;

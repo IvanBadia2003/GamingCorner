@@ -115,6 +115,9 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
 
+    background-color: gray;
+    color: white;
+
     .section {
         width: 90%;
         height: auto;
@@ -127,7 +130,7 @@ onMounted(() => {
         .title-container {
             width: 100%;
             display: flex;
-            border-bottom: 1px solid blue;
+            border-bottom: 1px solid orange;
         }
 
         .content{

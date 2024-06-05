@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
+import { useCartStore } from '@/stores/CartStore';
 
 var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
 
+const cartStore = useCartStore();
+
+const removeFromCart = (gameId: number) => {
+  cartStore.removeFromCart(gameId); // Despachar la acción
+};
 </script>
 
 <template>
@@ -13,9 +19,9 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                 <h3>Carrito</h3>
             </div>
             <div class="cart__product">
-                <div class="product">
+                <div v-for="product in cartStore.cartItems" class="product">
                     <div class="product__img">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co2lgo.webp" alt="">
+                        <img :src="product.imageURL" :alt="`${product.name}`">
                     </div>
                     <div class="product__info">
                         <div class="info__up">
@@ -23,9 +29,9 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                                 <IconSteam />
                             </div>
                             <div class="title">
-                                <p>The Legend of Zelda</p>
+                                <p>{{product.name}}</p>
                             </div>
-                            <div class="delete">
+                            <div class="delete" @click="removeFromCart(product.videogameId)">
                                 <IconDelete />
                             </div>
                         </div>
@@ -45,67 +51,14 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                                 </select>
                             </div>
                             <div class="price">
-                                <h2>60€</h2>
+                                <h2>{{product.price}}€</h2>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="separation"></div>
-                <div class="product">
-                    <div class="product__img">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co2lgo.webp" alt="">
-                    </div>
-                    <div class="product__info">
-                        <div class="info__up">
-                            <div class="platform">
-                                <IconSteam />
-                            </div>
-                            <div class="title">
-                                <p>The Legend of Zelda</p>
-                            </div>
-                            <div class="delete">
-                                <IconDelete />
-                            </div>
-                        </div>
-                        <div class="info__down">
-                            <div class="quantity">
-                                <select name="quantity" id="quantity">
-                                    <option v-for="n in quantities" :key="n" :value="n">{{ n }}</option>
-                                </select>
-                            </div>
-                            <div class="price">
-                                <h2>60€</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="separation"></div>
-                <div class="product">
-                    <div class="product__img">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co2lgo.webp" alt="">
-                    </div>
-                    <div class="product__info">
-                        <div class="info__up">
-                            <div class="platform">
-                                <IconSteam />
-                            </div>
-                            <div class="title">
-                                <p>The Legend of Zelda</p>
-                            </div>
-                            <div class="delete">
-                                <IconDelete />
-                            </div>
-                        </div>
-                        <div class="info__down">
-                            <div class="quantity">
 
-                            </div>
-                            <div class="price">
-                                <h2>60€</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -130,7 +83,7 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
         &__product {
             border-radius: 5px;
-            border: 1px solid blue;
+            border: 1px solid orange;
             margin-left: 15px;
             height: auto;
             width: 100%;
@@ -140,7 +93,6 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             align-items: center;
 
             .product {
-                background-color: bisque;
                 width: 90%;
                 height: auto;
 
@@ -153,7 +105,6 @@ var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                     width: 35%;
 
                     height: auto;
-                    background-color: #fff;
 
                     img {
                         max-width: 100%;
