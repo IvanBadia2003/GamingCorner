@@ -69,7 +69,7 @@ export const useGameStore = defineStore('GameStore', () => {
     // Action
     // saca de la api todas los juegos que hay
     async function fetchGames() {
-        debugger
+    
         try {
             const response = await fetch('http://localhost:5000/Videogame');
             console.log("Fetch de grid de juegos hecho desde GameStore.ts");

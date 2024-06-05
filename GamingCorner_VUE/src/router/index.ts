@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import DescriptionView from '../views/DescriptionView.vue'
 import AdminView from '../views/AdminView.vue'
 import CartView from '../views/CartView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import { useUserStore } from '../stores/UserStore';
 
 
@@ -41,11 +42,16 @@ const router = createRouter({
       path: '/cart',
       name: 'cart',
       component: CartView
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView
     }
     ]
 })
 
-router.beforeEach((to, from, next) => {
+ router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   
   // Verificar si la ruta es la página de inicio de sesión y si el usuario está autenticado
@@ -59,6 +65,6 @@ router.beforeEach((to, from, next) => {
       // Permitir que la navegación continúe según la lógica actual
       next();
   }
-});
+}); 
 
 export default router
