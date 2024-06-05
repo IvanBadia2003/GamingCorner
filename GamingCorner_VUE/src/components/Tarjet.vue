@@ -23,11 +23,10 @@ const isSelected = ref(false)
 
 <template>
   <div class="cardContainer">
-    <div class="slideSup" :class="{ 'viewSup': isSelected }">
+    <div class="slideSup" :class="{ 'viewSup': isSelected }" style="background-color: transparent;">
       <div class="btn-close" @click="isSelected = false">
         <i class="fa-solid fa-xmark"></i>
       </div>
-      <div class="img-menu"></div>
     </div>
     <div class="center">
       <div class="prevImage" ref="prevImage">
@@ -36,7 +35,7 @@ const isSelected = ref(false)
       </div>
     </div>
     <div class="slideInf" :class="{ 'viewInf': isSelected }">
-      <div class="text-menu">{{name}}</div>
+      <div class="text-menu">{{ name }}</div>
       <div class="btn-menu-cont">
         <RouterLink :to="{ name: 'description', params: { id: idGame } }">
           <div class="btn1">
@@ -47,17 +46,20 @@ const isSelected = ref(false)
       </div>
     </div>
   </div>
+
 </template>
 
 
 <style scoped lang="scss">
+
+
+
 .cardContainer {
   position: relative;
 
   height: auto;
   width: 100%;
   height: auto;
-  background-color: blue;
   overflow: hidden;
   color: #333;
 
@@ -66,18 +68,18 @@ const isSelected = ref(false)
 
 
 
-  .center {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
+.center {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 .prevImage {
@@ -110,12 +112,12 @@ const isSelected = ref(false)
   .btnImg {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 35%;
     transform: translateX(-50%);
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background-color: #4876eb;
+    background-color: orange;
     border-radius: 50%;
     margin: auto;
     color: #fff;
@@ -158,7 +160,7 @@ const isSelected = ref(false)
 .btn-close {
   width: 40px;
   height: 40px;
-  background-color: #4876eb;
+  background-color: orange;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -203,7 +205,7 @@ const isSelected = ref(false)
 .slideInf {
   width: 100%;
   height: 50%;
-  background-color: #4876eb;
+  background-color: orange;
   position: absolute;
   bottom: 0;
   display: flex;

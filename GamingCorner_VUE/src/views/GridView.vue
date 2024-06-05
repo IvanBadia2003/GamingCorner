@@ -8,6 +8,8 @@ import { useGameStore } from '@/stores/GameStore';
 const GameStore = useGameStore();
 GameStore.fetchGames();
 
+
+
 const FilterStore = useFilterStore();
 </script>
 
@@ -15,6 +17,8 @@ const FilterStore = useFilterStore();
     <section class="content">
         <button class="filterButton" @click="FilterStore.toggleFilter = !FilterStore.toggleFilter">Filtros</button>
         <div class="grid-container">
+
+
             <div class="grid">
                 <Tarjet v-for="game in GameStore.games" :key="game.videogameId" :idGame="game.videogameId"
                     :name="game.name" :pegi="game.pegi" :description="game.description" :category="game.category"

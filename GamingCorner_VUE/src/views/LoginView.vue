@@ -4,8 +4,13 @@ import { computed, ref } from 'vue';
 
 
 const userStore = useUserStore();
-const email = ref('');
-const password = ref('');
+const emailLogin = ref('');
+const passwordLogin = ref('');
+
+const emailRegister = ref('');
+const nameRegister = ref('');
+const passwordRegister = ref('');
+const phoneNumberRegister = ref('');
 
 </script>
 
@@ -14,15 +19,15 @@ const password = ref('');
     <div class="container">
       <div class="form-container">
         <h2>Iniciar Sesión</h2>
-        <form @submit.prevent="userStore.login(email, password)">
+        <form @submit.prevent="userStore.login(emailLogin, passwordLogin)">
           <div class="campo">
             <label for="email">Email</label>
-            <input type="email" id="email" v-model="email" required>
+            <input type="email" id="email" v-model="emailLogin" required>
           </div>
 
           <div class="campo">
             <label for="password">Contraseña</label>
-            <input type="password" id="password" v-model="password" required>
+            <input type="password" id="password" v-model="passwordLogin" required>
           </div>
 
           <button type="submit">Registrarse</button>
@@ -35,25 +40,25 @@ const password = ref('');
 
       <div class="form-container">
         <h2>Iniciar Sesión</h2>
-        <form class="signin-form">
+        <form class="signin-form" @submit.prevent="userStore.register(nameRegister, emailRegister, passwordRegister, phoneNumberRegister)">
           <div class="campo">
             <label for="email">Email</label>
-            <input type="email" id="email" required>
-          </div>
-
-          <div class="campo">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" required>
+            <input type="email" id="email" v-model="emailRegister" required>
           </div>
 
           <div class="campo">
             <label for="name">Nombre</label>
-            <input type="text" id="name" required>
+            <input type="text" id="name" v-model="nameRegister" required>
           </div>
 
           <div class="campo">
             <label for="phone">Teléfono</label>
-            <input type="number" id="phone" required>
+            <input type="text" id="phone" v-model="phoneNumberRegister">
+          </div>
+
+          <div class="campo">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" v-model="passwordRegister" required>
           </div>
 
           <div class="campo">

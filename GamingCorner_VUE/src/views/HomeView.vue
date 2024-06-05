@@ -20,13 +20,7 @@
     height: 2000px;
     background-color: beige;
 
-    display: grid;
-    grid-template-columns: 
-      repeat(
-        auto-fit,
-        minmax(400px, 1fr)
-      );
-    gap: 35px;
+
   }
 </style>
 

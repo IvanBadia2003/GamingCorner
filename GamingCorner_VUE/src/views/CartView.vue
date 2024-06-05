@@ -6,8 +6,8 @@ import Summary from '@/components/Cart/Summary.vue';
 
 const cartStore = useCartStore();
 const cartItems = computed(() => cartStore.cartItems);
-const totalPrice = computed(() => cartStore.totalPrice);
-const totalItems = computed(() => cartStore.totalItems);
+/* const totalPrice = computed(() => cartStore.totalPrice);
+const totalItems = computed(() => cartStore.totalItems); */
 
 
 
@@ -29,6 +29,8 @@ const totalItems = computed(() => cartStore.totalItems);
 .container{
     display: flex;
     flex-direction: column;
+
+    color: white;
 
     div{
         background-color: gray;

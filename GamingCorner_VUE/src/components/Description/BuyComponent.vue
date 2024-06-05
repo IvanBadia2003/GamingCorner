@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useGameStore } from '@/stores/GameStore';
+import { useCartStore } from '@/stores/CartStore';
 import IconFavorite from '@/components/icons/IconFavorite.vue';
 import IconTick from '@/components/icons/IconTick.vue';
 import IconCross from '@/components/icons/IconCross.vue';
@@ -12,15 +13,21 @@ import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconPS from '@/components/icons/platform/IconPS.vue';
 import IconXbox from '@/components/icons/platform/IconXbox.vue';
 import IconNintendo from '@/components/icons/platform/IconNintendo.vue';
+import { reactive, ref } from 'vue';
 
 const gameStore = useGameStore();
+const cartStore = useCartStore();
 
+const game = ref(gameStore.game);
+const addToCart = () => {
+  cartStore.addToCart(game.value); // Call addToCart with reactive value
+};
 </script>
 
 <template>
     <div class="principal">
         <div>
-            <img :src="gameStore.game.imageURL" :alt="`${gameStore.game.name}`">
+            <img :src="game.imageURL" :alt="`${gameStore.game.name}`">
         </div>
 
     </div>
@@ -53,8 +60,11 @@ const gameStore = useGameStore();
         </div>
         <div class="secundary">
             <h2>{{ gameStore.game.price }}€</h2>
+            <button class="button" @click="addToCart">
+                Añadir al carrito
+            </button>
             <router-link :to="'/cart'" class="button">
-                COMPRAR
+               IR COMPRAR
             </router-link>
         </div>
 
