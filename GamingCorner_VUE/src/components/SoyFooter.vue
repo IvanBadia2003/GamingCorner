@@ -37,7 +37,7 @@ import IconX from './icons/IconX.vue';
     </footer>
 </template>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 .footer {
   display: flex;
