@@ -21,9 +21,7 @@ const FilterStore = useFilterStore();
 
             <div class="grid">
                 <Tarjet v-for="game in GameStore.games" :key="game.videogameId" :idGame="game.videogameId"
-                    :name="game.name" :pegi="game.pegi" :description="game.description" :category="game.category"
-                    :stock="game.stock" :available="game.available" :platform="game.platform" :price="game.price"
-                    :image="game.imageURL"></Tarjet>
+                    :name="game.name" :price="game.price" :image="game.imageURL"></Tarjet>
 
             </div>
 
@@ -58,13 +56,18 @@ const FilterStore = useFilterStore();
         justify-content: center;
 
         .grid {
-            margin: 9%;
 
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+            grid-template-columns: 
+            repeat(
+                auto-fit, minmax(110px, 1fr)
+            );
 
-            @media screen and (min-width: 720px) {
+            gap: 32px;
+           
+
+
+            @media screen and (min-width: 920px) {
                 grid-template-columns: repeat(3, 1fr);
                 /* Máximo 4 columnas */
                 gap: 40px;

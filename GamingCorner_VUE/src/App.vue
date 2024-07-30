@@ -22,7 +22,7 @@ body {
   padding: 0px;
   margin: 0;
   position: relative;
-  background-color: gray;
+  background-color: rgb(46, 46, 46);
 }
 
 

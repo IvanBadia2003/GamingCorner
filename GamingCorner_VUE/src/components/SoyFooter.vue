@@ -1,96 +1,114 @@
 <script setup lang="ts">
-/* import IconFacebook from './icons/IconFacebook.vue';
-import IconInstagram from './icons/IconInstagram.vue';
-import IconX from './icons/IconX.vue';
- */
+import IconLogo from './icons/IconLogo.vue';
+
 
 </script>
 
 <template>
-    <footer class="footer">
-        <div class="footer__links">
-            <ul>
-                <li><a href="">AVISO LEGAL</a></li>
-                <li><a href="">POLITICA DE PRIVACIDAD</a></li>
-                <li><a href="">POLITICA DE COOKIES</a></li>
-            </ul>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Acerca de Nosotros</h4>
+          <IconLogo class="logo"/>
         </div>
-        <div class="footer__links">
-            <div class="footer__title">
-                <h2>GAMING CORNER</h2>
-            </div>
-            <div class="footer__media">
-                
-<!--                 <IconInstagram />
-                <IconFacebook />
-                <IconX /> -->
-
-            </div>
+        <div class="footer-section">
+          <h4>Enlaces Útiles</h4>
+          <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+          </ul>
         </div>
-        <div class="footer__links">
-            <ul>
-                <li><a href="">BLOG</a></li>
-                <li><a href="">CONTACTO</a></li>
-                <li><a href="">FAQS</a></li>
-            </ul>
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p>Dirección: Calle Falsa 123</p>
+          <p>Teléfono: (555) 123-4567</p>
+          <p>Email: info@empresa.com</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </footer>
 </template>
 
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+
+<style lang="scss" scoped>
 .footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 25px;
-  background-color: #ba1313;
-  color: white;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
-.footer .footer__links {
-  flex: 1;
-  margin-bottom: 20px;
-}
-.footer .footer__links ul {
-  list-style: none;
-  padding: 0;
-}
-.footer .footer__links ul li {
-  margin-bottom: 20px;
-}
-.footer .footer__links ul li a {
-  font-family: "Bebas Neue";
-  font-size: 24px;
-  text-decoration: none;
-  color: white;
-}
-.footer .footer__links .footer__title h2 {
-  font-family: "Bebas Neue";
-  font-size: 48px;
-  text-decoration: underline;
-  margin-bottom: 10px;
-}
-.footer .footer__links .footer__media {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.footer .footer__links .footer__media img {
-  max-width: 7%;
-  height: auto;
-}
-@media screen and (max-width: 767px) {
-  .footer {
-    font-size: 12px;
+  background-color: orange;
+  color: #fff;
+  padding: 20px 0;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
   }
-  .footer .footer .footer__links .footer__media img {
-    max-width: 20%;
-    height: auto;
+
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+      margin: 10px 20px;
+
+      .logo{
+        width: 20%;
+      }
+
+      h4 {
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+
+      p, ul, li {
+        font-size: 0.9rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          margin-bottom: 5px;
+
+          a {
+            color: #fff;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
-/*# sourceMappingURL=footer.css.map */
+@media (max-width: 768px) {
+  .footer {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+
+      .footer-section {
+        margin: 20px 0;
+      }
+    }
+  }
+}
 
 </style>

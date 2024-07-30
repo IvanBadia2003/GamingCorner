@@ -7,7 +7,11 @@ const toggleMenu = ref<boolean>(false);
 
 <template>
     <header id="Header">
-        <img src="../../assets/logo.png" class="logo" alt="logo" >
+        <router-link  :to="'/'">
+            
+            <img src="../../assets/logo.png" class="logo" alt="logo" >
+        </router-link>
+
 
         <button @click="toggleMenu = !toggleMenu" :class="{ 'open': toggleMenu }">
             <div></div>
@@ -67,7 +71,7 @@ header {
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #323337;
+    background-color: rgba($color: #323337, $alpha: .8);
     display: none;
     flex-direction: column;
 
