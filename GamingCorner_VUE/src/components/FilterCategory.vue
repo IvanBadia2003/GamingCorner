@@ -1,13 +1,9 @@
 <script setup lang="ts">
-    import { useGenderStore } from '@/stores/GenderStore';
-    import { useFilterStore } from '@/stores/FilterStore';
-    import { ref } from 'vue';
+import { useGenderStore } from '@/stores/GenderStore';
+import { useFilterStore } from '@/stores/FilterStore';
+import { ref } from 'vue';
 
-
-var props = defineProps<{
-  title: string
-
-}>()
+const props = defineProps<{ title: string }>();
 
 const GenderStore = useGenderStore();
 const FilterStore = useFilterStore();
@@ -17,70 +13,84 @@ const genderSelected = ref('');
 
 <template>
     <div class="category-container">
-        <div class="category-name">
-            {{ props.title }} 
-        </div>
+        <div class="category-name">{{ props.title }}</div>
         <div v-if="$props.title == 'Género'" class="category-filters">
-            filtros para {{title}}
-            <select v-model="genderSelected" name="genders" id="genders">
-                <option v-for="gender in GenderStore.genders">{{gender.name}}</option>
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
             </select>
-
-        </div>
-        <div v-if="$props.title == 'Plataforma'" class="category-filters">
-            filtros para {{title}}
-
         </div>
         <div v-if="$props.title == 'Sistema'" class="category-filters">
-            filtros para {{title}}
-
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+            </select>
         </div>
-        <div v-if="$props.title == 'Precio'" class="category-filters ">
-            filtros para {{title}}
-
+        <div v-if="$props.title == 'Precio'" class="category-filters">
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+            </select>
         </div>
-        <div v-if="$props.title == 'Mano'" class="category-filters">
-            filtros para {{title}}
-
+        <div v-if="$props.title == 'Producto'" class="category-filters">
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
+                <option>Consola</option>
+                <option>Juego</option>
+            </select>
         </div>
         <div v-if="$props.title == 'Ordenar por'" class="category-filters">
-            filtros para {{title}} 
-
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+            </select>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-
 .category-container {
-    border-bottom: 3px solid orange;
     width: 100%;
-    height: auto;
-
-
+    padding: 16px 0;
+    border-bottom: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
-    
-    .category-name {
-        height: 50px;
-    }
-
-    .category-filters {
-        transition: .8s;
-        height: 50px;
-        &:hover {
-            height: 100px;
-        }
-    }
-    
     &:last-child {
         border-bottom: none;
     }
 
+    .category-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
 
+    .category-filters {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .custom-select {
+            width: 90%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 1rem;
+            color: #333;
+            appearance: none;
+            transition: border-color 0.3s ease;
+
+            option {
+                padding: 8px; 
+                background-color: #fff; 
+                color: #333;
+            }
+
+            &:hover,
+            &:focus {
+                border-color: #f77f00;
+            }
+        }
+    }
 }
-
 </style>

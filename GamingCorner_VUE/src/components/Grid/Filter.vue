@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-import FilterCategory from './FilterCategory.vue';
+import FilterCategory from '.././FilterCategory.vue';
 import jQuery from 'jquery';
 
 import { useFilterStore } from '@/stores/FilterStore';
@@ -12,10 +12,9 @@ const FilterStore = useFilterStore();
 <template>
     <aside class="filter-container" v-if="FilterStore.toggleFilter">
         <FilterCategory title="Género" />
-        <FilterCategory title="Plataforma" />
         <FilterCategory title="Sistema" />
         <FilterCategory title="Precio" />
-        <FilterCategory title="Mano" />
+        <FilterCategory title="Producto" />
         <FilterCategory title="Ordenar por" />
     </aside>
 </template>
@@ -32,21 +31,15 @@ const FilterStore = useFilterStore();
     right: 0;
     z-index: 12;
 
-    border-radius: 50px 50px 0 0;
-    border: 2px solid orange;
-    background-color: #a09c9c;
+    border-radius: 20px 20px 0 0;
+    background-color: orange;
 
-    @media screen and (min-width: 720px) {
+    @media screen and (min-width: 900px) {
         display: block;
         width: 30%;
-        position: relative;
         margin: 9% 0;
-        border-radius: 50px ;
-
-
-
-
-
+        border-radius: 0 20px 20px 0 ;
+        left: 0;
     }
 }
 </style>
