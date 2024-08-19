@@ -16,6 +16,9 @@ public class Transaction
 
     public User User { get; set; }
     public Product Product { get; set; }
+    public bool Type { get; set;} //si type = 1 -> compra || si type = 0 -> venta
+
+    public DateTime Date { get; set;} = DateTime.Now;
 
 
     public Transaction() { }
@@ -26,20 +29,20 @@ public class Transaction
         ProductId = productId;
     }
 
-    // public VideogameGender mapFromCreateDto(VideogameGenderCreateDTO videogameGenderCreateDTO)
-    // {
-    //     if (videogameGenderCreateDTO == null)
-    //     {
-    //         // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
-    //         throw new ArgumentNullException(nameof(videogameGenderCreateDTO));
-    //     }
+    public Transaction mapFromCreateDto(TransactionCreateDTO transactionCreateDTO)
+    {
+        if (transactionCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(transactionCreateDTO));
+        }
 
-    //     var videogameGender = new VideogameGender
-    //     {
-    //         GenderId = videogameGenderCreateDTO.GenderId,
-    //         VideogameId = videogameGenderCreateDTO.VideogameId,
-    //     };
+        var transaction = new Transaction
+        {
+            ProductId = transactionCreateDTO.ProductId,
+            UserId = transactionCreateDTO.UserId,
+        };
 
-    //     return videogameGender;
-    // }
+        return transaction;
+    }
 }
