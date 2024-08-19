@@ -115,7 +115,7 @@ public class UserController : ControllerBase
     // }
 
 //     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
-// public IActionResult GetChatDetails(string buyerId, string sellerId)
+// public IActionResult GetChatDetails(int buyerId, int sellerId)
 // {
 //     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
 //     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
