@@ -69,6 +69,9 @@ builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransactionRepository, TransactionEFRepository>();
 
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductEFRepository>();
+
 
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();
