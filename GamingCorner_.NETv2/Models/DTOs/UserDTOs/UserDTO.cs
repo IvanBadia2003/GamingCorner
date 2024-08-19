@@ -28,8 +28,6 @@ public class UserDTO
     [Required]
     public string? ImageURL { get; set; }
  
-    public List<Order> Orders { get; set; } = new List<Order>();
-
 
      public User ToUser()
     {

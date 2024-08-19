@@ -30,6 +30,12 @@ public class Videogame
     public int PlatformId { get; set; }
 
     public Platform Platform { get; set; }
+    [Required]
+    public int UserId { get; set; }
+
+    public User User { get; set; }
+
+    public Product Product { get; set;}
 
     [Required]
     public decimal Price { get; set; }
@@ -38,8 +44,6 @@ public class Videogame
     public string ImageURL { get; set; }
 
     public List<VideogameGender> ListVideogameGender { get; set; }
-
-    public List<OrderLine> Order_lines_Videogame { get; set; } = new List<OrderLine>();
 
 
     public Videogame() { }

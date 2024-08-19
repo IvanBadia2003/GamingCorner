@@ -66,11 +66,6 @@ builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
 builder.Services.AddScoped<IConsoleService, ConsoleService>();
 builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
 
-builder.Services.AddScoped<IOrderLineService, OrderLineService>();
-builder.Services.AddScoped<IOrderLineRepository, OrderLineEFRepository>();
-
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IOrderRepository, OrderEFRepository>();
 
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();
 // builder.Services.AddScoped<IIngredientesRepository, IngredienteEFRepository>();

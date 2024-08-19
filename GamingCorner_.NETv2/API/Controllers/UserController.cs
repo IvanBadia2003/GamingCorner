@@ -96,34 +96,60 @@ public class UserController : ControllerBase
         // Devuelve un Ok con el objeto UserDTO si el inicio de sesión es exitoso
         return Ok(user);
     }
+
+    //     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
+    // public ActionResult GetChatDetails(string buyerId, string sellerId)
+    // {
+    //     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
+    //     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
+
+    //     if (buyer == null || seller == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     else
+    //     {
+    //         return buyer;
+    //         return seller;
+    //     }
+    // }
+
+//     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
+// public IActionResult GetChatDetails(string buyerId, string sellerId)
+// {
+//     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
+//     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
+
+//     if (buyer == null || seller == null)
+//     {
+//         return NotFound();
+//     }
+
+//     var chatDetails = new
+//     {
+//         buyer = new
+//         {
+//             id = buyer.Id,
+//             name = buyer.Name,
+//             email = buyer.Email
+//         },
+//         seller = new
+//         {
+//             id = seller.Id,
+//             name = seller.Name,
+//             email = seller.Email
+//         }
+//     };
+
+//     return Ok(chatDetails);
+// }
+
+
+
+
 }
 
-[HttpGet("buyer/{buyerId}/seller/{sellerId}")]
-public IActionResult GetChatDetails(string buyerId, string sellerId)
-{
-    var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
-    var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
 
-    if (buyer == null || seller == null)
-    {
-        return NotFound();
-    }
 
-    var chatDetails = new
-    {
-        buyer = new
-        {
-            id = buyer.Id,
-            name = buyer.Name,
-            email = buyer.Email
-        },
-        seller = new
-        {
-            id = seller.Id,
-            name = seller.Name,
-            email = seller.Email
-        }
-    };
 
-    return Ok(chatDetails);
-}
+
