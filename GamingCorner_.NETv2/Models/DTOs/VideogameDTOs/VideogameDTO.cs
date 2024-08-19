@@ -35,7 +35,6 @@ public class VideogameDTO
     public string? ImageURL { get; set; }
  
     public List<VideogameGenderDTO> ListVideogameGender { get; set; }
-    public List<OrderLine> Order_lines_Videogame { get; set; } = new List<OrderLine>();
 
 
      public Videogame ToVideogame()

@@ -31,11 +31,6 @@ namespace GamingCorner.Data
                 .WithMany(vl => vl.ListVideogameGender)
                 .HasForeignKey(vli => vli.GenderId);
             
-            modelBuilder.Entity<Order>()
-                .HasOne(u => u.User)
-                .WithMany(o => o.Orders)
-                .HasForeignKey(u => u.UserId );
-
             modelBuilder.Entity<Videogame>()
                 .HasOne (p => p.Platform)
                 .WithMany(v => v.videogames)
@@ -47,26 +42,20 @@ namespace GamingCorner.Data
             modelBuilder.Entity<Videogame>()
                 .HasKey(v => new { v.VideogameId });
             
-            modelBuilder.Entity<GamingConsole>()
+            modelBuilder.Entity<Console_>()
                 .HasKey(c => new { c.ConsoleId });
 
             modelBuilder.Entity<Platform>()
                 .HasKey(p => new { p.PlatformId });
-
-            modelBuilder.Entity<Order>()
-                .HasKey(or => new { or.OrderId });
-
-            modelBuilder.Entity<OrderLine>()
-                .HasKey(ol => new { ol.OrderLineId });
 
             modelBuilder.Entity<Gender>()
                 .HasKey(ge => new { ge.GenderId });
 
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Name = "Diego", Email = "diego@gmail.com", Password = "12345", PhoneNumber = 601112734, Admin = true, ImageURL = "" },
-                new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = 123456789, Admin = true, ImageURL = "" },
-                new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = 987654321, Admin = false, ImageURL = "" }
+                new User { UserId = 1, Name = "Diego", Email = "diego@gmail.com", Password = "12345", PhoneNumber = "601112734", Admin = true, ImageURL = "" },
+                new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = "123456789", Admin = true, ImageURL = "" },
+                new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = "987654321", Admin = false, ImageURL = "" }
             );
 
             modelBuilder.Entity<Platform>().HasData(
@@ -134,6 +123,7 @@ namespace GamingCorner.Data
         public DbSet<VideogameGender> VideogameGenders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Console_> Consoles { get; set; }
-        public DbSet<OrderLine> OrderLines { get; set; }
+        // public DbSet<Transaction> Transactions { get; set; }
+        // public DbSet<Product> Products { get; set; }
     }
 }

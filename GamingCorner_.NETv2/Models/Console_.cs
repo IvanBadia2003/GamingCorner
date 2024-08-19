@@ -20,6 +20,13 @@ public class Console_
     public Platform Platform { get; set; }
 
     [Required]
+    public int UserId { get; set; }
+
+    public User User { get; set; }
+
+    public Product Product { get; set;}
+
+    [Required]
     public string Specifications { get; set; }
 
     [Required]
@@ -33,8 +40,6 @@ public class Console_
 
     [Required]
     public string ImageURL { get; set; }
-
-    public List<OrderLine> Order_lines_Console { get; set; } = new List<OrderLine>();
 
 
     public Console_() { }
