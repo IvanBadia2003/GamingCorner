@@ -67,6 +67,8 @@ namespace GamingCorner.Data
                 .HasKey(p => new { p.ProductId });
 
 
+
+
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Name = "Diego", Email = "diego@gmail.com", Password = "12345", PhoneNumber = "601112734", Admin = true, ImageURL = "" },
                 new User { UserId = 2, Name = "Ivan", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = "123456789", Admin = true, ImageURL = "" },

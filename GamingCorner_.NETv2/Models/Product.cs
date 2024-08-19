@@ -15,38 +15,41 @@ public class Product
     [Required]
     public DateTime CreationDate { get; set; } = DateTime.Now;
 
-    public int? VideogameId { get; set; }
+    public int VideogameId { get; set; }
 
     [ForeignKey("Videogame")]
     public Videogame Videogame { get; set; }
 
-    public int? ConsoleId { get; set; }
+    public int ConsoleId { get; set; }
 
     [ForeignKey("Console")]
     public Console_ Console { get; set; }
 
-    public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+    public List<Transaction> Transactions { get; set; }
 
     public Product() { }
 
-    // public Product()
-    // {
+    public Product(int videogameId, int consoleId)
+    {
+        VideogameId = videogameId;
+        ConsoleId = consoleId;
+        CreationDate = DateTime.Now;
+    }
 
-    // }
+    public Product mapFromCreateDto(ProductCreateDTO productCreateDTO)
+    {
+        if (productCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(productCreateDTO));
+        }
 
-    // public Product mapFromCreateDto(PlatformCreateDTO platformCreateDTO)
-    // {
-    //     if (platformCreateDTO == null)
-    //     {
-    //         // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
-    //         throw new ArgumentNullException(nameof(platformCreateDTO));
-    //     }
+        var product = new Product
+        {
+           VideogameId = productCreateDTO.VideogameId,
+           ConsoleId = productCreateDTO.ConsoleId
+        };
 
-    //     var platform = new Platform
-    //     {
-    //        Name = platformCreateDTO.Name,
-    //     };
-
-    //     return platform;
-    // }
+        return product;
+    }
 }
