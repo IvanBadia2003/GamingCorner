@@ -33,7 +33,7 @@ public class User
 
     public List<Videogame> Videogames { get; set; } = new List<Videogame>();
 
-    public List<Transaction> Transaction { get; set; }
+    public List<Transaction> Transactions { get; set; }
 
     public User() { }
 

@@ -17,6 +17,18 @@ namespace GamingCorner.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Transaction>()
+                .HasKey(t => new {t.ProductId, t.UserId});
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(p => p.Product)
+                .WithMany(pt => pt.Transactions)
+                .HasForeignKey(ptp => ptp.ProductId);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(u => u.User)
+                .WithMany(ut => ut.Transactions)
+                .HasForeignKey(utu => utu.UserId);
 
             modelBuilder.Entity<VideogameGender>()
                 .HasKey(v => new { v.VideogameId, v.GenderId });
@@ -50,6 +62,9 @@ namespace GamingCorner.Data
 
             modelBuilder.Entity<Gender>()
                 .HasKey(ge => new { ge.GenderId });
+
+            modelBuilder.Entity<Product>()
+                .HasKey(p => new { p.ProductId });
 
 
             modelBuilder.Entity<User>().HasData(
@@ -123,7 +138,7 @@ namespace GamingCorner.Data
         public DbSet<VideogameGender> VideogameGenders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Console_> Consoles { get; set; }
-        // public DbSet<Transaction> Transactions { get; set; }
-        // public DbSet<Product> Products { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

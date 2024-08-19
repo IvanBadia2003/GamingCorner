@@ -12,4 +12,7 @@ public interface IUserRepository
     void Delete(int id);
     UserDTO Login(string email, string password);
 
+    // Task AddUserAsync (User user);
+    // Task<User>GetUserAsync(int id);
+
 }
