@@ -31,7 +31,6 @@ public class ConsoleDTO
     [Required]
     public string? ImageURL { get; set; }
 
-    public List<OrderLine> Order_lines { get; set; } = new List<OrderLine>();
 
      public Console_ ToConsole()
     {

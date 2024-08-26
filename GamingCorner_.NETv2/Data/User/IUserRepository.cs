@@ -10,4 +10,6 @@ public interface IUserRepository
     UserDTO Get(int id);
     void Update(User user);
     void Delete(int id);
+    UserDTO Login(string email, string password);
+
 }
