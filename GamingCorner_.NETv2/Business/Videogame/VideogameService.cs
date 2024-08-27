@@ -3,17 +3,17 @@ namespace GamingCorner.Business;
 using GamingCorner.Data;
 using GamingCorner.Business;
 using GamingCorner.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-
-    public class VideogameService : IVideogameService
+public class VideogameService : IVideogameService
 {
 
     private readonly IVideogameRepository _videogameRepository;
 
 
-    public VideogameService(IVideogameRepository videgameRepository)
+    public VideogameService(IVideogameRepository videogameRepository)
     {
-        _videogameRepository = videgameRepository;
+        _videogameRepository = videogameRepository;
 
     }
     public List<VideogameDTO> GetAll()
@@ -45,10 +45,9 @@ using GamingCorner.Models;
         }
 
         var videogame = videogameDto.ToVideogame();
-        videogame.Name = videogameUpdateDTO.Name;
-        videogame.Stock = videogameUpdateDTO.Stock;
-        videogame.Available = videogameUpdateDTO.Available;
-        videogame.Price = videogameUpdateDTO.Price;
+        videogame.Stock = videogameDto.Stock;
+        videogame.Available = videogameDto.Available;
+        videogame.Price = videogameDto.Price;
         _videogameRepository.Update(videogame);
     }
 

@@ -18,24 +18,19 @@ public class VideogameDTO
 
     [Required]
     public string? Description { get; set; }
-  
+
     [Required]
     public int Stock { get; set; }
-
+  
     [Required]
     public bool Available { get; set; }
-
-    [Required]
-    public int PlatformId { get; set; }
-
+    
     [Required]
     public decimal Price { get; set; }
-
+        
     [Required]
     public string? ImageURL { get; set; }
  
-    public List<VideogameGenderDTO> ListVideogameGender { get; set; }
-
 
      public Videogame ToVideogame()
     {
@@ -43,16 +38,12 @@ public class VideogameDTO
         {
             VideogameId = this.VideogameId,
             Name = this.Name,
-            Pegi = this.Pegi,
+            Price = this.Price,
             Description = this.Description,
             Stock = this.Stock,
             Available = this.Available,
-            PlatformId = this.PlatformId,
-            ImageURL = this.ImageURL,
-            ListVideogameGender = this.ListVideogameGender != null ? this.ListVideogameGender.Select(g => new VideogameGender
-            {
-                Gender = new Gender {GenderId = g.GenderId}
-            }).ToList() : null
-        }; 
+            Pegi = this.Pegi,
+            ImageURL = this.ImageURL
+        };
     }
 }

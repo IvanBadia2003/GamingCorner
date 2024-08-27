@@ -10,11 +10,13 @@ public class VideogameUpdateDTO
 {
 
 
+    [Required]
+    public decimal Price { get; set; }
 
-    public string Name { get; set; }
+    [Required]
     public int Stock { get; set; }
 
+    [Required]
     public bool Available { get; set; }
 
-    public decimal Price { get; set; }
 }

@@ -21,7 +21,7 @@ public class User
     public string? Password { get; set; }
 
     [Required]
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     [Required]
     public bool Admin { get; set; }
@@ -29,22 +29,14 @@ public class User
     [Required]
     public string? ImageURL { get; set; }
 
-    public List<Console_> Consoles { get; set; } = new List<Console_>();
+    // public List<Console_> Consoles { get; set; } = new List<Console_>();
 
-    public List<Videogame> Videogames { get; set; } = new List<Videogame>();
+    // public List<Videogame> Videogames { get; set; } = new List<Videogame>();
 
-    public List<Transaction> Transactions { get; set; }
 
     public User() { }
 
-    public User(
-        string name,
-        string email,
-        string password,
-        string phoneNumber,
-        bool admin,
-        string imageURL
-    )
+    public User(string name,string email,string password,string phoneNumber,bool admin,string imageURL)
     {
         Name = name;
         Email = email;
@@ -67,7 +59,9 @@ public class User
             Name = userCreateDTO.Name,
             Email = userCreateDTO.Email,
             Password = userCreateDTO.Password,
+            PhoneNumber = userCreateDTO.phoneNumber,
             Admin = userCreateDTO.Admin,
+            ImageURL = userCreateDTO.ImageURL,
         };
 
         return user;

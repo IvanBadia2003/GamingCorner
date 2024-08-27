@@ -30,11 +30,10 @@ public class VideogameEFRepository : IVideogameRepository
             {
                 VideogameId = v.VideogameId,
                 Name = v.Name,
-                Description = v.Description,
                 Pegi = v.Pegi,
+                Description = v.Description,
                 Stock = v.Stock,
                 Available = v.Available,
-                PlatformId = v.PlatformId,
                 Price = v.Price,
                 ImageURL = v.ImageURL,
             }).ToList();
@@ -52,12 +51,9 @@ public class VideogameEFRepository : IVideogameRepository
         SaveChanges();
     }
 
-
     public VideogameDTO Get(int id)
     {
         var videogame = _context.Videogames
-            .Include(vg => vg.ListVideogameGender)
-                .ThenInclude(g => g.Gender)
             .Where(videogame => videogame.VideogameId == id)
             .FirstOrDefault();
 
@@ -67,28 +63,19 @@ public class VideogameEFRepository : IVideogameRepository
             {
                 VideogameId = videogame.VideogameId,
                 Name = videogame.Name,
-                Description = videogame.Description,
                 Pegi = videogame.Pegi,
+                Description = videogame.Description,
                 Stock = videogame.Stock,
-                Available = videogame.Available,
-                PlatformId = videogame.PlatformId,
+                Available =videogame.Available,
                 Price = videogame.Price,
                 ImageURL = videogame.ImageURL,
-                ListVideogameGender = videogame.ListVideogameGender
-                    .Where(bo => bo != null && bo.Gender != null)
-                    .Select(bo => new VideogameGenderDTO
-                    {
-                        GenderId = bo.GenderId
-                    }).ToList()
             };
-
             return videogameDto;
         }
         else
         {
-            return null; // Devuelve null si no se encuentra la obra
+            return null;
         }
-
     }
 
     public void Update(Videogame videogame)

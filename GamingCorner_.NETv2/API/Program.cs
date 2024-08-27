@@ -51,26 +51,20 @@ var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 builder.Services.AddScoped<IVideogameService, VideogameService>();
 builder.Services.AddScoped<IVideogameRepository, VideogameEFRepository>();
 
-builder.Services.AddScoped<IGenderService, GenderService>();
-builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
+// builder.Services.AddScoped<IGenderService, GenderService>();
+// builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 
-builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
-builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
+// builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
+// builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
 
-builder.Services.AddScoped<IPlatformService, PlatformService>();
-builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
+// builder.Services.AddScoped<IPlatformService, PlatformService>();
+// builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
 
-builder.Services.AddScoped<IConsoleService, ConsoleService>();
-builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
-
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-builder.Services.AddScoped<ITransactionRepository, TransactionEFRepository>();
-
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductRepository, ProductEFRepository>();
+// builder.Services.AddScoped<IConsoleService, ConsoleService>();
+// builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
 
 
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();

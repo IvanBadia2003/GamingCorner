@@ -18,9 +18,14 @@ public class UserCreateDTO
     [Required]
     public string? Password { get; set; }
 
-  
     [Required]
     public bool Admin { get; set; }
+    
+    [Required]
+    public string? phoneNumber { get; set; }
+    
+    [Required]
+    public string? ImageURL { get; set; }
  
 
 }

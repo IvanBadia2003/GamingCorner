@@ -26,16 +26,16 @@ public class Videogame
     [Required]
     public bool Available { get; set; }
 
-    [Required]
-    public int PlatformId { get; set; }
+    // [Required]
+    // public int PlatformId { get; set; }
 
-    public Platform Platform { get; set; }
-    [Required]
-    public int UserId { get; set; }
+    // public Platform Platform { get; set; }
+    // [Required]
+    // public int UserId { get; set; }
 
-    public User User { get; set; }
+    // public User User { get; set; }
 
-    public Product Product { get; set;}
+
 
     [Required]
     public decimal Price { get; set; }
@@ -43,7 +43,7 @@ public class Videogame
     [Required]
     public string ImageURL { get; set; }
 
-    public List<VideogameGender> ListVideogameGender { get; set; }
+    // public List<VideogameGender> ListVideogameGender { get; set; }
 
 
     public Videogame() { }
@@ -55,7 +55,7 @@ public class Videogame
         Description = description;
         Stock = stock;
         Available = available;
-        PlatformId = platformId;
+        // PlatformId = platformId;
         Price = price;
         ImageURL = imageURL;
     }
@@ -75,7 +75,7 @@ public class Videogame
             Description = videogameCreateDTO.Description,
             Stock = videogameCreateDTO.Stock,
             Available = videogameCreateDTO.Available,
-            PlatformId = videogameCreateDTO.PlatformId,
+            // PlatformId = videogameCreateDTO.PlatformId,
             Price = videogameCreateDTO.Price,
             ImageURL = videogameCreateDTO.ImageURL
         };
