@@ -1,116 +1,127 @@
-<!-- views/Profile.vue -->
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/UserStore';
-import MyProducts from '../components/Profile/MyProducts.vue';
 import Profile from '../components/Profile/Profile.vue';
+import Sales from '../components/Profile/Sales.vue';
+import Buys from '../components/Profile/Buys.vue';
 
 const UserStore = useUserStore();
 
+const toogleMenu = ref(false);
+const activeTab = ref('');
 
-const activeTab = ref('games');
-
+const toggleMenu = () => {
+  toogleMenu.value = !toogleMenu.value;
+};
 </script>
 
 <template>
-
-    <div class="todo">
-
-      <nav>
-        <ul>
-          <li @click="activeTab='profile'">Mi Perfil</li>
-          <li @click="activeTab='products'">Mis Productos<i class="fas fa-chevron-right flecha"></i></li>
-          <ul class="subboton">
-            <li>Comprados</li>
-            <li>Vendidos</li>
-          </ul>
+  <div class="todo">
+    <nav>
+      <ul>
+        <li @click="activeTab = 'profile'; toogleMenu = false">Mi Perfil</li>
+        <li @click="toggleMenu">
+          Mis Productos
+        </li>
+        <ul v-if="toogleMenu" class="subboton subboton-open">
+          <li @click="activeTab = 'buys'">Comprados</li>
+          <li @click="activeTab = 'sales'">Vendidos</li>
         </ul>
-
-        <button @click="UserStore.logout()">Desconectarse</button>
-      </nav>
-
-      <Profile v-if="activeTab == 'profile'"/>
-      <MyProducts v-if="activeTab == 'products'"/>
-
-      
-
-    </div>
-
+      </ul>
+      <button @click="UserStore.logout()">Desconectarse</button>
+    </nav>
+    <section class="content">
+      <Profile v-if="activeTab == 'profile'" />
+      <Buys v-if="activeTab == 'buys'"/>
+      <Sales v-if="activeTab == 'sales'"/>
+    </section>
+</div>
 </template>
 
-<style scoped>
-* {
-  padding: 0px;
-  margin: 0px;
-  font-family: 'Muli', sans-serif;
-}
+
+<style scoped lang="scss">
+
 
 .todo {
+  margin-top: 100px;
   display: flex;
-  flex-wrap: nowrap;
+  height: auto;
 }
 
-
-
-nav {
+nav {height: 85vh;
+  min-width: 250px;
+  background-color: #f8f9fa;
   display: flex;
-  min-width: 30%;
-  overflow: hidden;
   flex-direction: column;
-  height: 83vh;
-  border-right: solid 1px #d1d1d1;
-  box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-
-
-
-.todo nav ul li {
   padding: 20px;
-  margin-bottom: 6px;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li {
+  padding: 15px 20px;
+  margin-bottom: 10px;
   color: #606060;
-  border-left: solid 4px rgba(0, 0, 0, 0.1);
-  margin-left: 4px;
   cursor: pointer;
+  border-left: 4px solid transparent;
   transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.todo nav ul li:hover {
-  border-left: solid 4px #fcc728;
+nav ul li:hover {
   color: #fcc728;
+  border-left: 4px solid #fcc728;
 }
 
-.todo nav ul li:hover+.subboton {
-  transition: height 0.3s;
-  height: 150px;
-}
-
-.todo nav ul li:hover .flecha {
-  transform: rotate(90deg);
-  color: #fcc728;
-}
-
-.flecha {
-  float: right;
-  transition: all 0.3s;
+.content{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .subboton {
-  padding: 0px;
-  margin-left: 5px;
   list-style: none;
-  height: 0px;
+  padding-left: 20px;
   overflow: hidden;
-  transition: all 0.3s;
-  max-height: 100%;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
 }
 
-.subboton:hover {
-  height: 60px;
+.subboton-open {
+  max-height: 100px; /* Ajusta según la cantidad de elementos en el submenú */
 }
 
+.subboton li {
+  padding: 10px;
+  color: #606060;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
+.subboton li:hover {
+  color: #fcc728;
+}
 
+button {
+  margin-top: auto;
+  padding: 10px 15px;
+  background-color: #fcc728;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
+button:hover {
+  background-color: #c0392b;
+}
+
+.product-grid{
+  background-color: #fff;
+}
 </style>

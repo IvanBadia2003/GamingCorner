@@ -51,7 +51,7 @@ const router = createRouter({
     ]
 })
 
- router.beforeEach((to, from, next) => {
+/*  router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   
   // Verificar si la ruta es la página de inicio de sesión y si el usuario está autenticado
@@ -65,6 +65,6 @@ const router = createRouter({
       // Permitir que la navegación continúe según la lógica actual
       next();
   }
-}); 
+});  */
 
 export default router
