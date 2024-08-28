@@ -17,6 +17,9 @@ public class VideogameCreateDTO
 
     [Required]
     public string? Description { get; set; }
+    
+    [Required]
+    public string? Requisitos { get; set; }
 
     [Required]
     public int Stock { get; set; }

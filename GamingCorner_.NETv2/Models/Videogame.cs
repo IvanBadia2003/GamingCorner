@@ -25,6 +25,9 @@ public class Videogame
 
     [Required]
     public bool Available { get; set; }
+    
+    [Required]
+    public string? Requisitos { get; set; }
 
     // [Required]
     // public int PlatformId { get; set; }
@@ -73,6 +76,7 @@ public class Videogame
             Name = videogameCreateDTO.Name,
             Pegi = videogameCreateDTO.Pegi,
             Description = videogameCreateDTO.Description,
+            Requisitos = videogameCreateDTO.Requisitos,
             Stock = videogameCreateDTO.Stock,
             Available = videogameCreateDTO.Available,
             // PlatformId = videogameCreateDTO.PlatformId,

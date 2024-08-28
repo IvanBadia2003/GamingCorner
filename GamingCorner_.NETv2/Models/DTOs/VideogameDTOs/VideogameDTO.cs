@@ -18,6 +18,9 @@ public class VideogameDTO
 
     [Required]
     public string? Description { get; set; }
+    
+    [Required]
+    public string? Requisitos { get; set; }
 
     [Required]
     public int Stock { get; set; }
@@ -40,6 +43,7 @@ public class VideogameDTO
             Name = this.Name,
             Price = this.Price,
             Description = this.Description,
+            Requisitos = this.Requisitos,
             Stock = this.Stock,
             Available = this.Available,
             Pegi = this.Pegi,
