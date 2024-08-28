@@ -48,8 +48,8 @@ namespace GamingCorner.Data
             modelBuilder.Entity<Videogame>()
                 .HasKey(v => new { v.VideogameId });
             
-            // modelBuilder.Entity<Console_>()
-            //     .HasKey(c => new { c.ConsoleId });
+            modelBuilder.Entity<Console_>()
+                .HasKey(c => new { c.ConsoleId });
 
             modelBuilder.Entity<Platform>()
                 .HasKey(p => new { p.PlatformId });
@@ -74,6 +74,11 @@ namespace GamingCorner.Data
                 new Platform { PlatformId = 4, Name = "Switch"}
             );
 
+            modelBuilder.Entity<Console_>().HasData(
+                new Console_ { ConsoleId = 1, Name = "Play Station 4", Specifications = "Ta bien", Price = 300, Stock = 16, Available = true, ImageURL = ""},
+                new Console_ { ConsoleId = 2, Name = "Xbox 360", Specifications = "Ta bien pero no tanto", Price = 265, Stock = 5, Available = true, ImageURL = ""}
+            );
+            
             // modelBuilder.Entity<Console_>().HasData(
             //     new Console_ { ConsoleId = 1, Name = "Play Station 4", Specifications = "Ta bien", PlatformId = 2, Price = 300, Stock = 16, Available = true, ImageURL = "", UserId = 1},
             //     new Console_ { ConsoleId = 2, Name = "Xbox 360", Specifications = "Ta bien pero no tanto", PlatformId = 3, Price = 265, Stock = 5, Available = true, ImageURL = "", UserId = 2}
@@ -149,7 +154,7 @@ namespace GamingCorner.Data
         public DbSet<Gender> Genders { get; set; }
         // public DbSet<VideogameGender> VideogameGenders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
-        // public DbSet<Console_> Consoles { get; set; }
+        public DbSet<Console_> Consoles { get; set; }
 
     }
 }
