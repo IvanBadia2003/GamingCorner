@@ -51,11 +51,11 @@ namespace GamingCorner.Data
             // modelBuilder.Entity<Console_>()
             //     .HasKey(c => new { c.ConsoleId });
 
-            // modelBuilder.Entity<Platform>()
-            //     .HasKey(p => new { p.PlatformId });
+            modelBuilder.Entity<Platform>()
+                .HasKey(p => new { p.PlatformId });
 
-            // modelBuilder.Entity<Gender>()
-            //     .HasKey(ge => new { ge.GenderId });
+            modelBuilder.Entity<Gender>()
+                .HasKey(ge => new { ge.GenderId });
 
 
 
@@ -146,7 +146,7 @@ namespace GamingCorner.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Videogame> Videogames { get; set; }
-        // public DbSet<Gender> Genders { get; set; }
+        public DbSet<Gender> Genders { get; set; }
         // public DbSet<VideogameGender> VideogameGenders { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         // public DbSet<Console_> Consoles { get; set; }

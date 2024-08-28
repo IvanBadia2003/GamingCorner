@@ -51,8 +51,8 @@ var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 builder.Services.AddScoped<IVideogameService, VideogameService>();
 builder.Services.AddScoped<IVideogameRepository, VideogameEFRepository>();
 
-// builder.Services.AddScoped<IGenderService, GenderService>();
-// builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
+builder.Services.AddScoped<IGenderService, GenderService>();
+builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();
