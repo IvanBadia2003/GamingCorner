@@ -67,12 +67,12 @@ namespace GamingCorner.Data
                 new User { UserId = 3, Name = "Adrian", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = "987654321", Admin = false, ImageURL = "" }
             );
 
-            // modelBuilder.Entity<Platform>().HasData(
-            //     new Platform { PlatformId = 1, Name = "Steam"},
-            //     new Platform { PlatformId = 2, Name = "Play Station"},
-            //     new Platform { PlatformId = 3, Name = "Xbox"},
-            //     new Platform { PlatformId = 4, Name = "Switch"}
-            // );
+            modelBuilder.Entity<Platform>().HasData(
+                new Platform { PlatformId = 1, Name = "Steam"},
+                new Platform { PlatformId = 2, Name = "Play Station"},
+                new Platform { PlatformId = 3, Name = "Xbox"},
+                new Platform { PlatformId = 4, Name = "Switch"}
+            );
 
             // modelBuilder.Entity<Console_>().HasData(
             //     new Console_ { ConsoleId = 1, Name = "Play Station 4", Specifications = "Ta bien", PlatformId = 2, Price = 300, Stock = 16, Available = true, ImageURL = "", UserId = 1},
@@ -115,13 +115,13 @@ namespace GamingCorner.Data
             //     new Videogame { VideogameId = 15, Name = "The Legend of Zelda: Breath of the Wild", Description = "Aventura en el mundo de Hyrule",  Stock = 6, Pegi = 12, Available = true, PlatformId = 4, Price = 60, ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_small/co4n26.png" }   
             // );
 
-            // modelBuilder.Entity<Gender>().HasData(
-            //     new Gender { GenderId = 1, Name = "RPG", BackgroundImg = "", CharacterImg = "" },
-            //     new Gender { GenderId = 2, Name = "Shooter", BackgroundImg = "", CharacterImg = "" },
-            //     new Gender { GenderId = 3, Name = "Estrategia", BackgroundImg = "", CharacterImg = "" },
-            //     new Gender { GenderId = 4, Name = "Accion", BackgroundImg = "", CharacterImg = "" },
-            //     new Gender { GenderId = 5, Name = "Deportes", BackgroundImg = "", CharacterImg = "" }
-            // );
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender { GenderId = 1, Name = "RPG", BackgroundImg = "", CharacterImg = "" },
+                new Gender { GenderId = 2, Name = "Shooter", BackgroundImg = "", CharacterImg = "" },
+                new Gender { GenderId = 3, Name = "Estrategia", BackgroundImg = "", CharacterImg = "" },
+                new Gender { GenderId = 4, Name = "Accion", BackgroundImg = "", CharacterImg = "" },
+                new Gender { GenderId = 5, Name = "Deportes", BackgroundImg = "", CharacterImg = "" }
+            );
 
             // modelBuilder.Entity<VideogameGender>().HasData(
             //     new VideogameGender { GenderId = 1, VideogameId = 1 },
