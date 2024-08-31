@@ -7,6 +7,7 @@ import BuyComponent from '../components/Description/BuyComponent.vue';
 import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
+import Opinions from '@/components/Description/Opinions.vue';
 
 
 
@@ -59,14 +60,14 @@ onMounted(() => {
         <h2> {{ gameStore.game.name }} </h2>
 
         <section class="section first">
-            <BuyComponent/>
+            <BuyComponent />
         </section>
         <section class="section">
             <div class="title-container">
                 <h2>Requisitos</h2>
             </div>
             <div class="content">
-                <Requirements/>
+                <Requirements />
             </div>
         </section>
         <section class="section">
@@ -74,7 +75,7 @@ onMounted(() => {
                 <h2>Multimedia</h2>
             </div>
             <div class="content">
-                <Multimedia/>
+                <Multimedia />
             </div>
         </section>
         <section class="section">
@@ -82,12 +83,15 @@ onMounted(() => {
                 <h2>Descripción</h2>
             </div>
             <div class="content">
-                <Description/>
+                <Description />
             </div>
         </section>
         <section class="section">
             <div class="title-container">
                 <h2>Opiniones</h2>
+            </div>
+            <div class="content">
+                <Opinions />
             </div>
         </section>
         <section class="section">
@@ -95,19 +99,13 @@ onMounted(() => {
                 <h2>Productos similares</h2>
             </div>
         </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Consolas con las que puedes jugar</h2>
-            </div>
-        </section>
 
-        <!--         <button @click="addToCart">Añadir al Carrito</button>
- -->
     </div>
 </template>
 
 <style scoped lang="scss">
 .container {
+    margin-top: 100px;
     width: 100%;
     height: auto;
     display: flex;
@@ -121,24 +119,30 @@ onMounted(() => {
     .section {
         width: 90%;
         height: auto;
-        margin: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        background-color: orange;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin: 40px auto;
+        padding: 20px;
+
 
         .title-container {
             width: 100%;
             display: flex;
             border-bottom: 1px solid orange;
+            justify-content: center;
         }
 
-        .content{
+        .content {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 15px;            
+            margin-top: 15px;
 
         }
     }
@@ -146,7 +150,7 @@ onMounted(() => {
 
 @media screen and (min-width: 767px) {
     .container {
-     
+
         .first {
             flex-direction: row;
             align-items: normal;

@@ -2,192 +2,212 @@
 import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import { useCartStore } from '@/stores/CartStore';
-
-var quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+import { computed } from 'vue';
 
 const cartStore = useCartStore();
 
 const removeFromCart = (gameId: number) => {
-  cartStore.removeFromCart(gameId); // Despachar la acción
+  cartStore.removeFromCart(gameId);
+  delete cartStore.quantities[gameId]; // Elimina la cantidad asociada al producto
 };
 </script>
 
 <template>
-    <div class="cartContainer">
-        <div class="cart">
-            <div class="cart__title">
-                <h3>Carrito</h3>
+  <div class="cartContainer">
+    <div class="cart">
+      <div class="cart__title">
+        <h3>Carrito</h3>
+      </div>
+      <div class="cart__product">
+        <div v-if="cartStore.cartItems.length > 0">
+          <div v-for="product in cartStore.cartItems" :key="product.videogameId" class="product">
+            <div class="product__img">
+              <img :src="product.imageURL" :alt="product.name">
             </div>
-            <div class="cart__product">
-                <div v-for="product in cartStore.cartItems" class="product">
-                    <div class="product__img">
-                        <img :src="product.imageURL" :alt="`${product.name}`">
-                    </div>
-                    <div class="product__info">
-                        <div class="info__up">
-                            <div class="platform">
-                                <IconSteam />
-                            </div>
-                            <div class="title">
-                                <p>{{product.name}}</p>
-                            </div>
-                            <div class="delete" @click="removeFromCart(product.videogameId)">
-                                <IconDelete />
-                            </div>
-                        </div>
-                        <div class="info__down">
-                            <div class="quantity">
-                                <select name="quantity" id="quantity">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
-                            <div class="price">
-                                <h2>{{product.price}}€</h2>
-                            </div>
-                        </div>
-                    </div>
+            <div class="product__info">
+              <div class="info__up">
+                <div class="platform">
+                  <IconSteam />
                 </div>
-                <div class="separation"></div>
-
-
+                <div class="title">
+                  <p>{{ product.name }}</p>
+                </div>
+                <div class="delete" @click="removeFromCart(product.videogameId)">
+                  <IconDelete />
+                </div>
+              </div>
+              <div class="info__down">
+                <div class="quantity">
+                  <select
+                    name="quantity"
+                    id="quantity"
+                    v-model="cartStore.quantities[product.videogameId]"
+                    @change="cartStore.quantities[product.videogameId] = parseInt($event.target.value)"
+                  >
+                    <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+                  </select>
+                </div>
+                <div class="price">
+                  <h2>{{ product.price * (cartStore.quantities[product.videogameId] || 1) }}€</h2>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+        <div v-else>
+          <div class="empty-cart">
+            No hay productos en el carrito
+          </div>
+        </div>
+      </div>
+
+      <div class="totalPrice">
+        <h2>Total: {{ cartStore.totalPrice }}€</h2>
+      </div>
     </div>
+  </div>
 </template>
+
+
+
 
 <style scoped lang="scss">
 .cartContainer {
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.cart {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.cart__title {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0;
+  }
+}
+
+.cart__product {
+  .product {
     display: flex;
-    justify-content: center;
     align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
 
-    .cart {
-        width: 70%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-
-        &__title {
-            text-align: left;
-        }
-
-        &__product {
-            border-radius: 5px;
-            border: 1px solid orange;
-            margin-left: 15px;
-            height: auto;
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .product {
-                width: 90%;
-                height: auto;
-
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: 15px 0px;
-
-                &__img {
-                    width: 35%;
-
-                    height: auto;
-
-                    img {
-                        max-width: 100%;
-                    }
-                }
-
-                &__info {
-                    width: 60%;
-                    height: 100%;
-
-                    display: flex;
-                    flex-direction: column;
-
-
-                    .info__up {
-                        width: 100%;
-                        height: 50%;
-
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: center;
-                        align-items: center;
-
-                        img {
-                            max-width: 100%;
-                        }
-
-                        .platform {
-                            width: 15%;
-                            height: 100%;
-
-                            &__icon {
-                                width: 100%;
-                            }
-
-                        }
-
-                        .title {
-                            width: 70%;
-                            height: 100%;
-                        }
-
-                        .delete {
-                            width: 15%;
-                            height: 100%;
-                        }
-                    }
-
-                    .info__down {
-                        width: 100%;
-                        height: 50%;
-
-                        
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-around;
-                        align-items: center;
-
-                        .quantity{
-                            width: 40%;
-                            select{
-                                width: 100%;
-                            }
-                        }
-
-                        .price{
-                            width: 30%;
-                            select{
-                                width: 100%;
-                            }
-                        }
-                    }
-
-                }
-
-            }
-
-            .separation {
-                background-color: bisque;
-                width: 90%;
-                height: 3px;
-            }
-        }
+    &:last-child {
+      border-bottom: none;
     }
+
+    &__img {
+      flex: 0 0 80px;
+
+      img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &__info {
+      flex: 1;
+      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .info__up {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        img {
+          max-width: 100%;
+        }
+
+        .platform {
+
+          width: 30px;
+          height: 30px;
+          fill: #333333;
+
+        }
+
+        .title {
+          flex: 1;
+          margin-left: 15px;
+
+          p {
+            font-size: 18px;
+            color: #555555;
+            margin: 0;
+            font-weight: 500;
+          }
+        }
+
+        .delete {
+          cursor: pointer;
+          transition: transform 0.2s ease;
+          width: 24px;
+          height: 24px;
+          fill: #ff4d4d;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+
+      .info__down {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .quantity {
+          select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+
+            &:focus {
+              border-color: #888;
+              outline: none;
+            }
+          }
+        }
+
+        .price {
+          h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .separation {
+    height: 20px;
+  }
 }
 </style>

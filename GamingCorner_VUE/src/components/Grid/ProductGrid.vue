@@ -38,8 +38,9 @@ const prevPage = () => {
 <template>  
     <h2>{{ title }}</h2>
     <div class="product-grid">
+      
         <Tarjet v-for="game in paginatedGames" :key="game.videogameId" :idGame="game.videogameId" :name="game.name"
-            :price="game.price" :image="game.imageURL"></Tarjet>
+        :price="game.price" :image="game.imageURL"></Tarjet>
     </div>
     <div class="pagination">
       <button @click="prevPage" :disabled="currentPage === 1"><</button>

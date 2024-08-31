@@ -20,7 +20,7 @@ const cartStore = useCartStore();
 
 const game = ref(gameStore.game);
 const addToCart = () => {
-  cartStore.addToCart(game.value); // Call addToCart with reactive value
+    cartStore.addToCart(game.value); // Call addToCart with reactive value
 };
 </script>
 
@@ -45,27 +45,31 @@ const addToCart = () => {
                     <IconPegi18 v-if="gameStore.game.pegi == 18" />
                 </div>
                 <div class="infoIcons__others">
-                    <div class="infoIcons__others__platform">
+                    <div class="platform">
                         <IconSteam />
                     </div>
-                    <div class="infoIcons__others__stock">
+                    <div class="stock">
                         <IconTick IconCross v-if="gameStore.game.stock > 0" />
                         <IconCross v-else />
                     </div>
-                    <div class="infoIcons__others__valorations">
+                    <div class="valorations">
                         5
                     </div>
                 </div>
             </div>
         </div>
         <div class="secundary">
-            <h2>{{ gameStore.game.price }}€</h2>
-            <button class="button" @click="addToCart">
-                Añadir al carrito
-            </button>
-            <router-link :to="'/cart'" class="button">
-               IR COMPRAR
-            </router-link>
+            <div class="price">
+                <h2>{{ gameStore.game.price }}€</h2>
+            </div>
+            <div class="buttons">
+                <button class="button" @click="addToCart" style="background-color: #ff6600;">
+                    CARRITO
+                </button>
+                <router-link :to="'/cart'" class="button" style="background-color: orangered;">
+                    COMPRAR
+                </router-link>
+            </div>
         </div>
 
 
@@ -129,27 +133,38 @@ const addToCart = () => {
     justify-content: center;
     align-items: center;
 
+
     .secundary {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         width: 100%;
         justify-content: space-between;
 
-        h2 {
-            font: {
-                size: 50px;
+        .price {
+
+            h2 {
+                font: {
+                    size: 50px;
+                }
             }
         }
 
-        .button {
-            background-color: gray;
-            padding: 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: white;
+        .buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
 
+            .button {
+                width: 45%;
+                background-color: gray;
+                padding: 10px 10px;
+                border-radius: 20px;
+                text-decoration: none;
+                color: white;
 
+            }
         }
     }
 
@@ -170,26 +185,58 @@ const addToCart = () => {
             display: flex;
             width: 100%;
             justify-content: center;
+            gap: 5px;
 
             &__favorite {
                 display: flex;
                 align-items: center;
-                padding: 0px 15px;
-
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
 
             }
 
             &__pegi {
                 padding: 0px 15px;
-
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
             }
 
             &__others {
                 display: flex;
+                align-items: center;
+                gap: 5px;
+
+                .platform,
+                .stock,
+                .valorations {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+
+                .platform:hover,
+                .stock:hover,
+                .valorations:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                .valorations {
+                    font-size: 1rem;
+                    font-weight: bold;
+                    color: #333;
+                    color: #fff;
+                }
+
 
             }
-
-
         }
     }
 }
@@ -199,7 +246,6 @@ const addToCart = () => {
     .principal {
         @include content(30%, 100%);
         align-items: center;
-
 
         div {
             height: 100%;
@@ -241,29 +287,39 @@ const addToCart = () => {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: 20%;
+        width: 30%;
 
         .secundary {
+            width: 70%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: auto;
             justify-content: space-between;
 
-            h2 {
-                font: {
-                    size: 50px;
+            .price {
+
+                h2 {
+                    font: {
+                        size: 50px;
+                    }
                 }
             }
 
-            .button {
-                background-color: gray;
-                padding: 30px 70px;
-                border-radius: 20px;
-                text-decoration: none;
-                color: white;
+            .buttons {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
 
+                .button {
+                    width: 45%;
+                    background-color: gray;
+                    padding: 10px 10px;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    color: white;
 
+                }
             }
         }
 
@@ -277,21 +333,7 @@ const addToCart = () => {
             .infoIcons {
                 @include content(100%, 50%);
 
-                &__favorite {
-                    display: flex;
-                    align-items: center;
-                    padding: 0px 15px;
-
-
-                }
-
-                &__pegi {
-                    padding: 0px 15px;
-
-                }
-
                 &__others {
-                    display: flex;
                     flex-direction: column
                 }
             }
