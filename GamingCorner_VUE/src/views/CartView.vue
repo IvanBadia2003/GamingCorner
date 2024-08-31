@@ -27,15 +27,23 @@ const totalItems = computed(() => cartStore.totalItems); */
 <style scoped lang="scss">
 
 .container{
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
-
     color: white;
+    min-height: calc(100vh - 100px);
 
     div{
         background-color: gray;
         width: 100%;
         height: auto;
+    }
+}
+
+@media screen and (min-width: 767px) {
+    .container{
+        flex-direction: row;
+
     }
 }
 

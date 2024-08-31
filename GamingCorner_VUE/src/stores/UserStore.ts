@@ -1,5 +1,6 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router';
 
 interface User {
     userId: number;
@@ -16,6 +17,7 @@ interface User {
 export const useUserStore = defineStore('userStore', () => {
 
     // State
+    const router = useRouter(); // Obtén el router
 
     const user = reactive<User>({
         userId: 0,
@@ -33,6 +35,7 @@ export const useUserStore = defineStore('userStore', () => {
     // Funciones
     // Función para enviar las credenciales de inicio de sesión al backend
     async function login(email: string, password: string) {
+        debugger
         const response = await fetch('http://localhost:5000/User/login', {
             method: 'POST',
             headers: {
@@ -45,6 +48,7 @@ export const useUserStore = defineStore('userStore', () => {
             const userData = await response.json();
             user.isAuthenticated = true;
             Object.assign(user, userData);
+            router.push('/');
 
         } else {
             const errorData = await response.json();

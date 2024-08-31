@@ -6,6 +6,7 @@ import DescriptionView from '../views/DescriptionView.vue'
 import AdminView from '../views/AdminView.vue'
 import CartView from '../views/CartView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import BuyView from '../views/BuyView.vue'
 import { useUserStore } from '../stores/UserStore';
 
 
@@ -47,6 +48,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/purchase',
+      name: 'purchase',
+      component: BuyView
     }
     ]
 })

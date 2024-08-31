@@ -16,22 +16,34 @@ const isSelected = ref(false)
 
 
 <template>
-  <article class="card">
-    <div class="card__img">
-      <img :src="props.image" alt="">
-      <div class="discount">
-        <span>-50%</span>
+  <router-link :to="{
+    name: 'description',
+    params: {
+      id: props.idGame
+    }
+  }">
+    <article class="card">
+      <div class="card__img">
+        <img :src="props.image" alt="">
+        <div class="discount">
+          <span>-50%</span>
+        </div>
       </div>
-    </div>
-    <div class="card__info">
-      <span class="card__title">{{ props.name }}</span>
-      <span class="card__price">{{ props.price }}€</span>
-    </div>
-  </article>
+      <div class="card__info">
+        <span class="card__title">{{ props.name }}</span>
+        <span class="card__price">{{ props.price }}€</span>
+      </div>
+    </article>
+  </router-link>
 </template>
 
 
 <style scoped lang="scss">
+
+*{
+  text-decoration: none;
+}
+
 .card {
   width: auto;
   height: auto;
@@ -53,7 +65,7 @@ const isSelected = ref(false)
     width: 100%;
     height: auto;
     position: relative;
-    
+
 
     .discount {
       position: absolute;
@@ -97,7 +109,7 @@ const isSelected = ref(false)
     }
   }
 
-  &__info{
+  &__info {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -112,14 +124,12 @@ const isSelected = ref(false)
       text-align: left;
     }
 
-    .card__price{
-      
-    }
+    .card__price {}
   }
 
 }
 
 .card:hover {
-      transform: perspective(250px) rotateX(5deg) translateY(-5%) translateZ(0);
-    }
+  transform: perspective(250px) rotateX(5deg) translateY(-5%) translateZ(0);
+}
 </style>

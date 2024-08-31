@@ -28,10 +28,9 @@ const cartStore = useCartStore();
                         <div class="valor">{{ cartStore.totalPrice }}</div>
                     </div>
                 </div>
-                <router-link :to="'/'" class="buy__button">
+                <router-link :to="'/purchase'" class="buy__button">
                     PROCEDER CON EL PAGO
                 </router-link>
-
             </div>
         </div>
     </div>
@@ -39,72 +38,84 @@ const cartStore = useCartStore();
 
 <style scoped lang="scss">
 .summaryContainer {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
 
-    .summary {
-        width: 70%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
+.summary {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+}
 
-        &__title {
-            text-align: left;
-        }
+.summary__title {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 
-        &__buy {
-            margin-left: 15px;
-            height: auto;
-            width: 100%;
+    h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333333;
+        margin: 0;
+    }
+}
+
+.summary__buy {
+    .buy__info {
+        .fila {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
 
-            .buy__info {
-                background-color: orange;
-                color: white;
-                padding: 5px;
-                border-radius: 10px;
-                text-align: right;
-                width: 100%;
-
-                .fila {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 10px;
-
-                    .etiqueta {
-                        font-weight: bold;
-                    }
-
-                    .valor {
-                        text-align: right;
-                    }
-
-                    .descuento {
-                        color: #ff7272;
-                    }
-                }
-
-                .total {
-                    font-size: 1.4em;
-                    border-top: 1px solid white;
-                    padding-top: 10px;
-                }
-
+            &:last-child {
+                border-bottom: none;
             }
 
-            .buy__button {
-                margin-top: 15px;
-                width: 100%;
-                background-color: orange;
-                color: white;
-                padding: 15px 0;
-                border-radius: 10px;
-                text-decoration: none;
+            &.total {
+                font-weight: bold;
+                font-size: 18px;
             }
+
+            .etiqueta {
+                font-size: 16px;
+                color: #555555;
+            }
+
+            .valor {
+                font-size: 16px;
+                color: #333333;
+
+                &.descuento {
+                    color: #ff4d4d;
+                }
+            }
+        }
+    }
+
+    .buy__button {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px 0;
+        background-color: #ff6600;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #e65c00;
         }
     }
 }
