@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Tarjet from '@/components/Tarjet.vue';
+import Modal from '@/components/Modal.vue'; 
 
 import { useGameStore } from '@/stores/GameStore';
 
 const GameStore = useGameStore();
 GameStore.fetchGames();
 
-const props = defineProps<{ title: string }>();
-
+const props = defineProps<{ title: string, isGrid: boolean }>();
 
 const currentPage = ref(1);
 const itemsPerPage = ref(6);
+
+const selectedGameId = ref<number | null>(null);  // Estado para el ID del juego seleccionado
 
 const totalPages = computed(() => Math.ceil(GameStore.games.length / itemsPerPage.value));
 
@@ -32,21 +34,42 @@ const prevPage = () => {
     currentPage.value--;
   }
 };
+
+const handleCardClick = (id: number) => {
+  selectedGameId.value = id;  // Actualiza el ID del juego seleccionado
+};
 </script>
 
 
 <template>  
-    <h2>{{ title }}</h2>
-    <div class="product-grid">
-      
-        <Tarjet v-for="game in paginatedGames" :key="game.videogameId" :idGame="game.videogameId" :name="game.name"
-        :price="game.price" :image="game.imageURL"></Tarjet>
-    </div>
-    <div class="pagination">
-      <button @click="prevPage" :disabled="currentPage === 1"><</button>
-      <button @click="nextPage" :disabled="currentPage === totalPages">></button>
-    </div>
+  <h2>{{ title }}</h2>
+  <div class="product-grid">
+    <Tarjet 
+      v-for="game in paginatedGames" 
+      :key="game.videogameId" 
+      :idGame="game.videogameId" 
+      :name="game.name"
+      :price="game.price" 
+      :image="game.imageURL"
+      :isGrid="isGrid"
+      @click="handleCardClick(game.videogameId)" 
+    />
+  </div>
+
+  <div class="pagination">
+    <button @click="prevPage" :disabled="currentPage === 1"><</button>
+    <button @click="nextPage" :disabled="currentPage === totalPages">></button>
+  </div>
+
+  <!-- Mostrar el modal solo si selectedGameId no es null -->
+  <Modal v-if="selectedGameId" v-model:modelValue="selectedGameId" title="Código del juego">
+    <template #default>
+      <h3>ID del Juego: {{ selectedGameId }}</h3>
+      <!-- Aquí puedes agregar más contenido relacionado con el juego seleccionado -->
+    </template>
+  </Modal>
 </template>
+
 
 
 

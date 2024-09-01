@@ -7,6 +7,7 @@ interface User {
     name: string;
     email: string;
     password: string;
+    confirmPassword: string;
     phoneNumber: string;
     admin: boolean;
     imageURL: string;
@@ -23,6 +24,7 @@ export const useUserStore = defineStore('userStore', () => {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         phoneNumber: "",
         admin: false,
         imageURL: "",
