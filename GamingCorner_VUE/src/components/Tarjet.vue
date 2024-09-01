@@ -5,7 +5,8 @@ const props = defineProps<{
   idGame: number,
   name: string,
   price: number,
-  image: string
+  image: string,
+  isGrid: boolean
 }>()
 
 
@@ -16,7 +17,7 @@ const isSelected = ref(false)
 
 
 <template>
-  <router-link :to="{
+  <router-link v-if="props.isGrid" :to="{
     name: 'description',
     params: {
       id: props.idGame
@@ -35,12 +36,28 @@ const isSelected = ref(false)
       </div>
     </article>
   </router-link>
+
+  <!-- Si isGrid es falso, mostramos un div con el mismo contenido pero sin navegación -->
+  <div v-else>
+    <article class="card">
+      <div class="card__img">
+        <img :src="props.image" alt="">
+        <div class="discount">
+          <span>-50%</span>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__title">{{ props.name }}</span>
+        <span class="card__price">{{ props.price }}€</span>
+      </div>
+    </article>
+  </div>
 </template>
 
 
-<style scoped lang="scss">
 
-*{
+<style scoped lang="scss">
+* {
   text-decoration: none;
 }
 

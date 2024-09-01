@@ -5,7 +5,7 @@ import ProductGrid from '@/components/Grid/ProductGrid.vue';
 
 <template>
     <div class="container">
-        <ProductGrid title="Comprado"/>
+        <ProductGrid title="Comprado" :is-grid="false" />
     </div>
 
 </template>

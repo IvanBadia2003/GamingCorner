@@ -4,11 +4,12 @@ import { useUserStore } from '@/stores/UserStore';
 import Profile from '../components/Profile/Profile.vue';
 import Sales from '../components/Profile/Sales.vue';
 import Buys from '../components/Profile/Buys.vue';
+import UploadProduct from '../components/Profile/UploadProduct.vue';
 
 const UserStore = useUserStore();
 
 const toogleMenu = ref(false);
-const activeTab = ref('');
+const activeTab = ref('profile');
 
 const toggleMenu = () => {
   toogleMenu.value = !toogleMenu.value;
@@ -26,6 +27,7 @@ const toggleMenu = () => {
         <ul v-if="toogleMenu" class="subboton subboton-open">
           <li @click="activeTab = 'buys'">Comprados</li>
           <li @click="activeTab = 'sales'">Vendidos</li>
+          <li @click="activeTab = 'upload'">Vender</li>
         </ul>
       </ul>
       <button @click="UserStore.logout()">Desconectarse</button>
@@ -34,6 +36,7 @@ const toggleMenu = () => {
       <Profile v-if="activeTab == 'profile'" />
       <Buys v-if="activeTab == 'buys'"/>
       <Sales v-if="activeTab == 'sales'"/>
+      <UploadProduct v-if="activeTab == 'upload'"/>
     </section>
 </div>
 </template>
@@ -93,7 +96,7 @@ nav ul li:hover {
 }
 
 .subboton-open {
-  max-height: 100px; /* Ajusta según la cantidad de elementos en el submenú */
+  max-height: 150px; /* Ajusta según la cantidad de elementos en el submenú */
 }
 
 .subboton li {

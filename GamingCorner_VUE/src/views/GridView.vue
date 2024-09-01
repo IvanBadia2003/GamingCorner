@@ -14,8 +14,8 @@ const FilterStore = useFilterStore();
     <section class="content">
         <button class="filterButton" @click="FilterStore.toggleFilter = !FilterStore.toggleFilter">Filtros</button>
 
-        <ProductGrid title="Consolas"/>
-        <ProductGrid title="Juegos"/>
+        <ProductGrid title="Consolas" :is-grid="true"/>
+        <ProductGrid title="Juegos" :is-grid="true"/>
 
         <Filter />
 
