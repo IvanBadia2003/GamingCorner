@@ -3,28 +3,65 @@ import { ref, computed } from 'vue';
 import Tarjet from '@/components/Tarjet.vue';
 import Modal from '@/components/Modal.vue'; 
 
+import { useConsoleStore } from '@/stores/ConsoleStore';
 import { useGameStore } from '@/stores/GameStore';
+import { useFilterStore } from '@/stores/FilterStore';
+
+interface Product {
+  price: number;
+}
 
 const GameStore = useGameStore();
 GameStore.fetchGames();
 
-const props = defineProps<{ title: string, isGrid: boolean }>();
+const ConsoleStore = useConsoleStore();
+ConsoleStore.fetchConsoles();
+
+const FilterStore = useFilterStore();
+
+interface Props {
+  title: string;
+  isGrid: boolean;
+  type: string;
+}
+
+const props = defineProps<Props>();
 
 const currentPage = ref(1);
 const itemsPerPage = ref(6);
 
-const selectedGameId = ref<number | null>(null);  // Estado para el ID del juego seleccionado
+const selectedGameId = ref<number | null>(null);
 
-const totalPages = computed(() => Math.ceil(GameStore.games.length / itemsPerPage.value));
+const sortItems = (items: Product[]): Product[] => {
+  if (FilterStore.sortOption === 'price-asc') {
+    return items.sort((a, b) => a.price - b.price);
+  } else if (FilterStore.sortOption === 'price-desc') {
+    return items.sort((a, b) => b.price - a.price);
+  }
+  return items;
+};
+
+const totalPagesGames = computed(() => Math.ceil(GameStore.games.length / itemsPerPage.value));
+const totalPagesConsoles = computed(() => Math.ceil(ConsoleStore.consoles.length / itemsPerPage.value));
 
 const paginatedGames = computed(() => {
+  const sortedGames = sortItems(GameStore.games);
   const start = (currentPage.value - 1) * itemsPerPage.value;
   const end = start + itemsPerPage.value;
-  return GameStore.games.slice(start, end);
+  return sortedGames.slice(start, end);
+});
+
+const paginatedConsoles = computed(() => {
+  const sortedConsoles = sortItems(ConsoleStore.consoles);
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return sortedConsoles.slice(start, end);
 });
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
+  if (props.type === 'game' && currentPage.value < totalPagesGames.value) {
+    currentPage.value++;
+  } else if (props.type === 'console' && currentPage.value < totalPagesConsoles.value) {
     currentPage.value++;
   }
 };
@@ -36,15 +73,14 @@ const prevPage = () => {
 };
 
 const handleCardClick = (id: number) => {
-  selectedGameId.value = id;  // Actualiza el ID del juego seleccionado
+  selectedGameId.value = id;
 };
 </script>
 
-
-<template>  
-  <h2>{{ title }}</h2>
+<template>
+  <h2>{{ props.title }}</h2>
   <div class="product-grid">
-    <Tarjet 
+    <Tarjet v-if="props.type === 'game'"
       v-for="game in paginatedGames" 
       :key="game.videogameId" 
       :idGame="game.videogameId" 
@@ -54,21 +90,30 @@ const handleCardClick = (id: number) => {
       :isGrid="isGrid"
       @click="handleCardClick(game.videogameId)" 
     />
+    <Tarjet v-if="props.type === 'console'"
+      v-for="console in paginatedConsoles" 
+      :key="console.consoleId" 
+      :idGame="console.consoleId" 
+      :name="console.name"
+      :price="console.price" 
+      :image="console.imageURL"
+      :isGrid="isGrid"
+      @click="handleCardClick(console.consoleId)" 
+    />
   </div>
 
   <div class="pagination">
     <button @click="prevPage" :disabled="currentPage === 1"><</button>
-    <button @click="nextPage" :disabled="currentPage === totalPages">></button>
+    <button @click="nextPage" :disabled="props.type === 'game' ? currentPage === totalPagesGames : currentPage === totalPagesConsoles">></button>
   </div>
 
-  <!-- Mostrar el modal solo si selectedGameId no es null -->
   <Modal v-if="selectedGameId" v-model:modelValue="selectedGameId" title="Código del juego">
     <template #default>
       <h3>ID del Juego: {{ selectedGameId }}</h3>
-      <!-- Aquí puedes agregar más contenido relacionado con el juego seleccionado -->
     </template>
   </Modal>
 </template>
+
 
 
 
