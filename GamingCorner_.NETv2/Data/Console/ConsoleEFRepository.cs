@@ -6,8 +6,9 @@
     using System.Data;
     using GamingCorner.Data;
     using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
-    public class ConsoleEFRepository : IConsoleRepository
+public class ConsoleEFRepository : IConsoleRepository
     {
 
 
@@ -53,7 +54,8 @@
         public ConsoleDTO Get(int id)
         {
             var console = _context.Consoles
-                .Where(console => console.ConsoleId == id)
+            // .Include(p => p.Platform)
+            //     .Where(console => console.ConsoleId == id)
                 .FirstOrDefault();
 
             if (console != null)
@@ -67,6 +69,7 @@
                     Stock = console.Stock,
                     Available = console.Available,
                     ImageURL = console.ImageURL,
+
                 };
                 return consoleDto;
             }

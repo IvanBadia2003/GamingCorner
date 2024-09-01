@@ -27,6 +27,8 @@ public class ConsoleDTO
         
     [Required]
     public string? ImageURL { get; set; }
+
+    // public List<ConsoleDTO> Consoles { get; set; }Ç
  
 
      public Console_ ToConsole()

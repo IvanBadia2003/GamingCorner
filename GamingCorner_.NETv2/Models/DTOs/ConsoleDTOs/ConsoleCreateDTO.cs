@@ -21,8 +21,9 @@ public class ConsoleCreateDTO
     [Required]
     public bool Available { get; set; }
     
-    // [Required]
-    // public string? PlatformId { get; set; }
+    // public int PlatformId { get; set; }
+
+    // public Platform Platform { get; set; }
     
     [Required]
     public decimal Price { get; set; }

@@ -13,6 +13,9 @@ public class User
 
     [Required]
     public string? Name { get; set; }
+    
+    [Required]
+    public string? Address { get; set; }
 
     [Required]
     public string? Email { get; set; }
@@ -31,14 +34,16 @@ public class User
 
     // public List<Console_> Consoles { get; set; } = new List<Console_>();
 
-    // public List<Videogame> Videogames { get; set; } = new List<Videogame>();
+    public List<Videogame> Videogames { get; set; } = new List<Videogame>();
+    public List<Transaction> Transactions { get; set; }
 
 
     public User() { }
 
-    public User(string name,string email,string password,string phoneNumber,bool admin,string imageURL)
+    public User(string name,string address, string email,string password,string phoneNumber,bool admin,string imageURL)
     {
         Name = name;
+        Address = address;
         Email = email;
         Password = password;
         PhoneNumber = phoneNumber;
@@ -57,6 +62,7 @@ public class User
         var user = new User
         {
             Name = userCreateDTO.Name,
+            Address = userCreateDTO.Address,
             Email = userCreateDTO.Email,
             Password = userCreateDTO.Password,
             PhoneNumber = userCreateDTO.phoneNumber,

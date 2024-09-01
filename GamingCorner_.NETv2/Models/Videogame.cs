@@ -25,7 +25,7 @@ public class Videogame
 
     [Required]
     public bool Available { get; set; }
-    
+
     [Required]
     public string? Requisitos { get; set; }
 
@@ -33,10 +33,10 @@ public class Videogame
     // public int PlatformId { get; set; }
 
     // public Platform Platform { get; set; }
-    // [Required]
-    // public int UserId { get; set; }
+    [Required]
+    public int UserId { get; set; }
 
-    // public User User { get; set; }
+    public User User { get; set; }
 
 
 
@@ -47,6 +47,7 @@ public class Videogame
     public string ImageURL { get; set; }
 
     // public List<VideogameGender> ListVideogameGender { get; set; }
+    public List<Transaction> Transactions { get; set; }
 
 
     public Videogame() { }

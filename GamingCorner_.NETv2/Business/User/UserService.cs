@@ -46,6 +46,7 @@ using GamingCorner.Models;
 
         var user = userDto.ToUser();
         user.Name = userUpdateDTO.Name;
+        user.Address = userUpdateDTO.Address;
         user.Email = userUpdateDTO.Email;
         user.Password = userUpdateDTO.Password;
         user.PhoneNumber = userUpdateDTO.PhoneNumber;

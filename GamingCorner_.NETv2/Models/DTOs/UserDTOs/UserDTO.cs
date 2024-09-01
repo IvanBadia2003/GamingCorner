@@ -12,6 +12,9 @@ public class UserDTO
 
     [Required]
     public string? Name { get; set; }
+    
+    [Required]
+    public string? Address { get; set; }
 
     [Required]
     public string? Email { get; set; }
@@ -27,7 +30,9 @@ public class UserDTO
         
     [Required]
     public string? ImageURL { get; set; }
- 
+    
+    public List<VideogameDTO> Videogames { get; set; }
+    public List<TransactionDTO> Transactions { get; set; }
 
      public User ToUser()
     {
@@ -35,6 +40,7 @@ public class UserDTO
         {
             UserId = this.UserId,
             Name = this.Name,
+            Address = this.Address,
             Email = this.Email,
             Password = this.Password,
             PhoneNumber = this.PhoneNumber,

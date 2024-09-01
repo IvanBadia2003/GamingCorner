@@ -5,24 +5,20 @@ using System.Reflection.Metadata;
 
 namespace GamingCorner.Models;
 
-public class TransactionDTO
+public class TransactionCreateDTO
 {
-    [Required]
-    public int TransactionId { get; set; }
-
-    [Required]
+    [ForeignKey("User")]
     public int? UserId { get; set; }
-    
-    [Required]
+
+    [ForeignKey("Product")]
     public int? ProductId { get; set; }
     
-    [Required]
+    [ForeignKey("Videogame")]
     public int? VideogameId { get; set; }
     
-    [Required]
+    [ForeignKey("Console_")]
     public int? ConsoleId { get; set; }
-    
-    [Required]
-    public string Type { get; set; }
+
+    public string? Type { get; set; }
 
 }

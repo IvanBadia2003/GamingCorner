@@ -4,7 +4,7 @@
 
 namespace GamingCorner.Data.Migrations
 {
-    public partial class migration27_08_2 : Migration
+    public partial class migration1_09_4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

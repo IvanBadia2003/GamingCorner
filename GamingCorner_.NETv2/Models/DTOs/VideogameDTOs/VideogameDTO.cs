@@ -20,6 +20,12 @@ public class VideogameDTO
     public string? Description { get; set; }
     
     [Required]
+    public User User { get; set; }
+    
+    [Required]
+    public int UserId { get; set; }
+    
+    [Required]
     public string? Requisitos { get; set; }
 
     [Required]

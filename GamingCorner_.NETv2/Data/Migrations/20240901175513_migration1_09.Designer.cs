@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    [Migration("20240827172843_migration27_08_2")]
-    partial class migration27_08_2
+    [Migration("20240901175513_migration1_09")]
+    partial class migration1_09
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,190 @@ namespace GamingCorner.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("GamingCorner.Models.Console_", b =>
+                {
+                    b.Property<int>("ConsoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConsoleId"), 1L, 1);
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Specifications")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("ConsoleId");
+
+                    b.ToTable("Consoles");
+
+                    b.HasData(
+                        new
+                        {
+                            ConsoleId = 1,
+                            Available = true,
+                            ImageURL = "",
+                            Name = "Play Station 4",
+                            Price = 300m,
+                            Specifications = "Ta bien",
+                            Stock = 16
+                        },
+                        new
+                        {
+                            ConsoleId = 2,
+                            Available = true,
+                            ImageURL = "",
+                            Name = "Xbox 360",
+                            Price = 265m,
+                            Specifications = "Ta bien pero no tanto",
+                            Stock = 5
+                        });
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.Gender", b =>
+                {
+                    b.Property<int>("GenderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenderId"), 1L, 1);
+
+                    b.Property<string>("BackgroundImg")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CharacterImg")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GenderId");
+
+                    b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            GenderId = 1,
+                            BackgroundImg = "",
+                            CharacterImg = "",
+                            Name = "RPG"
+                        },
+                        new
+                        {
+                            GenderId = 2,
+                            BackgroundImg = "",
+                            CharacterImg = "",
+                            Name = "Shooter"
+                        },
+                        new
+                        {
+                            GenderId = 3,
+                            BackgroundImg = "",
+                            CharacterImg = "",
+                            Name = "Estrategia"
+                        },
+                        new
+                        {
+                            GenderId = 4,
+                            BackgroundImg = "",
+                            CharacterImg = "",
+                            Name = "Accion"
+                        },
+                        new
+                        {
+                            GenderId = 5,
+                            BackgroundImg = "",
+                            CharacterImg = "",
+                            Name = "Deportes"
+                        });
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.Platform", b =>
+                {
+                    b.Property<int>("PlatformId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlatformId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PlatformId");
+
+                    b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            PlatformId = 1,
+                            Name = "Steam"
+                        },
+                        new
+                        {
+                            PlatformId = 2,
+                            Name = "Play Station"
+                        },
+                        new
+                        {
+                            PlatformId = 3,
+                            Name = "Xbox"
+                        },
+                        new
+                        {
+                            PlatformId = 4,
+                            Name = "Switch"
+                        });
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+                });
 
             modelBuilder.Entity("GamingCorner.Models.User", b =>
                 {
@@ -120,10 +304,19 @@ namespace GamingCorner.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Requisitos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("VideogameId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Videogames");
 
@@ -137,7 +330,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Rocket League",
                             Pegi = 12,
                             Price = 15m,
-                            Stock = 3
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 3,
+                            UserId = 1
                         },
                         new
                         {
@@ -148,7 +343,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "GTA 5",
                             Pegi = 18,
                             Price = 13m,
-                            Stock = 7
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 7,
+                            UserId = 1
                         },
                         new
                         {
@@ -159,7 +356,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "The Witcher 3",
                             Pegi = 18,
                             Price = 20m,
-                            Stock = 5
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 5,
+                            UserId = 2
                         },
                         new
                         {
@@ -170,7 +369,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Minecraft",
                             Pegi = 7,
                             Price = 25m,
-                            Stock = 10
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 10,
+                            UserId = 3
                         },
                         new
                         {
@@ -181,7 +382,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Fortnite",
                             Pegi = 12,
                             Price = 0m,
-                            Stock = 8
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 8,
+                            UserId = 2
                         },
                         new
                         {
@@ -192,7 +395,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Overwatch",
                             Pegi = 12,
                             Price = 30m,
-                            Stock = 6
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 6,
+                            UserId = 1
                         },
                         new
                         {
@@ -203,7 +408,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "FIFA 21",
                             Pegi = 3,
                             Price = 50m,
-                            Stock = 12
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 12,
+                            UserId = 2
                         },
                         new
                         {
@@ -214,7 +421,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Cyberpunk 2077",
                             Pegi = 18,
                             Price = 60m,
-                            Stock = 4
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 4,
+                            UserId = 3
                         },
                         new
                         {
@@ -225,7 +434,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Red Dead Redemption 2",
                             Pegi = 18,
                             Price = 40m,
-                            Stock = 9
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 9,
+                            UserId = 3
                         },
                         new
                         {
@@ -236,7 +447,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Assassin's Creed Valhalla",
                             Pegi = 18,
                             Price = 55m,
-                            Stock = 7
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 7,
+                            UserId = 1
                         },
                         new
                         {
@@ -247,7 +460,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Call of Duty: Modern Warfare",
                             Pegi = 18,
                             Price = 50m,
-                            Stock = 11
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 11,
+                            UserId = 1
                         },
                         new
                         {
@@ -258,7 +473,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Horizon Zero Dawn",
                             Pegi = 16,
                             Price = 35m,
-                            Stock = 5
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 5,
+                            UserId = 2
                         },
                         new
                         {
@@ -269,7 +486,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Stardew Valley",
                             Pegi = 7,
                             Price = 20m,
-                            Stock = 8
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 8,
+                            UserId = 2
                         },
                         new
                         {
@@ -280,7 +499,9 @@ namespace GamingCorner.Data.Migrations
                             Name = "Among Us",
                             Pegi = 10,
                             Price = 5m,
-                            Stock = 15
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 15,
+                            UserId = 2
                         },
                         new
                         {
@@ -291,8 +512,26 @@ namespace GamingCorner.Data.Migrations
                             Name = "The Legend of Zelda: Breath of the Wild",
                             Pegi = 12,
                             Price = 60m,
-                            Stock = 6
+                            Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
+                            Stock = 6,
+                            UserId = 3
                         });
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.Videogame", b =>
+                {
+                    b.HasOne("GamingCorner.Models.User", "User")
+                        .WithMany("Videogames")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.User", b =>
+                {
+                    b.Navigation("Videogames");
                 });
 #pragma warning restore 612, 618
         }
