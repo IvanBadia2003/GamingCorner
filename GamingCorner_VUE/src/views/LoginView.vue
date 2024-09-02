@@ -1,3 +1,49 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useUserStore } from '@/stores/UserStore';
+const UserStore = useUserStore();
+
+
+const showLogin = ref(true);
+const showRegister = ref(true);
+const containerLeft = ref('0px');
+
+const anchoPage = () => {
+  if (window.innerWidth > 1050) {
+    showLogin.value = true;
+    showRegister.value = false;
+  } else {
+    showLogin.value = false;
+    showRegister.value = false;
+    containerLeft.value = '0px';
+  }
+};
+
+const iniciarSesion = () => {
+  showLogin.value = true;
+  showRegister.value = false;
+  containerLeft.value = window.innerWidth > 850 ? '10px' : '0px';
+};
+
+const register = () => {
+  showLogin.value = false;
+  showRegister.value = true;
+  containerLeft.value = window.innerWidth > 850 ? '410px' : '0px';
+};
+
+onMounted(() => {
+  anchoPage();
+  window.addEventListener('resize', anchoPage);
+});
+
+// Limpieza del evento de resize cuando el componente se desmonte
+import { onUnmounted } from 'vue';
+onUnmounted(() => {
+  window.removeEventListener('resize', anchoPage);
+});
+</script>
+
+
 <template>
   <div class="container">
     <div class="image-section">
@@ -17,18 +63,18 @@
         </div>
       </div>
       <div class="contenedor__login-register" :style="{ left: containerLeft }">
-        <form v-if="showLogin" class="formulario__login">
+        <form v-if="showLogin" class="formulario__login" @submit.prevent="UserStore.login(UserStore.user.email, UserStore.user.password)">
           <h2>Iniciar Sesión</h2>
-          <input type="text" placeholder="Correo Electrónico" />
-          <input type="password" placeholder="Contraseña" />
+          <input type="text" placeholder="Correo Electrónico" v-model="UserStore.user.email" />
+          <input type="password" placeholder="Contraseña" v-model="UserStore.user.password"/>
           <button>Entrar</button>
         </form>
-        <form v-if="showRegister" class="formulario__register">
+        <form v-if="showRegister" class="formulario__register" @submit.prevent="UserStore.register(UserStore.user.email, UserStore.user.password, UserStore.user.phoneNumber, UserStore.user.password)">
           <h2>Registrarse</h2>
-          <input type="text" placeholder="Nombre completo" />
-          <input type="text" placeholder="Correo Electrónico" />
-          <input type="text" placeholder="Usuario" />
-          <input type="password" placeholder="Contraseña" />
+          <input type="text" placeholder="Nombre completo"  v-model="UserStore.user.name"/>
+          <input type="text" placeholder="Correo Electrónico"  v-model="UserStore.user.email"/>
+          <input type="text" placeholder="Teléfono"  v-model="UserStore.user.phoneNumber"/>
+          <input type="password" placeholder="Contraseña"  v-model="UserStore.user.password"/>
           <button>Registrarse</button>
         </form>
       </div>
@@ -36,53 +82,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, onMounted, defineComponent } from 'vue';
 
-export default defineComponent({
-  setup() {
-    const showLogin = ref(true);
-    const showRegister = ref(true);
-    const containerLeft = ref('0px');
-
-    const anchoPage = () => {
-      if (window.innerWidth > 1050) {
-        showLogin.value = true;
-        showRegister.value = false;
-      } else {
-        showLogin.value = false;
-        showRegister.value = false;
-        containerLeft.value = '0px';
-      }
-    };
-
-    const iniciarSesion = () => {
-      showLogin.value = true;
-      showRegister.value = false;
-      containerLeft.value = window.innerWidth > 850 ? '10px' : '0px';
-    };
-
-    const register = () => {
-      showLogin.value = false;
-      showRegister.value = true;
-      containerLeft.value = window.innerWidth > 850 ? '410px' : '0px';
-    };
-
-    onMounted(() => {
-      anchoPage();
-      window.addEventListener('resize', anchoPage);
-    });
-
-    return {
-      showLogin,
-      showRegister,
-      containerLeft,
-      iniciarSesion,
-      register,
-    };
-  },
-});
-</script>
 
 <style scoped lang="scss">
 .container {

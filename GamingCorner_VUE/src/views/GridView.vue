@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import Filter from '@/components/Filter.vue';
-import Tarjet from '@/components/Tarjet.vue';
+import Filter from '@/components/Grid/Filter.vue';
+import ProductGrid from '@/components/Grid/ProductGrid.vue';
 
 import { useFilterStore } from '@/stores/FilterStore';
-import { useGameStore } from '@/stores/GameStore';
 
-const GameStore = useGameStore();
-GameStore.fetchGames();
 
 
 
@@ -16,18 +13,12 @@ const FilterStore = useFilterStore();
 <template>
     <section class="content">
         <button class="filterButton" @click="FilterStore.toggleFilter = !FilterStore.toggleFilter">Filtros</button>
-        <div class="grid-container">
 
+        <ProductGrid title="Consolas" :is-grid="true" type="console"/>
+        <ProductGrid title="Juegos" :is-grid="true" type="game"/>
 
-            <div class="grid">
-                <Tarjet v-for="game in GameStore.games" :key="game.videogameId" :idGame="game.videogameId"
-                    :name="game.name" :price="game.price" :image="game.imageURL"></Tarjet>
+        <Filter />
 
-            </div>
-
-            <Filter />
-
-        </div>
 
     </section>
 </template>
@@ -36,6 +27,8 @@ const FilterStore = useFilterStore();
 .content {
     background-color: gray;
     height: auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
 
     @media screen and (min-width: 720px) {
         display: flex;
@@ -45,42 +38,17 @@ const FilterStore = useFilterStore();
     }
 
     .filterButton {
-        margin-top: 10px;
+        background-color: orange;
+        border: none;
+        padding: 10px;
+        color: #fff;
+        border-radius: 5px;
 
-    }
-
-    .grid-container {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-
-        .grid {
-
-            display: grid;
-            grid-template-columns: 
-            repeat(
-                auto-fit, minmax(110px, 1fr)
-            );
-
-            gap: 32px;
-           
-
-
-            @media screen and (min-width: 920px) {
-                grid-template-columns: repeat(3, 1fr);
-                /* Máximo 4 columnas */
-                gap: 40px;
-                row-gap: 80px;
-
-            }
-
-            @media screen and (min-width: 1250px) {
-                grid-template-columns: repeat(4, 1fr);
-                /* Máximo 4 columnas */
-                gap: 40px;
-                row-gap: 80px;
-            }
+        @media screen and (min-width: 720px) {
+            position: fixed;
+            margin-top: 190px;
+            top: 0;
+            left: 5%;
         }
 
     }

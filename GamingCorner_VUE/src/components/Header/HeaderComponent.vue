@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/UserStore';
+import IconCart from '../icons/IconCart.vue';
+import IconUser from '../icons/IconUser.vue';
+
+const UserStore = useUserStore();
 
 
 const toggleMenu = ref<boolean>(false);
@@ -25,7 +30,16 @@ const toggleMenu = ref<boolean>(false);
             <router-link class="item" :to="'/grid'">Play Station</router-link>
             <router-link class="item" :to="'/grid'">Xbox</router-link>
             <router-link class="item" :to="'/grid'">Nintendo</router-link>
-            <router-link class="btn" :to="'/login'">Login</router-link>
+            <router-link v-if="UserStore.user.isAuthenticated == false" class="btn" :to="'/login'">Login</router-link>
+            <div v-else>
+                <router-link class="item" :to="'/cart'">
+                    <IconCart/>
+                </router-link>
+                <router-link class="item" :to="'/profile'">
+                    <IconUser/>
+                </router-link>
+
+            </div>
 
         </ul>
     </header>

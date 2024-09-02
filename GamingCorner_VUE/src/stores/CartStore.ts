@@ -31,6 +31,10 @@ interface CartItem {
 
 export const useCartStore = defineStore('cartStore', () => {
     const cartItems = ref<Game[]>([]); // Reactive array for cart items
+    const quantities = ref<{ [key: number]: number }>({}); // Cantidades seleccionadas para cada producto
+    const purchaseItems = reactive<CartItem[]>([]); // Productos a comprar
+
+
 
     const addToCart = (item: Game) => {
         const existingItem = cartItems.value.find(cartItem => cartItem.videogameId === item.videogameId);
@@ -56,12 +60,17 @@ export const useCartStore = defineStore('cartStore', () => {
         }
     };
 
-    // Computed properties for derived data (optional)
-/*     const totalItems = computed(() => cartItems.value.reduce((acc, item) => acc + item.quantity, 0));
-   */ const totalPrice = computed(() => {
-        return cartItems.value.reduce((total, item) => total + item.price, 0);
+    const totalPrice = computed(() => {
+        return cartItems.value.reduce((total, item) => {
+            const quantity = quantities.value[item.videogameId] || 1; // Obtiene la cantidad o 1 si no está definida
+            return total + (item.price * quantity);
+        }, 0);
     });
 
+    const addToPurchase = (item: CartItem) => {
+        purchaseItems.push({ ...item });
 
-    return { cartItems,/*  totalItems, */totalPrice, addToCart, removeFromCart /* clearCart */ };
+    };
+
+    return { cartItems, totalPrice, addToCart, removeFromCart, quantities, addToPurchase };
 });

@@ -42,7 +42,7 @@ function onSlideChange() {
         :breakpoints="breakpoints"
         :navigation="true">
         <swiper-slide v-for="game in GameStore.games" :key="game.videogameId">
-            <Tarjet :idGame="game.videogameId" :name="game.name" :price="game.price" :image="game.imageURL"></Tarjet>
+            <Tarjet :idGame="game.videogameId" :name="game.name" :price="game.price" :image="game.imageURL" :is-grid="true"></Tarjet>
         </swiper-slide>
     </swiper>
 </template>
