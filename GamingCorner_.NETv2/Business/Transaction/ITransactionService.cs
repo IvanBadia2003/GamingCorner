@@ -9,5 +9,10 @@ public interface ITransactionService
     // GetAll(int id);
     void Add(TransactionCreateDTO transactionCreateDTO);
     TransactionDTO Get(int id);
+    void RegisterPurchaseVideogame(int userId, int videogameId);
+    void RegisterPurchaseConsole(int userId, int consoleId);
+    void RegisterPurchaseProduct(int userId, int productId);
+    void SellProduct(int userId, Product product);
     void Delete(int id);
+
 }

@@ -14,6 +14,9 @@ public class VideogameCreateDTO
 
     [Required]
     public int Pegi { get; set; }
+    
+    [Required]
+    public string Code { get; set; }
 
     [Required]
     public string? Description { get; set; }
@@ -29,6 +32,12 @@ public class VideogameCreateDTO
     
     [Required]
     public decimal Price { get; set; }
+    
+    [Required]
+    public int PlatformId { get; set; }
+    
+    [Required]
+    public int GenderId { get; set; }
     
     [Required]
     public string? ImageURL { get; set; }

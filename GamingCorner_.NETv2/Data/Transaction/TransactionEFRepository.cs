@@ -35,6 +35,7 @@ public class TransactionEFRepository : ITransactionRepository
                     VideogameId = t.VideogameId,
                     ConsoleId = t.ConsoleId,
                     Type = t.Type,
+                    Date = t.Date,
                 }).ToList();
                 return transactionDto;
             }
@@ -53,16 +54,15 @@ public class TransactionEFRepository : ITransactionRepository
         public TransactionDTO Get(int id)
         {
             var transaction = _context.Transactions
-                .Where(transaction => transaction.TransactionId == id)
-                .Include(p => p.User)
-                .Include(pr => pr.Product)
+                .Include(u => u.User)
+                .Include(p => p.Product)
                 .Include(v => v.Videogame)
-                // .Include(c => c.ConsoleId)
-                .FirstOrDefault();
+                .Include(c => c.Console)
+                .FirstOrDefault(t => t.TransactionId == id);
 
             if (transaction != null)
             {
-                var transactionDto = new TransactionDTO
+                return new TransactionDTO
                 {
                     TransactionId = transaction.TransactionId,
                     UserId = transaction.UserId,
@@ -70,13 +70,14 @@ public class TransactionEFRepository : ITransactionRepository
                     VideogameId = transaction.VideogameId,
                     ConsoleId = transaction.ConsoleId,
                     Type = transaction.Type,
+                    Date = transaction.Date,
                 };
-                return transactionDto;
             }
             else
             {
                 return null;
             }
+            
         }
 
         public void Update(Transaction transaction)

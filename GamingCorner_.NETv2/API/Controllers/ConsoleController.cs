@@ -34,6 +34,8 @@ public class ConsoleController : ControllerBase
         }
     }
 
+    
+
     [HttpPost]
     public IActionResult Create([FromBody] ConsoleCreateDTO consoleCreateDTO)
     {

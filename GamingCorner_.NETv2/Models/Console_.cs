@@ -14,10 +14,10 @@ public class Console_
     [Required]
     public string Name { get; set; }
 
-    // [Required]
-    // public int PlatformId { get; set; }
+    [Required]
+    public int PlatformId { get; set; }
 
-    // public Platform Platform { get; set; }
+    public Platform Platform { get; set; }
 
     // [Required]
     // public int? UserId { get; set; }
@@ -45,11 +45,11 @@ public class Console_
 
     public Console_() { }
 
-    public Console_(string name, string specifications, int stock, bool available, decimal price, string imageURL)
+    public Console_(string name, string specifications, int stock, bool available, decimal price, string imageURL, int platformId)
     {
         Name = name;
         Specifications = specifications;
-        // PlatformId = platformId;
+        PlatformId = platformId;
         Stock = stock;
         Available = available;
         Price = price;
@@ -68,7 +68,7 @@ public class Console_
         {
             Name = consoleCreateDTO.Name,
             Specifications = consoleCreateDTO.Specifications,
-            // PlatformId = consoleCreateDTO.PlatformId,
+            PlatformId = consoleCreateDTO.PlatformId,
             Stock = consoleCreateDTO.Stock,
             Available = consoleCreateDTO.Available,
             Price = consoleCreateDTO.Price,

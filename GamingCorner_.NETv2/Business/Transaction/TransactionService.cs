@@ -9,11 +9,17 @@ using GamingCorner.Models;
 {
 
     private readonly ITransactionRepository _transactionRepository;
+    private readonly IVideogameRepository _videogameRepository;
+    private readonly IConsoleRepository _consoleRepository;
+    private readonly IProductRepository _productRepository;
 
 
-    public TransactionService(ITransactionRepository transactionRepository)
+    public TransactionService(ITransactionRepository transactionRepository,IVideogameRepository videogameRepository, IConsoleRepository consoleRepository, IProductRepository productRepository)
     {
         _transactionRepository = transactionRepository;
+        _videogameRepository = videogameRepository;
+        _consoleRepository = consoleRepository;
+        _productRepository = productRepository;
 
     }
     public List<TransactionDTO> GetAll()
@@ -22,12 +28,38 @@ using GamingCorner.Models;
         return transactions;
     }
 
+    public void RegisterPurchaseProduct (int userId, int productId)
+    {
+        var transaction = new Transaction(userId, productId,null,null, "Compra", DateTime.Now);
+        _transactionRepository.Add(transaction);
+    }
+    public void RegisterPurchaseVideogame (int userId, int videogameId)
+    {
+        var transaction = new Transaction(userId, null,videogameId,null, "Compra", DateTime.Now);
+        _transactionRepository.Add(transaction);
+    }
+    
+    public void RegisterPurchaseConsole (int userId, int consoleId)
+    {
+        var transaction = new Transaction(userId, null,null,consoleId, "Compra", DateTime.Now);
+        _transactionRepository.Add(transaction);
+    }
+    public void SellProduct (int userId, Product product)
+    {
+        _productRepository.Add(product);
+        var transaction = new Transaction(userId, product.ProductId,null,null, "Venta", DateTime.Now);
+        _transactionRepository.Add(transaction);
+    }
+
     public TransactionDTO Get(int id)
     {
         var transaction = _transactionRepository.Get(id);
         return transaction;
     }
-
+    public TransactionDTO GetTransactionById(int id)
+    {
+        return _transactionRepository.Get(id);
+    }
 
     public void Add(TransactionCreateDTO transactionCreateDTO)
     {
@@ -41,6 +73,7 @@ using GamingCorner.Models;
     {
         _transactionRepository.Delete(id);
     }
+
 }
 
 

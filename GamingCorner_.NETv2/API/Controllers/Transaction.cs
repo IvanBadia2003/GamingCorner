@@ -34,6 +34,53 @@ public class TransactionController : ControllerBase
         }
     }
 
+    [HttpGet("user/{userId}")]
+    public ActionResult<List<TransactionDTO>> GetTransactionsByUserId(int userId)
+    {
+        var transactions = _transactionService.Get(userId);
+        if (transactions == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(transactions);
+    }
+
+    [HttpPost("compra/product")]
+    public ActionResult PurchaseProduct(int userId, int productId)
+    {
+        _transactionService.RegisterPurchaseProduct(userId, productId);
+        return Ok();
+    }
+    
+    [HttpPost("compra/videogame")]
+    public ActionResult PurchaseVideogame(int userId, int videogameId)
+    {
+        _transactionService.RegisterPurchaseVideogame(userId, videogameId);
+        return Ok();
+    }
+    
+    [HttpPost("compra/console")]
+    public ActionResult PurchaseConsole(int userId, int consoleId)
+    {
+        _transactionService.RegisterPurchaseConsole(userId, consoleId);
+        return Ok();
+    }
+    [HttpPost("sell/product")]
+    public ActionResult SellProduct(int userId, [FromBody] ProductCreateDTO productCreateDTO)
+    {
+        var product = new Product
+        {
+            Name = productCreateDTO.Name,
+            Description = productCreateDTO.Description,
+            Price = productCreateDTO.Price,
+            Available = productCreateDTO.Available,
+            ImageURL = productCreateDTO.ImageURL
+        };
+        _transactionService.SellProduct(userId, product);
+        return Ok();
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] TransactionCreateDTO transactionCreateDTO)
     {

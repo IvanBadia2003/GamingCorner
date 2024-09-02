@@ -27,6 +27,48 @@ using GamingCorner.Models;
         var platform = _platformRepository.Get(id);
         return platform;
     }
+    
+    public List<VideogameDTO> GetVideogamesByPlatform(int id)
+    {
+        var videogames = _platformRepository.GetVideogamesByPlatform(id);
+
+        if (videogames == null || !videogames.Any())
+        {
+            return null;
+        }
+
+        return videogames.Select(v => new VideogameDTO
+        {
+            VideogameId = v.VideogameId,
+            Name = v.Name,
+            PlatformId = v.PlatformId,
+            Price = v.Price,
+            Stock = v.Stock,
+            Description = v.Description,
+            Requisitos = v.Requisitos,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
+    public List<ConsoleDTO> GetConsolesByPlatform(int id)
+    {
+        var consoles = _platformRepository.GetConsolesByPlatform(id);
+
+        if (consoles == null || !consoles.Any())
+        {
+            return null;
+        }
+
+        return consoles.Select(v => new ConsoleDTO
+        {
+            ConsoleId = v.ConsoleId,
+            Name = v.Name,
+            Specifications = v.Specifications,
+            Price = v.Price,
+            Stock = v.Stock,
+            Available = v.Available,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
 
 
     public void Add(PlatformCreateDTO platformCreateDTO)

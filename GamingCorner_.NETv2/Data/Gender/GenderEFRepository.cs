@@ -30,8 +30,6 @@
                 {
                     GenderId = g.GenderId,
                     Name = g.Name,
-                    BackgroundImg = g.BackgroundImg,
-                    CharacterImg = g.CharacterImg,
                 }).ToList();
                 return genderDto;
             }
@@ -59,8 +57,6 @@
                 {
                     GenderId = gender.GenderId,
                     Name = gender.Name,
-                    BackgroundImg = gender.BackgroundImg,
-                    CharacterImg = gender.CharacterImg,
                 };
                 return genderDto;
             }
@@ -68,6 +64,13 @@
             {
                 return null;
             }
+        }
+
+        public List<Videogame> GetVideogamesByGender (int id)
+        {
+            return _context.Videogames
+                           .Where(v => v.GenderId == id)
+                           .ToList();    
         }
 
         public void Update(Gender gender)

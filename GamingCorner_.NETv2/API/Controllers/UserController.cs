@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using GamingCorner.Business;
 using GamingCorner.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,31 @@ public class UserController : ControllerBase
     public UserController(IUserService userService)
     {
         _userService = userService;
+    }
+
+    [HttpGet("get-chat-users")]
+    public IActionResult GetChatUsers(int productId)
+    {
+        try
+        {
+            // Obtén el ID del usuario autenticado desde el token de autenticación
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            // Llama al servicio para obtener los datos del usuario actual y el vendedor
+            (UserDTO currentUser, UserDTO sellerUser) = _userService.PrepareChatUsers(currentUserId, productId);
+
+            // Devuelve los datos en la respuesta HTTP
+            return Ok(new
+            {
+                CurrentUser = currentUser,
+                SellerUser = sellerUser
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            // Si ocurre una excepción de KeyNotFound, devolvemos un 404 NotFound
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpGet]
@@ -32,6 +58,21 @@ public class UserController : ControllerBase
         {
             return user;
         }
+    }
+
+    [HttpGet]
+    [Route("{id}/transactions")]
+    public ActionResult<List<TransactionDTO>> GetTransactionsByUser(int id)
+    {
+        var transactions = _userService.GetTransactionsByUser(id);
+
+        if (transactions == null || transactions.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(transactions);
+
+
     }
 
     [HttpPost]
@@ -114,35 +155,35 @@ public class UserController : ControllerBase
     //     }
     // }
 
-//     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
-// public IActionResult GetChatDetails(int buyerId, int sellerId)
-// {
-//     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
-//     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
+    //     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
+    // public IActionResult GetChatDetails(int buyerId, int sellerId)
+    // {
+    //     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
+    //     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
 
-//     if (buyer == null || seller == null)
-//     {
-//         return NotFound();
-//     }
+    //     if (buyer == null || seller == null)
+    //     {
+    //         return NotFound();
+    //     }
 
-//     var chatDetails = new
-//     {
-//         buyer = new
-//         {
-//             id = buyer.Id,
-//             name = buyer.Name,
-//             email = buyer.Email
-//         },
-//         seller = new
-//         {
-//             id = seller.Id,
-//             name = seller.Name,
-//             email = seller.Email
-//         }
-//     };
+    //     var chatDetails = new
+    //     {
+    //         buyer = new
+    //         {
+    //             id = buyer.Id,
+    //             name = buyer.Name,
+    //             email = buyer.Email
+    //         },
+    //         seller = new
+    //         {
+    //             id = seller.Id,
+    //             name = seller.Name,
+    //             email = seller.Email
+    //         }
+    //     };
 
-//     return Ok(chatDetails);
-// }
+    //     return Ok(chatDetails);
+    // }
 
 
 

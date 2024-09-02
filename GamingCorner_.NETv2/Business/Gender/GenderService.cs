@@ -28,6 +28,27 @@ using GamingCorner.Models;
         return gender;
     }
 
+    public List<VideogameDTO> GetVideogamesByGender(int id)
+    {
+        var videogames = _genderRepository.GetVideogamesByGender(id);
+
+        if (videogames == null || !videogames.Any())
+        {
+            return null;
+        }
+
+        return videogames.Select(v => new VideogameDTO
+        {
+            VideogameId = v.VideogameId,
+            Name = v.Name,
+            PlatformId = v.PlatformId,
+            Price = v.Price,
+            Stock = v.Stock,
+            Description = v.Description,
+            Requisitos = v.Requisitos,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
 
     public void Add(GenderCreateDTO genderCreateDTO)
     {

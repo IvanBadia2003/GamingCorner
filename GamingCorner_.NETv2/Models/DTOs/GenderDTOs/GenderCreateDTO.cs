@@ -9,11 +9,5 @@ public class GenderCreateDTO
 {
     [Required]
     public string? Name { get; set; }
-    
-    [Required]
-    public string? BackgroundImg { get; set; }
-    
-    [Required]
-    public string? CharacterImg { get; set; }
 
 }

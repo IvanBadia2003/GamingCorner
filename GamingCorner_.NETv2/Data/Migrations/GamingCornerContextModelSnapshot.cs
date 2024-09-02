@@ -41,6 +41,9 @@ namespace GamingCorner.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -53,6 +56,8 @@ namespace GamingCorner.Data.Migrations
 
                     b.HasKey("ConsoleId");
 
+                    b.HasIndex("PlatformId");
+
                     b.ToTable("Consoles");
 
                     b.HasData(
@@ -62,6 +67,7 @@ namespace GamingCorner.Data.Migrations
                             Available = true,
                             ImageURL = "",
                             Name = "Play Station 4",
+                            PlatformId = 1,
                             Price = 300m,
                             Specifications = "Ta bien",
                             Stock = 16
@@ -72,6 +78,7 @@ namespace GamingCorner.Data.Migrations
                             Available = true,
                             ImageURL = "",
                             Name = "Xbox 360",
+                            PlatformId = 3,
                             Price = 265m,
                             Specifications = "Ta bien pero no tanto",
                             Stock = 5
@@ -86,12 +93,6 @@ namespace GamingCorner.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenderId"), 1L, 1);
 
-                    b.Property<string>("BackgroundImg")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CharacterImg")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -103,36 +104,26 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             GenderId = 1,
-                            BackgroundImg = "",
-                            CharacterImg = "",
                             Name = "RPG"
                         },
                         new
                         {
                             GenderId = 2,
-                            BackgroundImg = "",
-                            CharacterImg = "",
                             Name = "Shooter"
                         },
                         new
                         {
                             GenderId = 3,
-                            BackgroundImg = "",
-                            CharacterImg = "",
                             Name = "Estrategia"
                         },
                         new
                         {
                             GenderId = 4,
-                            BackgroundImg = "",
-                            CharacterImg = "",
                             Name = "Accion"
                         },
                         new
                         {
                             GenderId = 5,
-                            BackgroundImg = "",
-                            CharacterImg = "",
                             Name = "Deportes"
                         });
                 });
@@ -172,6 +163,16 @@ namespace GamingCorner.Data.Migrations
                         {
                             PlatformId = 4,
                             Name = "Switch"
+                        },
+                        new
+                        {
+                            PlatformId = 5,
+                            Name = "Ubisoft"
+                        },
+                        new
+                        {
+                            PlatformId = 6,
+                            Name = "Epic Games"
                         });
                 });
 
@@ -246,15 +247,17 @@ namespace GamingCorner.Data.Migrations
                     b.Property<int?>("ConsoleId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("ProductId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("VideogameId")
@@ -276,6 +279,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 1,
+                            Date = new DateTime(2024, 9, 2, 21, 35, 27, 305, DateTimeKind.Local).AddTicks(1155),
                             ProductId = 1,
                             Type = "Compra",
                             UserId = 1
@@ -283,6 +287,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 2,
+                            Date = new DateTime(2024, 9, 2, 21, 35, 27, 305, DateTimeKind.Local).AddTicks(1194),
                             ProductId = 2,
                             Type = "Compra",
                             UserId = 2
@@ -290,6 +295,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 3,
+                            Date = new DateTime(2024, 9, 2, 21, 35, 27, 305, DateTimeKind.Local).AddTicks(1196),
                             ProductId = 3,
                             Type = "Compra",
                             UserId = 3
@@ -382,9 +388,16 @@ namespace GamingCorner.Data.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
@@ -397,6 +410,9 @@ namespace GamingCorner.Data.Migrations
                     b.Property<int>("Pegi")
                         .HasColumnType("int");
 
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -407,10 +423,14 @@ namespace GamingCorner.Data.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("VideogameId");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("PlatformId");
 
                     b.HasIndex("UserId");
 
@@ -421,10 +441,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 1,
                             Available = true,
+                            Code = "code1",
                             Description = "Altos carros voladores",
+                            GenderId = 1,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.webp",
                             Name = "Rocket League",
                             Pegi = 12,
+                            PlatformId = 1,
                             Price = 15m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 3,
@@ -434,10 +457,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 2,
                             Available = true,
+                            Code = "code2",
                             Description = "Gran Robo de Autos",
+                            GenderId = 2,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1twh.webp",
                             Name = "GTA 5",
                             Pegi = 18,
+                            PlatformId = 2,
                             Price = 13m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 7,
@@ -447,10 +473,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 3,
                             Available = true,
+                            Code = "code3",
                             Description = "Aventura épica en un mundo de fantasía",
+                            GenderId = 3,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lgo.webp",
                             Name = "The Witcher 3",
                             Pegi = 18,
+                            PlatformId = 3,
                             Price = 20m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 5,
@@ -460,10 +489,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 4,
                             Available = true,
+                            Code = "code4",
                             Description = "Juego de construcción y aventuras",
+                            GenderId = 4,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2b4k.webp",
                             Name = "Minecraft",
                             Pegi = 7,
+                            PlatformId = 1,
                             Price = 25m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 10,
@@ -473,10 +505,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 5,
                             Available = true,
+                            Code = "code5",
                             Description = "Juego de supervivencia y construcción",
+                            GenderId = 5,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2ekt.webp",
                             Name = "Fortnite",
                             Pegi = 12,
+                            PlatformId = 2,
                             Price = 0m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 8,
@@ -486,10 +521,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 6,
                             Available = true,
+                            Code = "code6",
                             Description = "Juego de disparos en equipo",
+                            GenderId = 1,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co7v86.webp",
                             Name = "Overwatch",
                             Pegi = 12,
+                            PlatformId = 3,
                             Price = 30m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 6,
@@ -499,10 +537,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 7,
                             Available = true,
+                            Code = "code7",
                             Description = "Simulación de fútbol",
+                            GenderId = 2,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co3wm2.webp",
                             Name = "FIFA 21",
                             Pegi = 3,
+                            PlatformId = 1,
                             Price = 50m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 12,
@@ -512,10 +553,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 8,
                             Available = true,
+                            Code = "code8",
                             Description = "Aventura en un mundo futurista",
+                            GenderId = 3,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co64re.webp",
                             Name = "Cyberpunk 2077",
                             Pegi = 18,
+                            PlatformId = 2,
                             Price = 60m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 4,
@@ -525,10 +569,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 9,
                             Available = true,
+                            Code = "code9",
                             Description = "Aventura en el Viejo Oeste",
+                            GenderId = 4,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1q1f.webp",
                             Name = "Red Dead Redemption 2",
                             Pegi = 18,
+                            PlatformId = 3,
                             Price = 40m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 9,
@@ -538,10 +585,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 10,
                             Available = true,
+                            Code = "code10",
                             Description = "Aventura de vikingos",
+                            GenderId = 5,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rrw.webp",
                             Name = "Assassin's Creed Valhalla",
                             Pegi = 18,
+                            PlatformId = 4,
                             Price = 55m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 7,
@@ -551,10 +601,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 11,
                             Available = true,
+                            Code = "code11",
                             Description = "Juego de disparos en primera persona",
+                            GenderId = 1,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rsg.webp",
                             Name = "Call of Duty: Modern Warfare",
                             Pegi = 18,
+                            PlatformId = 4,
                             Price = 50m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 11,
@@ -564,10 +617,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 12,
                             Available = true,
+                            Code = "code12",
                             Description = "Aventura en un mundo postapocalíptico",
+                            GenderId = 2,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2una.webp",
                             Name = "Horizon Zero Dawn",
                             Pegi = 16,
+                            PlatformId = 4,
                             Price = 35m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 5,
@@ -577,10 +633,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 13,
                             Available = true,
+                            Code = "code13",
                             Description = "Simulación de granja",
+                            GenderId = 3,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/xrpmydnu9rpxvxfjkiu7.webp",
                             Name = "Stardew Valley",
                             Pegi = 7,
+                            PlatformId = 4,
                             Price = 20m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 8,
@@ -590,10 +649,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 14,
                             Available = true,
+                            Code = "code14",
                             Description = "Juego de deducción social",
+                            GenderId = 4,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co6kqt.webp",
                             Name = "Among Us",
                             Pegi = 10,
+                            PlatformId = 1,
                             Price = 5m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 15,
@@ -603,10 +665,13 @@ namespace GamingCorner.Data.Migrations
                         {
                             VideogameId = 15,
                             Available = true,
+                            Code = "code15",
                             Description = "Aventura en el mundo de Hyrule",
+                            GenderId = 5,
                             ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_small/co4n26.png",
                             Name = "The Legend of Zelda: Breath of the Wild",
                             Pegi = 12,
+                            PlatformId = 2,
                             Price = 60m,
                             Requisitos = "RTX 3060;MUCHAS COSAS MAS; LAS TERCERA COSA; Y UNA DE REGALO",
                             Stock = 6,
@@ -614,27 +679,38 @@ namespace GamingCorner.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("GamingCorner.Models.Console_", b =>
+                {
+                    b.HasOne("GamingCorner.Models.Platform", "Platform")
+                        .WithMany("Consoles")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Platform");
+                });
+
             modelBuilder.Entity("GamingCorner.Models.Transaction", b =>
                 {
                     b.HasOne("GamingCorner.Models.Console_", "Console")
                         .WithMany("Transactions")
-                        .HasForeignKey("ConsoleId");
+                        .HasForeignKey("ConsoleId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("GamingCorner.Models.Product", "Product")
                         .WithMany("Transactions")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("GamingCorner.Models.User", "User")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GamingCorner.Models.Videogame", "Videogame")
                         .WithMany("Transactions")
-                        .HasForeignKey("VideogameId");
+                        .HasForeignKey("VideogameId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Console");
 
@@ -647,11 +723,26 @@ namespace GamingCorner.Data.Migrations
 
             modelBuilder.Entity("GamingCorner.Models.Videogame", b =>
                 {
+                    b.HasOne("GamingCorner.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GamingCorner.Models.Platform", "Platform")
+                        .WithMany("videogames")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("GamingCorner.Models.User", "User")
                         .WithMany("Videogames")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("Platform");
 
                     b.Navigation("User");
                 });
@@ -659,6 +750,13 @@ namespace GamingCorner.Data.Migrations
             modelBuilder.Entity("GamingCorner.Models.Console_", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("GamingCorner.Models.Platform", b =>
+                {
+                    b.Navigation("Consoles");
+
+                    b.Navigation("videogames");
                 });
 
             modelBuilder.Entity("GamingCorner.Models.Product", b =>

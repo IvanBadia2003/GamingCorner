@@ -34,6 +34,21 @@ public class GenderController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("{id}/videogames")]
+    public ActionResult<List<VideogameDTO>> GetVideogamesByGender(int id)
+    {
+        var videogames = _genderService.GetVideogamesByGender(id);
+
+        if (videogames == null || videogames.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(videogames);
+
+
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] GenderCreateDTO genderCreateDTO)
     {

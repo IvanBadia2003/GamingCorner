@@ -6,8 +6,9 @@
     using System.Data;
     using GamingCorner.Data;
     using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
-    public class PlatformEFRepository : IPlatformRepository
+public class PlatformEFRepository : IPlatformRepository
     {
 
 
@@ -64,6 +65,19 @@
             {
                 return null;
             }
+        }
+
+        public List<Videogame> GetVideogamesByPlatform (int id)
+        {
+            return _context.Videogames
+                           .Where(v => v.PlatformId == id)
+                           .ToList();    
+        }
+        public List<Console_> GetConsolesByPlatform (int id)
+        {
+            return _context.Consoles
+                           .Where(v => v.ConsoleId == id)
+                           .ToList();    
         }
 
         public void Update(Platform platform)

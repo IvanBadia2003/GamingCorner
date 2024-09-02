@@ -10,4 +10,5 @@ public interface ITransactionRepository
     TransactionDTO Get(int id);
     void Update(Transaction transaction);
     void Delete(int id);
+
 }

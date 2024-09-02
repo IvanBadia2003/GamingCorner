@@ -12,11 +12,11 @@ public class Transaction
     
     [ForeignKey("User")]
     public int? UserId { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
     
     [ForeignKey("Product")]
     public int? ProductId { get; set; }
-    public Product Product { get; set; }
+    public Product? Product { get; set; }
     
     [ForeignKey("Videogame")]
     public int? VideogameId { get; set; }
@@ -25,19 +25,22 @@ public class Transaction
     [ForeignKey("Console_")]
     public int? ConsoleId { get; set; }
     public Console_? Console { get; set; }
-    public string? Type { get; set; }
+    
+    public string Type { get; set; } // Compra o venta
+    public DateTime? Date { get; set; }
 
     // public List<VideogameGender> ListVideogameGender { get; set; }
 
     public Transaction() { }
 
-    public Transaction(int userId, int productId, string type, int videogameId, int consoleId)
+    public Transaction(int? userId, int? productId, int? videogameId, int? consoleId, string? type, DateTime? date)
     {
         UserId = userId;
         ProductId = productId;
         VideogameId = videogameId;
         ConsoleId = consoleId;
         Type = type;
+        Date = date;
     }
 
 
@@ -55,7 +58,6 @@ public class Transaction
            ProductId = transactionCreateDTO.ProductId,
            VideogameId = transactionCreateDTO.VideogameId,
            ConsoleId = transactionCreateDTO.ConsoleId,
-           Type = transactionCreateDTO.Type,
         };
 
         return transaction;
