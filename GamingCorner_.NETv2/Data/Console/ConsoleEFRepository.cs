@@ -55,7 +55,7 @@ public class ConsoleEFRepository : IConsoleRepository
         {
             var console = _context.Consoles
             // .Include(p => p.Platform)
-            //     .Where(console => console.ConsoleId == id)
+                .Where(console => console.ConsoleId == id)
                 .FirstOrDefault();
 
             if (console != null)
