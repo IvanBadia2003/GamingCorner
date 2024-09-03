@@ -23,7 +23,8 @@ public class Videogame
 
     public bool Available { get; set; }
 
-    public string? Requisitos { get; set; }
+    public string? Requisitos1 { get; set; }
+    public string? Requisitos2 { get; set; }
 
     public int PlatformId { get; set; }
 
@@ -44,12 +45,14 @@ public class Videogame
 
     public Videogame() { }
 
-    public Videogame(string name, int pegi, string description, int stock, bool available, int platformId, int genderId, decimal price, string imageURL, string code)
+    public Videogame(string name, int pegi, string description, int stock, bool available, int platformId, int genderId, decimal price, string imageURL, string code, string requisitos1, string requisitos2)
     {
         Name = name;
         Pegi = pegi;
         Code = code;
         Description = description;
+        Requisitos1 = requisitos1;
+        Requisitos2 = requisitos2;
         Stock = stock;
         Available = available;
         PlatformId = platformId;
@@ -72,7 +75,8 @@ public class Videogame
             Pegi = videogameCreateDTO.Pegi,
             Code = videogameCreateDTO.Code,
             Description = videogameCreateDTO.Description,
-            Requisitos = videogameCreateDTO.Requisitos,
+            Requisitos1 = videogameCreateDTO.Requisitos1,
+            Requisitos2 = videogameCreateDTO.Requisitos2,
             Stock = videogameCreateDTO.Stock,
             Available = videogameCreateDTO.Available,
             PlatformId = videogameCreateDTO.PlatformId,

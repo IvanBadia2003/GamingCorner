@@ -45,7 +45,8 @@ using GamingCorner.Models;
             Price = v.Price,
             Stock = v.Stock,
             Description = v.Description,
-            Requisitos = v.Requisitos,
+            Requisitos1 = v.Requisitos1,
+            Requisitos2 = v.Requisitos2,
             ImageURL = v.ImageURL
         }).ToList();
     }

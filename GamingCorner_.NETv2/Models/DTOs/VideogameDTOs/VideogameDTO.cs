@@ -14,7 +14,8 @@ public class VideogameDTO
     public string? Code { get; set; }
     public string? Description { get; set; }
     public int UserId { get; set; }
-    public string? Requisitos { get; set; }
+    public string? Requisitos1 { get; set; }
+    public string? Requisitos2 { get; set; }
     public int Stock { get; set; }
     public bool Available { get; set; }
     public decimal Price { get; set; }
@@ -32,7 +33,8 @@ public class VideogameDTO
             Price = this.Price,
             Code = this.Code,
             Description = this.Description,
-            Requisitos = this.Requisitos,
+            Requisitos1 = this.Requisitos1,
+            Requisitos2 = this.Requisitos2,
             Stock = this.Stock,
             Available = this.Available,
             Pegi = this.Pegi,
