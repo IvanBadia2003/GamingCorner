@@ -46,27 +46,27 @@ public class TransactionController : ControllerBase
         return Ok(transactions);
     }
 
-    [HttpPost("compra/product")]
+    [HttpPost("compra/user/{userId}/product/{productId}")]
     public ActionResult PurchaseProduct(int userId, int productId)
     {
         _transactionService.RegisterPurchaseProduct(userId, productId);
         return Ok();
     }
     
-    [HttpPost("compra/videogame")]
+    [HttpPost("compra/user/{userId}/videgame/{videogameId}")]
     public ActionResult PurchaseVideogame(int userId, int videogameId)
     {
         _transactionService.RegisterPurchaseVideogame(userId, videogameId);
         return Ok();
     }
     
-    [HttpPost("compra/console")]
+    [HttpPost("compra/user/{userId}/console/{consoleId}")]
     public ActionResult PurchaseConsole(int userId, int consoleId)
     {
         _transactionService.RegisterPurchaseConsole(userId, consoleId);
         return Ok();
     }
-    [HttpPost("sell/product")]
+    [HttpPost("sell/user/{userId}/product")]
     public ActionResult SellProduct(int userId, [FromBody] ProductCreateDTO productCreateDTO)
     {
         var product = new Product
