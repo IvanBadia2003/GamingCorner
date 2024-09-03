@@ -1,44 +1,69 @@
 <script setup lang="ts">
 import { useGenderStore } from '@/stores/GenderStore';
 import { useFilterStore } from '@/stores/FilterStore';
+import { useGameStore } from '@/stores/GameStore';
+import { usePlatformStore } from '@/stores/PlatformStore';
 import { ref } from 'vue';
 
 const props = defineProps<{ title: string }>();
 
 const GenderStore = useGenderStore();
 const FilterStore = useFilterStore();
+const GameStore = useGameStore();
+const PlatformStore = usePlatformStore();
 
-const genderSelected = ref('');
+const genderSelected = ref(0);
+const platformSelected = ref(0);
+
+// Función para filtro 'Ordenar Por'
+const selectedOption = ref<string>('');
+const handleFilterChange = () => {
+    if (props.title === 'Ordenar por') {
+        FilterStore.setSortOption(selectedOption.value);
+    }
+};
+// Nueva función para manejar la entrada de la búsqueda
+const handleSearchInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    FilterStore.setSearchTerm(target.value);
+};
+
 </script>
 
 <template>
     <div class="category-container">
         <div class="category-name">{{ props.title }}</div>
         <div v-if="$props.title == 'Género'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
-                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select" @change="GameStore.filterGamesByGenre(genderSelected)">
+                <option value="0">Selecciona una opción...</option>
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId" :value="gender.genderId">{{ gender.name }}</option>
             </select>
         </div>
-        <div v-if="$props.title == 'Sistema'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
-                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+        <div v-if="$props.title == 'Plataforma'" class="category-filters">
+            <select v-model="platformSelected" name="genders" id="genders" class="custom-select" @change="GameStore.filterGamesByPlatform(platformSelected)">
+                <option value="0">Selecciona una opción...</option>
+                <option v-for="platform in PlatformStore.paltforms" :key="platform.platformId" :value="platform.platformId">{{ platform.name }}</option>
             </select>
         </div>
         <div v-if="$props.title == 'Precio'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
-                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
+            <select  name="genders" id="genders" class="custom-select">
+                <option value="">Selecciona una opción...</option>
+                <option value="price-asc">Hasta 10€</option>
+                <option value="price-desc">Hasta 25€</option>                
+                <option value="price-asc">Hasta 50€</option>
+                <option value="price-desc">Hasta 80€</option>
             </select>
         </div>
-        <div v-if="$props.title == 'Producto'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
-                <option>Consola</option>
-                <option>Juego</option>
+
+        <div v-if="props.title === 'Ordenar por'" class="category-filters">
+            <select v-model="selectedOption" @change="handleFilterChange" class="custom-select">
+                <option value="">Selecciona una opción...</option>
+                <option value="price-asc">Precio: Menor a Mayor</option>
+                <option value="price-desc">Precio: Mayor a Menor</option>
             </select>
         </div>
-        <div v-if="$props.title == 'Ordenar por'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select">
-                <option v-for="gender in GenderStore.genders" :key="gender.genderId">{{ gender.name }}</option>
-            </select>
+        <div class="category-filters" v-if="props.title === 'Buscar'">
+            <input type="text" placeholder="Buscar..." @input="handleSearchInput" class="custom-select" />
         </div>
     </div>
 </template>
@@ -81,8 +106,8 @@ const genderSelected = ref('');
             transition: border-color 0.3s ease;
 
             option {
-                padding: 8px; 
-                background-color: #fff; 
+                padding: 8px;
+                background-color: #fff;
                 color: #333;
             }
 
