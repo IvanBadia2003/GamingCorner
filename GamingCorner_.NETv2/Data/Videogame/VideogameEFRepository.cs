@@ -35,6 +35,7 @@ public class VideogameEFRepository : IVideogameRepository
                 Description = v.Description,
                 Requisitos = v.Requisitos,
                 Stock = v.Stock,
+                PlatformId =v.PlatformId,
                 Available = v.Available,
                 GenderId =v.GenderId,
                 Price = v.Price,
