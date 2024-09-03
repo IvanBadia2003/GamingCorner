@@ -76,13 +76,12 @@ public class UserEFRepository : IUserRepository
                 Password = user.Password,
                 PhoneNumber = user.PhoneNumber,
                 Admin = user.Admin,
-                // ImageURL = user.ImageURL,
-                Videogames = user.Videogames.Select(v => new VideogameDTO
-                {
-                    VideogameId = v.VideogameId,
-                    Price = v.Price,
-                    Name = v.Name,
-                }).ToList()
+                // Videogames = user.Videogames.Select(v => new VideogameDTO
+                // {
+                //     VideogameId = v.VideogameId,
+                //     Price = v.Price,
+                //     Name = v.Name,
+                // }).ToList()
             };
             return userDto;
         }
@@ -144,7 +143,6 @@ public class UserEFRepository : IUserRepository
                 Password = user.Password,
                 PhoneNumber = user.PhoneNumber,
                 Admin = user.Admin,
-                // ImageURL = user.ImageURL,
             };
             return userDto;
         }

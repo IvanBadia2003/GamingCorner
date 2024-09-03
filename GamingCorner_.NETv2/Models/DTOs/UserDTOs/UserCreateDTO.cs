@@ -27,9 +27,6 @@ public class UserCreateDTO
     
     [Required]
     public string? phoneNumber { get; set; }
-    
-    [Required]
-    public IFormFile? ImageURL { get; set; }
  
 
 }

@@ -29,11 +29,6 @@ public class User
     [Required]
     public bool Admin { get; set; }
 
-    // [Required]
-    // public string? ImageURL { get; set; }
-    public byte[]? ProfilePicture { get; set; }         // Para almacenar los datos binarios de la imagen
-    public string? ProfilePictureFileName { get; set; } // Para almacenar el nombre del archivo de la imagen
-    public string? ProfilePictureContentType { get; set; } // Para almacenar el tipo de contenido (MIME type) de la imagen
 
     // public List<Console_> Consoles { get; set; } = new List<Console_>();
 
@@ -43,7 +38,7 @@ public class User
 
     public User() { }
 
-    public User(string name,string address, string email,string password,string phoneNumber,bool admin,string imageURL)
+    public User(string name,string address, string email,string password,string phoneNumber,bool admin)
     {
         Name = name;
         Address = address;

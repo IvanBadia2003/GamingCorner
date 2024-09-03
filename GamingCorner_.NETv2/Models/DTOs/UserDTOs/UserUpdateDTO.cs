@@ -25,6 +25,5 @@ public class UserUpdateDTO
     public string? Password { get; set; }
 
     public string? PhoneNumber { get; set; }
-    public IFormFile ProfilePicture { get; set; }  // Para manejar la actualización de la imagen de perfil
 
 }

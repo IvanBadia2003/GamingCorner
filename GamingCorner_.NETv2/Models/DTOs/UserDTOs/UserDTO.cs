@@ -28,12 +28,6 @@ public class UserDTO
     [Required]
     public bool Admin { get; set; }
 
-    [Required]
-    public string? ImageURL { get; set; }
-
-    public string ProfilePictureFileName { get; set; } // Nombre del archivo de la imagen
-    public string ProfilePictureContentType { get; set; } // Tipo de contenido (MIME type) de la imagen
-
     public List<VideogameDTO> Videogames { get; set; }
     public List<TransactionDTO> Transactions { get; set; }
 
@@ -48,7 +42,7 @@ public class UserDTO
             Password = this.Password,
             PhoneNumber = this.PhoneNumber,
             Admin = this.Admin,
-            // ImageURL = this.ImageURL
+
         };
     }
 }

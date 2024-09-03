@@ -16,31 +16,6 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpGet("get-chat-users")]
-    public IActionResult GetChatUsers(int productId)
-    {
-        try
-        {
-            // Obtén el ID del usuario autenticado desde el token de autenticación
-            var currentUserId = HttpContext.Session.GetInt32("UserId")
-
-            // Llama al servicio para obtener los datos del usuario actual y el vendedor
-            (UserDTO currentUser, UserDTO sellerUser) = _userService.PrepareChatUsers(currentUserId, productId);
-
-            // Devuelve los datos en la respuesta HTTP
-            return Ok(new
-            {
-                CurrentUser = currentUser,
-                SellerUser = sellerUser
-            });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            // Si ocurre una excepción de KeyNotFound, devolvemos un 404 NotFound
-            return NotFound(ex.Message);
-        }
-    }
-
     [HttpGet]
     public ActionResult<List<UserDTO>> GetAll() => _userService.GetAll();
 
@@ -143,7 +118,6 @@ public class UserController : ControllerBase
         }
 
         // Devuelve un Ok con el objeto UserDTO si el inicio de sesión es exitoso
-        var currentUserId = HttpContext.Session.GetInt32("UserId",)
         return Ok(user);
     }
 
