@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Http;
+
 
 namespace GamingCorner.Models;
 
@@ -23,7 +25,6 @@ public class UserUpdateDTO
     public string? Password { get; set; }
 
     public string? PhoneNumber { get; set; }
-
-    public string? ImageURL { get; set; }
+    public IFormFile ProfilePicture { get; set; }  // Para manejar la actualización de la imagen de perfil
 
 }

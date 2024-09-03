@@ -29,8 +29,11 @@ public class User
     [Required]
     public bool Admin { get; set; }
 
-    [Required]
-    public string? ImageURL { get; set; }
+    // [Required]
+    // public string? ImageURL { get; set; }
+    public byte[]? ProfilePicture { get; set; }         // Para almacenar los datos binarios de la imagen
+    public string? ProfilePictureFileName { get; set; } // Para almacenar el nombre del archivo de la imagen
+    public string? ProfilePictureContentType { get; set; } // Para almacenar el tipo de contenido (MIME type) de la imagen
 
     // public List<Console_> Consoles { get; set; } = new List<Console_>();
 
@@ -48,7 +51,6 @@ public class User
         Password = password;
         PhoneNumber = phoneNumber;
         Admin = admin;
-        ImageURL = imageURL;
     }
 
     public User mapFromCreateDto(UserCreateDTO userCreateDTO)
@@ -67,7 +69,6 @@ public class User
             Password = userCreateDTO.Password,
             PhoneNumber = userCreateDTO.phoneNumber,
             Admin = userCreateDTO.Admin,
-            ImageURL = userCreateDTO.ImageURL,
         };
 
         return user;

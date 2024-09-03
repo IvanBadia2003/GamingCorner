@@ -79,6 +79,17 @@ public class UserService : IUserService
         var user = new User();
         var mappedUser = user.mapFromCreateDto(userCreateDTO);
         _userRepository.Add(mappedUser);
+        if(userCreateDTO.ImageURL != null)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                userCreateDTO.ImageURL.CopyTo(memoryStream);
+                user.ProfilePicture = memoryStream.ToArray();
+                user.ProfilePictureFileName = userCreateDTO.ImageURL.FileName;
+                user.ProfilePictureContentType = userCreateDTO.ImageURL.ContentType;
+            }
+        }
+        _userRepository.Add(user); 
     }
 
     public void Update(int id, UserUpdateDTO userUpdateDTO)
@@ -95,7 +106,6 @@ public class UserService : IUserService
         user.Email = userUpdateDTO.Email;
         user.Password = userUpdateDTO.Password;
         user.PhoneNumber = userUpdateDTO.PhoneNumber;
-        user.ImageURL = userUpdateDTO.ImageURL;
         _userRepository.Update(user);
     }
 

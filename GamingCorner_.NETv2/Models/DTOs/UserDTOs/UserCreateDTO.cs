@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Http;
 
 namespace GamingCorner.Models;
 
@@ -28,7 +29,7 @@ public class UserCreateDTO
     public string? phoneNumber { get; set; }
     
     [Required]
-    public string? ImageURL { get; set; }
+    public IFormFile? ImageURL { get; set; }
  
 
 }

@@ -82,8 +82,16 @@ public class UserController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        _userService.Add(userCreateDTO);
-        return Ok();
+        try
+        {
+             _userService.Add(userCreateDTO);
+             return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+        
     }
 
     [HttpPut("{id}")]

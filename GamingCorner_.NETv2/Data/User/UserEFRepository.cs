@@ -36,7 +36,7 @@ public class UserEFRepository : IUserRepository
                 PhoneNumber = u.PhoneNumber,
                 Password = u.Password,
                 Admin = u.Admin,
-                ImageURL = u.ImageURL,
+                // ImageURL = u.ImageURL,
                 Videogames = u.Videogames.Select(v => new VideogameDTO
                 {
                     VideogameId = v.VideogameId,
@@ -76,7 +76,7 @@ public class UserEFRepository : IUserRepository
                 Password = user.Password,
                 PhoneNumber = user.PhoneNumber,
                 Admin = user.Admin,
-                ImageURL = user.ImageURL,
+                // ImageURL = user.ImageURL,
                 Videogames = user.Videogames.Select(v => new VideogameDTO
                 {
                     VideogameId = v.VideogameId,
@@ -144,7 +144,7 @@ public class UserEFRepository : IUserRepository
                 Password = user.Password,
                 PhoneNumber = user.PhoneNumber,
                 Admin = user.Admin,
-                ImageURL = user.ImageURL,
+                // ImageURL = user.ImageURL,
             };
             return userDto;
         }

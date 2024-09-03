@@ -106,10 +106,11 @@ namespace GamingCorner.Data
 
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Name = "Diego", Address = "C/ La Lectura", Email = "diego@gmail.com", Password = "12345", PhoneNumber = "601112734", Admin = true, ImageURL = "" },
-                new User { UserId = 2, Name = "Ivan", Address = "Avda. San Juan de la Peña", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = "123456789", Admin = true, ImageURL = "" },
-                new User { UserId = 3, Name = "Adrian", Address = "El Actur", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = "987654321", Admin = false, ImageURL = "" }
-            );
+    new User { UserId = 1, Name = "Diego", Address = "C/ La Lectura", Email = "diego@gmail.com", Password = "12345", PhoneNumber = "601112734", Admin = true, ProfilePicture = null,}, // No se proporciona una imagenProfilePictureFileName = null, ProfilePictureContentType = null 
+    new User { UserId = 2, Name = "Ivan", Address = "Avda. San Juan de la Peña", Email = "ivan@gmail.com", Password = "12345", PhoneNumber = "123456789", Admin = true, ProfilePicture = null, ProfilePictureFileName = null, ProfilePictureContentType = null },
+    new User { UserId = 3, Name = "Adrian", Address = "El Actur", Email = "adrian@gmail.com", Password = "00000", PhoneNumber = "987654321", Admin = false, ProfilePicture = null, ProfilePictureFileName = null, ProfilePictureContentType = null }
+);
+
 
             modelBuilder.Entity<Platform>().HasData(
                 new Platform { PlatformId = 1, Name = "Steam" },
