@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import GridView from '../views/GridView.vue'
 import LoginView from '../views/LoginView.vue'
-import DescriptionView from '../views/DescriptionView.vue'
+import DescriptionGameView from '../views/DescriptionGameView.vue'
+import DescriptionConsoleView from '../views/DescriptionConsoleView.vue'
 import AdminView from '../views/AdminView.vue'
 import CartView from '../views/CartView.vue'
 import ProfileView from '../views/ProfileView.vue'
@@ -30,9 +31,14 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/description/:id',
-      name: 'description',
-      component: DescriptionView
+      path: '/description-console/:id',
+      name: 'description-console',
+      component: DescriptionConsoleView
+    },
+    {
+      path: '/description-game/:id',
+      name: 'description-game',
+      component: DescriptionGameView
     },
     {
       path: '/admin',

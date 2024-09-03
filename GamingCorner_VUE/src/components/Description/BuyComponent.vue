@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue';
 import { useGameStore } from '@/stores/GameStore';
 import { useCartStore } from '@/stores/CartStore';
 import IconFavorite from '@/components/icons/IconFavorite.vue';
@@ -13,23 +14,62 @@ import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconPS from '@/components/icons/platform/IconPS.vue';
 import IconXbox from '@/components/icons/platform/IconXbox.vue';
 import IconNintendo from '@/components/icons/platform/IconNintendo.vue';
-import { reactive, ref } from 'vue';
+
+interface Console {
+    consoleId: number;
+    name: string;
+    platformId: number;
+    specifications: string;
+    stock: number;
+    available: boolean;
+    price: number;
+    imageURL: string;
+}
+
+interface Game {
+    videogameId: number;
+    name: string;
+    pegi: number;
+    description: string;
+    category: string;
+    stock: number;
+    available: boolean;
+    platform: string;
+    price: number;
+    imageURL: string;
+}
+
+
+defineProps<{
+    product: Game | Console;
+    isGame: boolean;
+}>()
 
 const gameStore = useGameStore();
 const cartStore = useCartStore();
 
-const game = ref(gameStore.game);
-const addToCart = () => {
-    cartStore.addToCart(game.value); // Call addToCart with reactive value
-};
+const game = computed(() => gameStore.game);
+
+/* const addToCart = () => {
+    if (game.value) {
+        cartStore.addToCart({
+            videogameId: game.value.videogameId,
+            name: game.value.name,
+            price: game.value.price,
+            quantity: 1,
+            imageURL: game.value.imageURL
+        });
+    }
+}; */
+
+
 </script>
 
 <template>
     <div class="principal">
         <div>
-            <img :src="game.imageURL" :alt="`${gameStore.game.name}`">
+            <img :src="product.imageURL" :alt="product.name">
         </div>
-
     </div>
     <div class="information">
         <div class="terciary">
@@ -37,19 +77,22 @@ const addToCart = () => {
                 <div class="infoIcons__favorite">
                     <IconFavorite class="favorite" />
                 </div>
-                <div class="infoIcons__pegi">
-                    <IconPegi3 v-if="gameStore.game.pegi == 3" />
-                    <IconPegi7 v-if="gameStore.game.pegi == 7" />
-                    <IconPegi12 v-if="gameStore.game.pegi == 12" />
-                    <IconPegi16 v-if="gameStore.game.pegi == 16" />
-                    <IconPegi18 v-if="gameStore.game.pegi == 18" />
+                <div class="infoIcons__pegi" v-if="isGame">
+                    <IconPegi3 v-if="product.pegi === 3" />
+                    <IconPegi7 v-if="product.pegi === 7" />
+                    <IconPegi12 v-if="product.pegi === 12" />
+                    <IconPegi16 v-if="product.pegi === 16" />
+                    <IconPegi18 v-if="product.pegi === 18" />
                 </div>
                 <div class="infoIcons__others">
-                    <div class="platform">
-                        <IconSteam />
+                    <div class="platform" v-if="isGame">
+                        <IconSteam v-if="product.platform === 'Steam'" />
+                        <IconPS v-if="product.platform === 'PS'" />
+                        <IconXbox v-if="product.platform === 'Xbox'" />
+                        <IconNintendo v-if="product.platform === 'Nintendo'" />
                     </div>
                     <div class="stock">
-                        <IconTick IconCross v-if="gameStore.game.stock > 0" />
+                        <IconTick v-if="product.stock > 0" />
                         <IconCross v-else />
                     </div>
                     <div class="valorations">
@@ -60,21 +103,20 @@ const addToCart = () => {
         </div>
         <div class="secundary">
             <div class="price">
-                <h2>{{ gameStore.game.price }}€</h2>
+                <h2>{{ product.price }}€</h2>
             </div>
             <div class="buttons">
-                <button class="button" @click="addToCart" style="background-color: #ff6600;">
+                <button class="button" style="background-color: #ff6600;" @click="addToCart">
                     CARRITO
                 </button>
-                <router-link :to="'/cart'" class="button" style="background-color: orangered;">
+                <router-link :to="{ name: 'cart' }" class="button" style="background-color: orangered;">
                     COMPRAR
                 </router-link>
             </div>
         </div>
-
-
     </div>
 </template>
+
 
 <style scoped lang="scss">
 @mixin content($width, $height) {

@@ -15,10 +15,11 @@ interface Game {
     category: string;
     stock: number;
     available: boolean;
+    requisitos: string;
     platform: string;
     price: number;
     imageURL: string;
-    listVideogameGender: Gender
+    code: string;
 }
 
 interface editedGame {
@@ -42,15 +43,13 @@ export const useGameStore = defineStore('GameStore', () => {
         category: '',
         stock: 0,
         available: false,
+        requisitos: '',
         platform: '',
         price: 0,
         imageURL: '',
-        listVideogameGender: { 
-          genderId: 0,
-          videogameId: 0
-        }
-      });
-    
+        code: ''
+    });
+
     // Getter
     // calcula la cantidad de funciones que hay
     const calcularCantidad = computed(() => games.length);
@@ -69,7 +68,7 @@ export const useGameStore = defineStore('GameStore', () => {
     // Action
     // saca de la api todas los juegos que hay
     async function fetchGames() {
-    
+
         try {
             const response = await fetch('http://localhost:5000/Videogame');
             console.log("Fetch de grid de juegos hecho desde GameStore.ts");
@@ -89,7 +88,7 @@ export const useGameStore = defineStore('GameStore', () => {
         return games.find(i => i.videogameId === id);
     }
 
-    async function fetchGamesById (id: number) {
+    async function fetchGamesById(id: number) {
         try {
             const response = await fetch('http://localhost:5000/Videogame/' + id);
             console.log("Fetch de un juego hecho desde GameStore.ts");
@@ -103,7 +102,7 @@ export const useGameStore = defineStore('GameStore', () => {
         }
     };
 
-    
+
 
     // eliminar obra
     async function deleteGame(id: number, name: string) {
@@ -162,14 +161,6 @@ export const useGameStore = defineStore('GameStore', () => {
         }
     }
 
-
-    // funcion para sacar el dia de la obra
-    const formatoFecha = (fechaHora: string) => {
-        const fecha = new Date(fechaHora)
-        const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-        return fecha.toLocaleDateString('es-ES', options);
-    };
-
     // Filtrar funciones por título
     function filterGamesByTitle(title: string) {
         console.log('Busco por titulo en la store');
@@ -181,27 +172,53 @@ export const useGameStore = defineStore('GameStore', () => {
         }
     }
 
-    /*     function filterGamesByGenre(genres: string[]) {
-            console.log('Busco por género en la store');
-            console.log(genres);
-    
-            // Verifica si no se han seleccionado géneros
-            if (genres.length < 2) {
-                console.log('Ningún género seleccionado');
-                // Si no se ha seleccionado ningún género, devuelve todas las funciones sin filtrar
-                return games;
-    
+    async function filterGamesByGenre(id: number) {
+        try {
+            if (id == 0) {
+                fetchGames();
+
             } else {
-                // Filtra las funciones que coinciden con al menos uno de los géneros seleccionados
-                const GamesFiltered = games.filter(func => {
-                    // Verifica si la función tiene al menos uno de los géneros seleccionados
-                    return func.genero && genres.some(genre => func.genero?.toLowerCase() === genre.toLowerCase());
-                });
-                return GamesFiltered;
-    
+                const response = await fetch(`http://localhost:5000/Gender/${id}/videogames`);
+                console.log("Fetch de grid de juegos por género hecho desde GameStore.ts");
+
+                const data = await response.json();
+
+                // Verificar si `data` es un array
+                if (Array.isArray(data)) {
+                    games.splice(0, games.length);  // Vaciar el array `games`
+                    games.push(...data);  // Insertar nuevos datos
+                } else {
+                    console.error('La respuesta del servidor no es un array:', data);
+                }
             }
-        } */
+        } catch (error) {
+            console.error('Error al obtener los videojuegos:', error);
+        }
+    }
 
+    async function filterGamesByPlatform(id: number) {
+        try {
+            debugger
+            if (id == 0) {
+                fetchGames();
+            } else {
+                const response = await fetch(`http://localhost:5000/Platform/${id}/videogames`);
+                console.log("Fetch de grid de juegos por plataforma hecho desde GameStore.ts");
 
-    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, formatoFecha, filterGamesByTitle, fetchGamesById /* filterGamesByGenre */ };
+                const data = await response.json();
+
+                // Verificar si `data` es un array
+                if (Array.isArray(data)) {
+                    games.splice(0, games.length);  // Vaciar el array `games`
+                    games.push(...data);  // Insertar nuevos datos
+                } else {
+                    console.error('La respuesta del servidor no es un array:', data);
+                }
+            }
+        } catch (error) {
+            console.error('Error al obtener los videojuegos:', error);
+        }
+    }
+
+    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, filterGamesByTitle, fetchGamesById, filterGamesByGenre,  filterGamesByPlatform };
 });

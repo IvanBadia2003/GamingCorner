@@ -19,51 +19,31 @@ const toggleText = async () => {
         }
     }
 };
+
+interface Game {
+    videogameId: number;
+    name: string;
+    pegi: number;
+    description: string;
+    category: string;
+    stock: number;
+    available: boolean;
+    platform: string;
+    price: number;
+    imageURL: string;
+}
+
+
+defineProps<{
+    product: string ;
+    isGame: boolean;
+}>()
 </script>
 
 <template>
     <div class="description-container">
         <p :class="{ 'show-more': showFullText }" ref="description">
-            The Legend of Zelda: Breath of the Wild para Nintendo Switch es un juego de acción y aventuras de Nintendo,
-            la última entrega de la larga serie de The Legend of Zelda. El juego ofrece un formato de mundo abierto, con
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            The Legend of Zelda: Breath of the Wild para Nintendo Switch es un juego de acción y aventuras de Nintendo,
-            la última entrega de la larga seriteriales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            The Legend of Zelda: Breath of the Wild para Nintendo Switch es un juego de acción y aventuras de Nintendo,
-            la última entrega de la larga serie de The Legend of Zelda. El juego ofrece un formato de mundo abierto, con
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.e de The Legend of Zelda. El juego ofrece un formato de mundo abierto, con
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            ma
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            The Legend of Zelda: Breath of the Wild para Nintendo Switch es un juego de acción y aventuras de Nintendo,
-            la última entrega de la larga seriteriales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            The Legend of Zelda: Breath of the Wild para Nintendo Switch es un juego de acción y aventuras de Nintendo,
-            la última entrega de la larga serie de The Legend of Zelda. El juego ofrece un formato de mundo abierto, con
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.e de The Legend of Zelda. El juego ofrece un formato de mundo abierto, con
-            amplia libertad y pocas instrucciones para los jugadores. La jugabilidad consiste en recolectar utensilios y
-            materiales, completar misiones secundarias y resolver ingeniosos puzles y mazmorras.
-            Gran parte del encanto de este juego reside en el hecho de que premia la experimentación, por lo que te
-            anima a que te salgas del guion y explores el inmenso mundo que ofrece a tu propio ritmo.
-            ma
+            {{ product }}
             <div class="fade" v-if="!showFullText"></div>
         </p>
         <button @click="toggleText">

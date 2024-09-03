@@ -2,17 +2,17 @@
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
 import { useCartStore } from '@/stores/CartStore';
 import BuyComponent from '../components/Description/BuyComponent.vue';
 import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
-import Opinions from '@/components/Description/Opinions.vue';
-
+import Specifications from '@/components/Description/Specifications.vue';
 
 
 const route = useRoute();
-const gameStore = useGameStore();
+const consoleStore = useConsoleStore();
 const cartStore = useCartStore();
 
 interface Gender {
@@ -20,24 +20,21 @@ interface Gender {
     videogameId: number
 }
 
-interface Game {
-    videogameId: number;
+interface Console {
+    consoleId: number;
     name: string;
-    pegi: number;
-    description: string;
-    category: string;
+    platformId: number;
+    specifications: string;
     stock: number;
     available: boolean;
-    platform: string;
     price: number;
     imageURL: string;
-    listVideogameGender: Gender
 }
 
 
-const gameId = computed(() => parseInt(route.params.id as string, 10));
+const ConsoleId = computed(() => parseInt(route.params.id as string, 10));
 onMounted(() => {
-    gameStore.fetchGamesById(gameId.value);
+    consoleStore.fetchConsolesById(ConsoleId.value);
 });
 
 /* const addToCart = () => {
@@ -57,17 +54,17 @@ onMounted(() => {
 
 <template>
     <div class="container">
-        <h2> {{ gameStore.game.name }} </h2>
+        <h2> {{ consoleStore.Console.name }} </h2>
 
         <section class="section first">
-            <BuyComponent />
+            <BuyComponent :product="consoleStore.Console" :isGame="false"/>
         </section>
         <section class="section">
             <div class="title-container">
-                <h2>Requisitos</h2>
+                <h2>Especificaciones</h2>
             </div>
             <div class="content">
-                <Requirements />
+                <Specifications :product="consoleStore.Console.specifications"/>
             </div>
         </section>
         <section class="section">
@@ -76,22 +73,6 @@ onMounted(() => {
             </div>
             <div class="content">
                 <Multimedia />
-            </div>
-        </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Descripción</h2>
-            </div>
-            <div class="content">
-                <Description />
-            </div>
-        </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Opiniones</h2>
-            </div>
-            <div class="content">
-                <Opinions />
             </div>
         </section>
         <section class="section">

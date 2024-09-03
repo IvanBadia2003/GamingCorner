@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useGameStore } from '@/stores/GameStore';
 
-const gameStore = useGameStore();
-
+defineProps<{
+    product: string;
+}>()
 </script>
 
 <template>
@@ -13,29 +14,9 @@ const gameStore = useGameStore();
             </div>
             <table>
                 <tr>
-                    <th>OS:</th>
-                    <td>Windows 10 (64-bit)</td>
+                        {{ product }}
                 </tr>
-                <tr>
-                    <th>Procesador:</th>
-                    <td>Intel Core i5-4670 (quad-core) / AMD FX-Series FX-4350 (quad-core)</td>
-                </tr>
-                <tr>
-                    <th>Memoria:</th>
-                    <td>8 GB RAM</td>
-                </tr>
-                <tr>
-                    <th>Gráfica:</th>
-                    <td>NVIDIA GeForce GTX 1050 (2 GB) / AMD Radeon RX-460 (4 GB)</td>
-                </tr>
-                <tr>
-                    <th>Almacenamiento:</th>
-                    <td>15GB</td>
-                </tr>
-                <tr>
-                    <th>DirectX:</th>
-                    <td>Version 12</td>
-                </tr>
+                
             </table>
         </div>
 

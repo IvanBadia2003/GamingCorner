@@ -9,6 +9,7 @@ import { useFilterStore } from '@/stores/FilterStore';
 
 interface Product {
   price: number;
+  name: string;
 }
 
 const GameStore = useGameStore();
@@ -32,6 +33,7 @@ const itemsPerPage = ref(6);
 
 const selectedGameId = ref<number | null>(null);
 
+// Lógica para ordenar elementos por precio
 const sortItems = (items: Product[]): Product[] => {
   if (FilterStore.sortOption === 'price-asc') {
     return items.sort((a, b) => a.price - b.price);
@@ -41,18 +43,24 @@ const sortItems = (items: Product[]): Product[] => {
   return items;
 };
 
+// Lógica para filtrar elementos según el término de búsqueda
+const filterItems = (items: Product[]): Product[] => {
+  const searchTerm = FilterStore.searchTerm.toLowerCase();
+  return items.filter(item => item.name.toLowerCase().includes(searchTerm));
+};
+
 const totalPagesGames = computed(() => Math.ceil(GameStore.games.length / itemsPerPage.value));
 const totalPagesConsoles = computed(() => Math.ceil(ConsoleStore.consoles.length / itemsPerPage.value));
 
 const paginatedGames = computed(() => {
-  const sortedGames = sortItems(GameStore.games);
+  const sortedGames = sortItems(filterItems(GameStore.games));
   const start = (currentPage.value - 1) * itemsPerPage.value;
   const end = start + itemsPerPage.value;
   return sortedGames.slice(start, end);
 });
 
 const paginatedConsoles = computed(() => {
-  const sortedConsoles = sortItems(ConsoleStore.consoles);
+  const sortedConsoles = sortItems(filterItems(ConsoleStore.consoles));
   const start = (currentPage.value - 1) * itemsPerPage.value;
   const end = start + itemsPerPage.value;
   return sortedConsoles.slice(start, end);
@@ -88,6 +96,7 @@ const handleCardClick = (id: number) => {
       :price="game.price" 
       :image="game.imageURL"
       :isGrid="isGrid"
+      :isGame="true"
       @click="handleCardClick(game.videogameId)" 
     />
     <Tarjet v-if="props.type === 'console'"
@@ -98,6 +107,7 @@ const handleCardClick = (id: number) => {
       :price="console.price" 
       :image="console.imageURL"
       :isGrid="isGrid"
+      :isGame="false"
       @click="handleCardClick(console.consoleId)" 
     />
   </div>
@@ -113,7 +123,6 @@ const handleCardClick = (id: number) => {
     </template>
   </Modal>
 </template>
-
 
 
 

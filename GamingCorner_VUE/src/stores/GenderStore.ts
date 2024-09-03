@@ -32,7 +32,6 @@ export const useGenderStore = defineStore('GenderStore', () => {
     // Action
     // saca de la api todas los juegos que hay
     async function fetchGenders() {
-        debugger
         try {
             const response = await fetch('http://localhost:5000/Gender');
             console.log("Fetch de géneros hecho desde Gendertore.ts");
