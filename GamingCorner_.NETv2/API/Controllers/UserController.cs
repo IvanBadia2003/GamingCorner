@@ -22,7 +22,7 @@ public class UserController : ControllerBase
         try
         {
             // Obtén el ID del usuario autenticado desde el token de autenticación
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var currentUserId = HttpContext.Session.GetInt32("UserId")
 
             // Llama al servicio para obtener los datos del usuario actual y el vendedor
             (UserDTO currentUser, UserDTO sellerUser) = _userService.PrepareChatUsers(currentUserId, productId);
@@ -135,58 +135,9 @@ public class UserController : ControllerBase
         }
 
         // Devuelve un Ok con el objeto UserDTO si el inicio de sesión es exitoso
+        var currentUserId = HttpContext.Session.GetInt32("UserId",)
         return Ok(user);
     }
-
-    //     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
-    // public ActionResult GetChatDetails(string buyerId, string sellerId)
-    // {
-    //     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
-    //     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
-
-    //     if (buyer == null || seller == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     else
-    //     {
-    //         return buyer;
-    //         return seller;
-    //     }
-    // }
-
-    //     [HttpGet("buyer/{buyerId}/seller/{sellerId}")]
-    // public IActionResult GetChatDetails(int buyerId, int sellerId)
-    // {
-    //     var buyer = _userService.Get(buyerId); // Implementa esta función en tu servicio para obtener el usuario comprador
-    //     var seller = _userService.Get(sellerId); // Implementa esta función en tu servicio para obtener el usuario vendedor
-
-    //     if (buyer == null || seller == null)
-    //     {
-    //         return NotFound();
-    //     }
-
-    //     var chatDetails = new
-    //     {
-    //         buyer = new
-    //         {
-    //             id = buyer.Id,
-    //             name = buyer.Name,
-    //             email = buyer.Email
-    //         },
-    //         seller = new
-    //         {
-    //             id = seller.Id,
-    //             name = seller.Name,
-    //             email = seller.Email
-    //         }
-    //     };
-
-    //     return Ok(chatDetails);
-    // }
-
-
-
 
 }
 
