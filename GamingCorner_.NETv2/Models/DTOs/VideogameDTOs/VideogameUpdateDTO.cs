@@ -8,15 +8,10 @@ namespace GamingCorner.Models;
 
 public class VideogameUpdateDTO
 {
-
-
-    [Required]
     public decimal Price { get; set; }
 
-    [Required]
     public int Stock { get; set; }
 
-    [Required]
     public bool Available { get; set; }
 
 }

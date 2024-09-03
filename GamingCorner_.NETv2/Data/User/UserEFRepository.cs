@@ -36,13 +36,6 @@ public class UserEFRepository : IUserRepository
                 PhoneNumber = u.PhoneNumber,
                 Password = u.Password,
                 Admin = u.Admin,
-                // ImageURL = u.ImageURL,
-                Videogames = u.Videogames.Select(v => new VideogameDTO
-                {
-                    VideogameId = v.VideogameId,
-                    Name = v.Name,
-                    Price = v.Price
-                }).ToList() // Mapea los videojuegos a VideogameDTO
             }).ToList();
             return userDto;
         }

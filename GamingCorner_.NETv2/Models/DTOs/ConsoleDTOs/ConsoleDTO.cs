@@ -18,6 +18,9 @@ public class ConsoleDTO
 
     [Required]
     public int Stock { get; set; }
+    
+    [Required]
+    public int PlatformId { get; set; }
 
     [Required]
     public bool Available { get; set; }
@@ -38,6 +41,7 @@ public class ConsoleDTO
             ConsoleId = this.ConsoleId,
             Name = this.Name,
             Specifications = this.Specifications,
+            PlatformId = this.PlatformId,
             Stock = this.Stock,
             Available = this.Available,
             Price = this.Price,

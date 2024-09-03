@@ -10,8 +10,6 @@ namespace GamingCorner.Models;
 
 public class UserUpdateDTO
 {
-
-
     [Required]
     public string? Name { get; set; }
     

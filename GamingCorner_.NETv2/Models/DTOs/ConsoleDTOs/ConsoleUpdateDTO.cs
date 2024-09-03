@@ -8,7 +8,6 @@ namespace GamingCorner.Models;
 
 public class ConsoleUpdateDTO
 {
-    [Required]
     public decimal Price { get; set; }
 
     public int Stock { get; set; }

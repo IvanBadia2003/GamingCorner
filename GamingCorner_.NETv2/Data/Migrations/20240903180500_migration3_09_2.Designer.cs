@@ -4,6 +4,7 @@ using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    partial class GamingCornerContextModelSnapshot : ModelSnapshot
+    [Migration("20240903180500_migration3_09_2")]
+    partial class migration3_09_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,7 +281,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 1,
-                            Date = new DateTime(2024, 9, 3, 20, 39, 4, 489, DateTimeKind.Local).AddTicks(5868),
+                            Date = new DateTime(2024, 9, 3, 20, 5, 0, 528, DateTimeKind.Local).AddTicks(6725),
                             ProductId = 1,
                             Type = "Compra",
                             UserId = 1
@@ -287,7 +289,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 2,
-                            Date = new DateTime(2024, 9, 3, 20, 39, 4, 489, DateTimeKind.Local).AddTicks(5904),
+                            Date = new DateTime(2024, 9, 3, 20, 5, 0, 528, DateTimeKind.Local).AddTicks(6765),
                             ProductId = 2,
                             Type = "Compra",
                             UserId = 2
@@ -295,7 +297,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 3,
-                            Date = new DateTime(2024, 9, 3, 20, 39, 4, 489, DateTimeKind.Local).AddTicks(5906),
+                            Date = new DateTime(2024, 9, 3, 20, 5, 0, 528, DateTimeKind.Local).AddTicks(6767),
                             ProductId = 3,
                             Type = "Compra",
                             UserId = 3
@@ -382,6 +384,7 @@ namespace GamingCorner.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -409,6 +412,7 @@ namespace GamingCorner.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Requisitos")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stock")

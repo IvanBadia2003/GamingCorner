@@ -11,33 +11,24 @@ public class Videogame
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int VideogameId { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
-    [Required]
     public int Pegi { get; set; }
     
-    [Required]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 
-    [Required]
     public string Description { get; set; }
 
-    [Required]
     public int Stock { get; set; }
 
-    [Required]
     public bool Available { get; set; }
 
-    [Required]
     public string? Requisitos { get; set; }
 
-    [Required]
     public int PlatformId { get; set; }
 
     public Platform Platform { get; set; }
     
-    [Required]
     public int GenderId { get; set; }
 
     public Gender Gender { get; set; }
@@ -46,10 +37,8 @@ public class Videogame
 
     public User? User { get; set; }
 
-    [Required]
     public decimal Price { get; set; }
 
-    [Required]
     public string ImageURL { get; set; }
     public List<Transaction> Transactions { get; set; }
 

@@ -36,6 +36,7 @@ public class VideogameEFRepository : IVideogameRepository
                 Requisitos = v.Requisitos,
                 Stock = v.Stock,
                 Available = v.Available,
+                GenderId =v.GenderId,
                 Price = v.Price,
                 ImageURL = v.ImageURL,
             }).ToList();
@@ -71,6 +72,8 @@ public class VideogameEFRepository : IVideogameRepository
                 Requisitos = videogame.Requisitos,
                 Stock = videogame.Stock,
                 Available =videogame.Available,
+                GenderId =videogame.GenderId,
+                PlatformId =videogame.PlatformId,
                 Price = videogame.Price,
                 ImageURL = videogame.ImageURL,
             };
@@ -83,15 +86,32 @@ public class VideogameEFRepository : IVideogameRepository
     }
 
     public void Update(Videogame videogame)
-    {
-        var existingVideogame = _context.Videogames.Find(videogame.VideogameId);
+{
+    var existingVideogame = _context.Videogames.Find(videogame.VideogameId);
 
-        if (existingVideogame != null)
+    if (existingVideogame != null)
+    {
+        // Verifica si el nuevo PlatformId existe en la tabla Platforms
+        if (!_context.Platforms.Any(p => p.PlatformId == videogame.PlatformId))
         {
-            _context.Entry(existingVideogame).CurrentValues.SetValues(videogame);
-            _context.SaveChanges();
+            throw new Exception("El PlatformId proporcionado no existe.");
         }
+
+        // Asegúrate de que el PlatformId no sea NULL
+        if (videogame.PlatformId == null)
+        {
+            throw new Exception("El PlatformId no puede ser nulo.");
+        }
+
+        _context.Entry(existingVideogame).CurrentValues.SetValues(videogame);
+        _context.SaveChanges();
     }
+    else
+    {
+        throw new KeyNotFoundException("Videogame not found.");
+    }
+}
+
 
     public void Delete(int id)
     {

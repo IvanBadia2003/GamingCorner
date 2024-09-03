@@ -25,7 +25,7 @@ public class ProductDTO
     [Required]
     public string? ImageURL { get; set; }
  
-    public List<TransactionDTO> Transactions { get; set; } 
+    // public List<TransactionDTO> Transactions { get; set; } 
 
      public Product ToProduct()
     {
