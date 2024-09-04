@@ -7,6 +7,7 @@ import BuyComponent from '../components/Description/BuyComponent.vue';
 import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
+import Carousel from '@/components/Home/Carousel.vue';
 
 const route = useRoute();
 const gameStore = useGameStore();
@@ -46,12 +47,15 @@ onMounted(() => {
                 <h2>Descripción</h2>
             </div>
             <div class="content">
-                <Description :product="gameStore.game.description"/>
+                <Description :product="gameStore.game.description" :isGame="true"/>
             </div>
         </section>
         <section class="section">
             <div class="title-container">
                 <h2>Productos similares</h2>
+            </div>
+            <div class="content">
+                <Carousel :isGame="true" />
             </div>
         </section>
     </div>

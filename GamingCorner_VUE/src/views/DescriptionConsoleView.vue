@@ -9,6 +9,7 @@ import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
 import Specifications from '@/components/Description/Specifications.vue';
+import Carousel from '@/components/Home/Carousel.vue';
 
 
 const route = useRoute();
@@ -57,14 +58,14 @@ onMounted(() => {
         <h2> {{ consoleStore.Console.name }} </h2>
 
         <section class="section first">
-            <BuyComponent :product="consoleStore.Console" :isGame="false"/>
+            <BuyComponent :product="consoleStore.Console" :isGame="false" />
         </section>
         <section class="section">
             <div class="title-container">
                 <h2>Especificaciones</h2>
             </div>
             <div class="content">
-                <Specifications :product="consoleStore.Console.specifications"/>
+                <Specifications :product="consoleStore.Console.specifications" />
             </div>
         </section>
         <section class="section">
@@ -79,6 +80,9 @@ onMounted(() => {
             <div class="title-container">
                 <h2>Productos similares</h2>
             </div>
+            <div class="content">
+                    <Carousel :isGame="false" />
+                </div>
         </section>
 
     </div>
