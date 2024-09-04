@@ -8,7 +8,7 @@ interface Transaction {
   videogameId: number | null,
   consoleId: number | null,
   type: string,
-  date: string // Mantén como string para simplificar el manejo de fechas
+  date: Date // Mantén como string para simplificar el manejo de fechas
 }
 
 export const useTransactionStore = defineStore('TransactionStore', () => {
