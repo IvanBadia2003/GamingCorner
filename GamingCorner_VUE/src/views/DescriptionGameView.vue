@@ -24,7 +24,7 @@ onMounted(() => {
         <h2>{{ gameStore.game.name }}</h2>
 
         <section class="section first">
-            <BuyComponent :product="gameStore.game" :isGame="true"/>
+            <BuyComponent :product="gameStore.game" :isGame="true" type="game"/>
         </section>
         <section class="section">
             <div class="title-container">

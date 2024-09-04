@@ -1,5 +1,9 @@
-import { ref, computed, reactive } from 'vue'
-import { defineStore } from 'pinia'
+import { ref, computed, reactive } from 'vue';
+import { defineStore } from 'pinia';
+import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useProductStore } from '@/stores/ProductStore';
+
 
 interface Transaction {
   transactionId: number,
@@ -12,8 +16,10 @@ interface Transaction {
 }
 
 export const useTransactionStore = defineStore('TransactionStore', () => {
-
   const transactions = reactive(new Array<Transaction>);
+  const gameStore = useGameStore();
+  const consoleStore = useConsoleStore();
+  const productStore = useProductStore();
 
   async function fetchTransactions() {
     try {
@@ -21,14 +27,13 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
       console.log("Fetch de transacciones hecho desde TransactionStore.ts");
       
       const data = await response.json();
-      transactions.splice(0, transactions.length)
+      transactions.splice(0, transactions.length);
       transactions.push(...data);
     } catch (error) {
       console.error('Error al obtener las transacciones:', error);
     }
   }
 
-  // Contar transacciones por mes y tipo
   const transactionsByMonth = computed(() => {
     const videogameCounts: { [key: string]: number } = {};
     const consoleCounts: { [key: string]: number } = {};
@@ -38,7 +43,6 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
       const date = new Date(transaction.date);
       const month = date.toLocaleString('default', { month: 'long' });
 
-      // Cuenta productos basados en productId, sin importar si son videojuegos o consolas
       productCounts[month] = (productCounts[month] || 0) + 1;
 
       if (transaction.videogameId !== null) {
@@ -52,5 +56,59 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
     return { videogameCounts, consoleCounts, productCounts };
   });
 
-  return { fetchTransactions, transactionsByMonth, transactions }
+  async function purchaseGame(idGame: number, idUser: number) {
+    debugger
+    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/videgame/'+idGame, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (response.ok) {
+      gameStore.purchaseGame(idGame)
+      console.log('compra del juego realizada con exito')
+
+    } else {
+        const errorData = await response.json();
+    }
+}
+
+  async function purchaseProduct(idProducto: number, idUser: number) {
+    debugger
+    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/product/'+idProducto, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (response.ok) {
+      productStore.purchaseProduct(idProducto)
+      console.log('compra del producto realizada con exito')
+
+    } else {
+        const errorData = await response.json();
+    }
+}
+
+  async function purchaseConsole(idConsole: number, idUser: number) {
+    debugger
+    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/console/'+idConsole, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (response.ok) {
+      consoleStore.purchaseConsole(idConsole)
+      console.log('compra del producto realizada con exito')
+
+    } else {
+        const errorData = await response.json();
+    }
+}
+
+  return { fetchTransactions, transactionsByMonth, transactions, purchaseGame, purchaseProduct, purchaseConsole };
 });

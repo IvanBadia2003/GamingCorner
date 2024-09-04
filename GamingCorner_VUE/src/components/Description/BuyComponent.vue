@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useGameStore } from '@/stores/GameStore';
-import { useCartStore } from '@/stores/CartStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useProductStore } from '@/stores/ProductStore';
 import { useUserStore } from '@/stores/UserStore';
 
 import IconFavorite from '@/components/icons/IconFavorite.vue';
@@ -31,7 +32,6 @@ interface Console {
     platform: number | null;
 }
 
-
 interface Game {
   videogameId: number;
   name: string;
@@ -46,9 +46,8 @@ interface Game {
   price: number;
   imageURL: string;
   code: string | null;
-  consoleId: number | null
+  consoleId: number | null;
 }
-
 
 interface Product {
     productId: number;
@@ -62,30 +61,41 @@ interface Product {
     stock: number;
 }
 
-defineProps<{
+const props = defineProps<{
     product: Game | Console | Product;
     isGame: boolean;
-}>()
+    type: 'game' | 'console' | 'product';
+}>();
 
-
-const UserStore = useUserStore();
+const userStore = useUserStore();
 const gameStore = useGameStore();
-const cartStore = useCartStore();
-
-const game = computed(() => gameStore.game);
+const consoleStore = useConsoleStore();
+const productStore = useProductStore();
 
 const addToCart = () => {
-    if (game.value) {
+    if (props.type === 'game') {
         gameStore.addToCart({
-            videogameId: game.value.videogameId,
-            name: game.value.name,
-            price: game.value.price,
-            imageURL: game.value.imageURL
+            videogameId: (props.product as Game).videogameId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
+        });
+    } else if (props.type === 'console') {
+        consoleStore.addToCart({
+            consoleId: (props.product as Console).consoleId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
+        });
+    } else if (props.type === 'product') {
+        productStore.addToCart({
+            productId: (props.product as Product).productId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
         });
     }
-}; 
-
-
+};
 </script>
 
 <template>
@@ -97,7 +107,6 @@ const addToCart = () => {
     <div class="information">
         <div class="terciary">
             <div class="infoIcons">
-
                 <div class="infoIcons__pegi" v-if="isGame">
                     <IconPegi3 v-if="product.pegi === 3" />
                     <IconPegi7 v-if="product.pegi === 7" />
@@ -130,7 +139,7 @@ const addToCart = () => {
                 <button class="button" style="background-color: #ff6600;" @click="addToCart">
                     CARRITO
                 </button>
-                <router-link :to="UserStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button"
+                <router-link :to="userStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button"
                     style="background-color: orangered;">
                     COMPRAR
                 </router-link>
@@ -138,6 +147,7 @@ const addToCart = () => {
         </div>
     </div>
 </template>
+
 
 
 <style scoped lang="scss">

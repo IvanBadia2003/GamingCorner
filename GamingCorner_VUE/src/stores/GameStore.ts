@@ -20,7 +20,6 @@ interface Game {
 
 interface editedGame {
   videogameId: number;
-  name: string;
   stock: number;
   available: boolean;
   price: number;
@@ -154,6 +153,45 @@ export const useGameStore = defineStore('GameStore', () => {
     }
   }
 
+  async function purchaseGame(id: number) {
+    // Encuentra el juego en la lista de juegos (puedes ajustar esto según cómo estés manejando los datos)
+    const game = games.find(g => g.videogameId === id);
+
+    if (game) {
+      // Calcula el nuevo stock y estado de disponibilidad
+      const newStock = game.stock - 1;
+      const newAvailable = newStock > 0;
+
+      try {
+        const response = await fetch('http://localhost:5000/Videogame/' + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            price: game.price,
+            stock: newStock,
+            available: newAvailable
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Juego editado exitosamente.');
+          // Actualiza el juego en el store (opcional si ya lo manejas en otro lado)
+          game.stock = newStock;
+          game.available = newAvailable;
+        } else {
+          console.error('Error al editar el juego:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error al editar el juego:', error);
+      }
+    } else {
+      console.error('Juego no encontrado');
+    }
+  }
+
+
   function filterGamesByTitle(title: string) {
     if (title.length < 2) {
       return games;
@@ -161,6 +199,8 @@ export const useGameStore = defineStore('GameStore', () => {
       return games.filter(func => func.name.toLowerCase().includes(title.toLowerCase()));
     }
   }
+
+
 
   async function filterGamesByGenre(id: number) {
     try {
@@ -244,6 +284,7 @@ export const useGameStore = defineStore('GameStore', () => {
     totalPrice,
     addToCart,
     removeFromCart,
-    clearCart
+    clearCart,
+    purchaseGame
   };
 });
