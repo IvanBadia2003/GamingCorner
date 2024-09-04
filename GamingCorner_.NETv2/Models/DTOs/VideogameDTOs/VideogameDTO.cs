@@ -9,33 +9,20 @@ public class VideogameDTO
 {
     [Key]
     public int VideogameId { get; set; }
-
-    [Required]
     public string? Name { get; set; }
-
-    [Required]
-    public int Pegi { get; set; }
-
-    [Required]
+    public int Pegi { get; set; }  
+    public string? Code { get; set; }
     public string? Description { get; set; }
-  
-    [Required]
+    public int UserId { get; set; }
+    public string? Requisitos1 { get; set; }
+    public string? Requisitos2 { get; set; }
     public int Stock { get; set; }
-
-    [Required]
     public bool Available { get; set; }
-
-    [Required]
-    public int PlatformId { get; set; }
-
-    [Required]
     public decimal Price { get; set; }
-
-    [Required]
+    public int PlatformId { get; set; }
+    public int GenderId { get; set; }
     public string? ImageURL { get; set; }
  
-    public List<VideogameGenderDTO> ListVideogameGender { get; set; }
-
 
      public Videogame ToVideogame()
     {
@@ -43,16 +30,17 @@ public class VideogameDTO
         {
             VideogameId = this.VideogameId,
             Name = this.Name,
-            Pegi = this.Pegi,
+            Price = this.Price,
+            Code = this.Code,
             Description = this.Description,
+            Requisitos1 = this.Requisitos1,
+            Requisitos2 = this.Requisitos2,
             Stock = this.Stock,
             Available = this.Available,
+            Pegi = this.Pegi,
             PlatformId = this.PlatformId,
-            ImageURL = this.ImageURL,
-            ListVideogameGender = this.ListVideogameGender != null ? this.ListVideogameGender.Select(g => new VideogameGender
-            {
-                Gender = new Gender {GenderId = g.GenderId}
-            }).ToList() : null
-        }; 
+            GenderId = this.GenderId,
+            ImageURL = this.ImageURL
+        };
     }
 }

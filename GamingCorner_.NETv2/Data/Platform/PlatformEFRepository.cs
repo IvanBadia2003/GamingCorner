@@ -1,111 +1,115 @@
-namespace GamingCorner.Data;
+    namespace GamingCorner.Data;
 
-using GamingCorner.Models;
-using System.Text.Json;
-using System.Data.SqlClient;
-using System.Data;
-using GamingCorner.Data;
-using Microsoft.EntityFrameworkCore;
+    using GamingCorner.Models;
+    using System.Text.Json;
+    using System.Data.SqlClient;
+    using System.Data;
+    using GamingCorner.Data;
+    using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 public class PlatformEFRepository : IPlatformRepository
-{
-
-
-    private readonly GamingCornerContext _context;
-
-    public PlatformEFRepository(GamingCornerContext context)
     {
 
-        _context = context;
-    }
 
-    public List<PlatformDTO> GetAll()
-    {
-        var platforms = _context.Platforms
-            .ToList();
+        private readonly GamingCornerContext _context;
 
-        if (platforms != null)
+        public PlatformEFRepository(GamingCornerContext context)
         {
-            var platformDto = platforms.Select(p => new PlatformDTO
+
+            _context = context;
+        }
+
+        public List<PlatformDTO> GetAll()
+        {
+            var platforms = _context.Platforms
+                .ToList();
+
+            if (platforms != null)
             {
-                PlatformId = p.PlatformId,
-                Name = p.Name,
-            }).ToList();
-            return platformDto;
+                var platformDto = platforms.Select(p => new PlatformDTO
+                {
+                    PlatformId = p.PlatformId,
+                    Name = p.Name,
+                }).ToList();
+                return platformDto;
+            }
+            else
+            {
+                return null;
+            }
         }
-        else
+
+        public void Add(Platform platform)
         {
-            return null;
-        }
-    }
-
-    public void Add(Platform platform)
-    {
-        _context.Platforms.Add(platform);
-        SaveChanges();
-    }
-
-    public PlatformDTO Get(int id)
-    {
-        // var platform = _context.Genders
-        //     .Include(vg => vg.ListVideogameGender)
-        //         .ThenInclude(v => v.Videogame)
-        //     .Where(gender => gender.GenderId == id)
-        //     .FirstOrDefault();
-
-        // if (gender != null)
-        // {
-        //     var genderDto = new GenderDTO
-        //     {
-        //         GenderId = gender.GenderId,
-        //         Name = gender.Name,
-        //         BackgroundImg = gender.BackgroundImg,
-        //         CharacterImg = gender.CharacterImg,
-        //         ListVideogameGender = gender.ListVideogameGender
-        //             .Where(bo => bo != null && bo.Videogame != null)
-        //             .Select(bo => new VideogameGenderDTO
-        //             {
-        //                 VideogameId = bo.VideogameId
-        //             }).ToList()
-        //     };
-        //     return genderDto;
-        // }
-        // else
-        // {
-            return null;
-        // }
-    }
-
-    // public void Update(Gender gender)
-    // {
-    //     var existingGender = _context.Genders.Find(gender.GenderId);
-
-    //     if (existingGender != null)
-    //     {
-    //         _context.Entry(existingGender).CurrentValues.SetValues(gender);
-    //         _context.SaveChanges();
-    //     }
-    // }
-
-    public void Delete(int id)
-    {
-        var genderDto = Get(id);
-        if (genderDto == null)
-        {
-            throw new KeyNotFoundException("Gender not found.");
-        }
-        var gender = _context.Genders.FirstOrDefault(g => g.GenderId == id);
-        if (gender != null)
-        {
-            _context.Genders.Remove(gender);
+            _context.Platforms.Add(platform);
             SaveChanges();
         }
 
-    }
+        public PlatformDTO Get(int id)
+        {
+            var platform = _context.Platforms
+                .Where(platform => platform.PlatformId == id)
+                .FirstOrDefault();
 
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
-    }
+            if (platform != null)
+            {
+                var platformDto = new PlatformDTO
+                {
+                    PlatformId = platform.PlatformId,
+                    Name = platform.Name,
+                };
+                return platformDto;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-}
+        public List<Videogame> GetVideogamesByPlatform (int id)
+        {
+            return _context.Videogames
+                           .Where(v => v.PlatformId == id)
+                           .ToList();    
+        }
+        public List<Console_> GetConsolesByPlatform (int id)
+        {
+            return _context.Consoles
+                           .Where(v => v.ConsoleId == id)
+                           .ToList();    
+        }
+
+        public void Update(Platform platform)
+        {
+            var existingPlatform = _context.Platforms.Find(platform.PlatformId);
+
+            if (existingPlatform != null)
+            {
+                _context.Entry(existingPlatform).CurrentValues.SetValues(platform);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var platformDto = Get(id);
+            if (platformDto == null)
+            {
+                throw new KeyNotFoundException("Platform not found.");
+            }
+            var platform = _context.Platforms.FirstOrDefault(p => p.PlatformId == id);
+            if (platform != null)
+            {
+                _context.Platforms.Remove(platform);
+                SaveChanges();
+            }
+
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
+    }

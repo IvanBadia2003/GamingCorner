@@ -2,7 +2,6 @@ using GamingCorner.Business;
 using GamingCorner.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace GamingCorner.Controllers;
 
 [ApiController]
@@ -10,16 +9,14 @@ namespace GamingCorner.Controllers;
 public class GenderController : ControllerBase
 {
     private readonly IGenderService _genderService;
+
     public GenderController(IGenderService genderService)
     {
         _genderService = genderService;
     }
 
     [HttpGet]
-    public ActionResult<List<GenderDTO>> GetAll() =>
-    _genderService.GetAll();
-
-
+    public ActionResult<List<GenderDTO>> GetAll() => _genderService.GetAll();
 
     [HttpGet]
     [Route("{id}")]
@@ -27,15 +24,30 @@ public class GenderController : ControllerBase
     {
         var gender = _genderService.Get(id);
 
-        if (gender == null){
+        if (gender == null)
+        {
             return NotFound();
-        }else{
+        }
+        else
+        {
             return gender;
         }
     }
 
+    [HttpGet]
+    [Route("{id}/videogames")]
+    public ActionResult<List<VideogameDTO>> GetVideogamesByGender(int id)
+    {
+        var videogames = _genderService.GetVideogamesByGender(id);
+
+        if (videogames == null || videogames.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(videogames);
 
 
+    }
 
     [HttpPost]
     public IActionResult Create([FromBody] GenderCreateDTO genderCreateDTO)
@@ -48,38 +60,22 @@ public class GenderController : ControllerBase
         return Ok();
     }
 
-
-
-
-    // [HttpPut("{id}")]
-    // public IActionResult Update(int id, [FromBody] VideogameUpdateDTO videogameUpdateDTO)
-    // {
-    //     if (!ModelState.IsValid) { return BadRequest(ModelState); }
-
-    //     try
-    //     {
-    //         _genderService.Update(id, videogameUpdateDTO);
-    //         return NoContent();
-    //     }
-    //     catch (KeyNotFoundException)
-    //     {
-    //         return NotFound();
-    //     }
-    // }
-
-
-
-
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var user = _genderService.Get(id);
+        var gender = _genderService.Get(id);
 
-        if (user is null)
+        if (gender is null)
             return NotFound();
 
         _genderService.Delete(id);
 
         return NoContent();
     }
+
 }
+
+
+
+
+

@@ -11,21 +11,17 @@ public class Gender
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int GenderId { get; set; }
     
-    public string? BackgroundImg { get; set; }
 
     public string? Name { get; set; }
 
-    public string? CharacterImg { get; set; }
 
-    public List<VideogameGender> ListVideogameGender { get; set; }
+    // public List<Videogame> Videogames { get; set; }
 
     public Gender() { }
 
     public Gender(string backgroundImg, string name, string characterImg)
     {
-        BackgroundImg = backgroundImg;
         Name = name;
-        CharacterImg = characterImg;
     }
 
 
@@ -40,8 +36,6 @@ public class Gender
         var gender = new Gender
         {
            Name = genderCreateDTO.Name,
-           BackgroundImg = genderCreateDTO.BackgroundImg,
-           CharacterImg = genderCreateDTO.CharacterImg,
         };
 
         return gender;

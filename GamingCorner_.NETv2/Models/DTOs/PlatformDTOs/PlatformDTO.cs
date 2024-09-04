@@ -7,20 +7,10 @@ namespace GamingCorner.Models;
 
 public class PlatformDTO
 {
-    [Key]
+    [Required]
     public int PlatformId { get; set; }
 
+    [Required]
     public string? Name { get; set; }
 
-    public List<Videogame> videogames {get; set;} = new List<Videogame>();
-    public List<Console_> consoles {get; set;} = new List<Console_>();
-
-     public Platform ToPlatform()
-    {
-        return new Platform
-        {
-            PlatformId = this.PlatformId,
-            Name = this.Name,
-        };
-    }
 }

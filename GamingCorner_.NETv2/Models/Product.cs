@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
@@ -13,40 +12,53 @@ public class Product
     public int ProductId { get; set; }
 
     [Required]
-    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public string Name { get; set; }
 
-    public int? VideogameId { get; set; }
+    [Required]
+    public string Description { get; set; }
 
-    [ForeignKey("Videogame")]
-    public Videogame Videogame { get; set; }
+    [Required]
+    public decimal Price { get; set; }
 
-    public int? ConsoleId { get; set; }
+    [Required]
+    public bool Available { get; set; }
 
-    [ForeignKey("Console")]
-    public Console_ Console { get; set; }
+    [Required]
+    public string ImageURL { get; set; }
 
-    public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+    // public List<VideogameGender> ListVideogameGender { get; set; }
+    public List<Transaction> Transactions { get; set; }
+
 
     public Product() { }
 
-    // public Product()
-    // {
+    public Product(string name, string description, bool available, decimal price, string imageURL)
+    {
+        Name = name;
+        Description = description;
+        Available = available;
+        Price = price;
+        ImageURL = imageURL;
+    }
 
-    // }
+    public Product mapFromCreateDto(ProductCreateDTO productCreateDTO)
+    {
+        if (productCreateDTO == null)
+        {
+            // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
+            throw new ArgumentNullException(nameof(productCreateDTO));
+        }
 
-    // public Product mapFromCreateDto(PlatformCreateDTO platformCreateDTO)
-    // {
-    //     if (platformCreateDTO == null)
-    //     {
-    //         // Puedes lanzar una excepción aquí o manejar el caso de DTO nulo según tu lógica
-    //         throw new ArgumentNullException(nameof(platformCreateDTO));
-    //     }
+        var product = new Product
+        {
+            Name = productCreateDTO.Name,
+            Description = productCreateDTO.Description,
+            Available = productCreateDTO.Available,
+            Price = productCreateDTO.Price,
+            ImageURL = productCreateDTO.ImageURL
+        };
 
-    //     var platform = new Platform
-    //     {
-    //        Name = platformCreateDTO.Name,
-    //     };
+        return product;
+    }
 
-    //     return platform;
-    // }
 }

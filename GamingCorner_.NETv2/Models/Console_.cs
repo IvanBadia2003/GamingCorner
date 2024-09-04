@@ -19,12 +19,11 @@ public class Console_
 
     public Platform Platform { get; set; }
 
-    [Required]
-    public int UserId { get; set; }
+    // [Required]
+    // public int? UserId { get; set; }
 
-    public User User { get; set; }
+    // public User User { get; set; }
 
-    public Product Product { get; set;}
 
     [Required]
     public string Specifications { get; set; }
@@ -41,14 +40,16 @@ public class Console_
     [Required]
     public string ImageURL { get; set; }
 
+    public List<Transaction> Transactions { get; set; }
+
 
     public Console_() { }
 
-    public Console_(string name,int platformId, string specifications, int stock, bool available, decimal price, string imageURL)
+    public Console_(string name, string specifications, int stock, bool available, decimal price, string imageURL, int platformId)
     {
         Name = name;
-        PlatformId = platformId;
         Specifications = specifications;
+        PlatformId = platformId;
         Stock = stock;
         Available = available;
         Price = price;
@@ -66,8 +67,8 @@ public class Console_
         var console = new Console_
         {
             Name = consoleCreateDTO.Name,
-            PlatformId = consoleCreateDTO.PlatformId,
             Specifications = consoleCreateDTO.Specifications,
+            PlatformId = consoleCreateDTO.PlatformId,
             Stock = consoleCreateDTO.Stock,
             Available = consoleCreateDTO.Available,
             Price = consoleCreateDTO.Price,

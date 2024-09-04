@@ -41,13 +41,13 @@ using GamingCorner.Models;
         var consoleDto = _consoleRepository.Get(id);
         if(consoleDto == null)
         {
-            throw new KeyNotFoundException($"Consola con Id {id} no encontrada.");
+            throw new KeyNotFoundException($"Console con Id {id} no encontrada.");
         }
 
         var console = consoleDto.ToConsole();
+        console.Price = consoleUpdateDTO.Price;
         console.Stock = consoleUpdateDTO.Stock;
         console.Available = consoleUpdateDTO.Available;
-        console.Price = consoleUpdateDTO.Price;
         _consoleRepository.Update(console);
     }
 

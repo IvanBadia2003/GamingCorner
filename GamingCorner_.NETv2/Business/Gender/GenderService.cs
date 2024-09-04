@@ -28,6 +28,28 @@ using GamingCorner.Models;
         return gender;
     }
 
+    public List<VideogameDTO> GetVideogamesByGender(int id)
+    {
+        var videogames = _genderRepository.GetVideogamesByGender(id);
+
+        if (videogames == null || !videogames.Any())
+        {
+            return null;
+        }
+
+        return videogames.Select(v => new VideogameDTO
+        {
+            VideogameId = v.VideogameId,
+            Name = v.Name,
+            PlatformId = v.PlatformId,
+            Price = v.Price,
+            Stock = v.Stock,
+            Description = v.Description,
+            Requisitos1 = v.Requisitos1,
+            Requisitos2 = v.Requisitos2,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
 
     public void Add(GenderCreateDTO genderCreateDTO)
     {
@@ -36,20 +58,6 @@ using GamingCorner.Models;
         _genderRepository.Add(mappedGender);
     }
 
-    // public void Update(int id, VideogameUpdateDTO videogameUpdateDTO)
-    // {
-    //     var videogameDto = _genderRepository.Get(id);
-    //     if(videogameDto == null)
-    //     {
-    //         throw new KeyNotFoundException($"Videogame con Id {id} no encontrada.");
-    //     }
-
-    //     var videogame = videogameDto.ToVideogame();
-    //     videogame.Stock = videogameDto.Stock;
-    //     videogame.Available = videogameDto.Available;
-    //     videogame.Price = videogameDto.Price;
-    //     _genderRepository.Update(videogame);
-    // }
 
     public void Delete(int id)
     {

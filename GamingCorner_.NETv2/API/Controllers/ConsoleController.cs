@@ -2,7 +2,6 @@ using GamingCorner.Business;
 using GamingCorner.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace GamingCorner.Controllers;
 
 [ApiController]
@@ -10,16 +9,14 @@ namespace GamingCorner.Controllers;
 public class ConsoleController : ControllerBase
 {
     private readonly IConsoleService _consoleService;
+
     public ConsoleController(IConsoleService consoleService)
     {
         _consoleService = consoleService;
     }
 
     [HttpGet]
-    public ActionResult<List<ConsoleDTO>> GetAll() =>
-    _consoleService.GetAll();
-
-
+    public ActionResult<List<ConsoleDTO>> GetAll() => _consoleService.GetAll();
 
     [HttpGet]
     [Route("{id}")]
@@ -27,15 +24,17 @@ public class ConsoleController : ControllerBase
     {
         var console = _consoleService.Get(id);
 
-        if (console == null){
+        if (console == null)
+        {
             return NotFound();
-        }else{
+        }
+        else
+        {
             return console;
         }
     }
 
-
-
+    
 
     [HttpPost]
     public IActionResult Create([FromBody] ConsoleCreateDTO consoleCreateDTO)
@@ -48,13 +47,13 @@ public class ConsoleController : ControllerBase
         return Ok();
     }
 
-
-
-
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] ConsoleUpdateDTO consoleUpdateDTO)
     {
-        if (!ModelState.IsValid) { return BadRequest(ModelState); }
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         try
         {
@@ -67,15 +66,12 @@ public class ConsoleController : ControllerBase
         }
     }
 
-
-
-
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var user = _consoleService.Get(id);
+        var console = _consoleService.Get(id);
 
-        if (user is null)
+        if (console is null)
             return NotFound();
 
         _consoleService.Delete(id);
@@ -83,3 +79,8 @@ public class ConsoleController : ControllerBase
         return NoContent();
     }
 }
+
+
+
+
+

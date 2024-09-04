@@ -10,4 +10,8 @@ public interface IVideogameRepository
     VideogameDTO Get(int id);
     void Update(Videogame videogame);
     void Delete(int id);
+
+    // Task AddUserAsync (User user);
+    // Task<User>GetUserAsync(int id);
+
 }

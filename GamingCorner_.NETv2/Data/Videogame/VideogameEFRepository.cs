@@ -30,11 +30,15 @@ public class VideogameEFRepository : IVideogameRepository
             {
                 VideogameId = v.VideogameId,
                 Name = v.Name,
-                Description = v.Description,
                 Pegi = v.Pegi,
+                Code = v.Code,
+                Description = v.Description,
+                Requisitos1 = v.Requisitos1,
+                Requisitos2 = v.Requisitos2,
                 Stock = v.Stock,
+                PlatformId =v.PlatformId,
                 Available = v.Available,
-                PlatformId = v.PlatformId,
+                GenderId =v.GenderId,
                 Price = v.Price,
                 ImageURL = v.ImageURL,
             }).ToList();
@@ -52,12 +56,9 @@ public class VideogameEFRepository : IVideogameRepository
         SaveChanges();
     }
 
-
     public VideogameDTO Get(int id)
     {
         var videogame = _context.Videogames
-            .Include(vg => vg.ListVideogameGender)
-                .ThenInclude(g => g.Gender)
             .Where(videogame => videogame.VideogameId == id)
             .FirstOrDefault();
 
@@ -67,40 +68,53 @@ public class VideogameEFRepository : IVideogameRepository
             {
                 VideogameId = videogame.VideogameId,
                 Name = videogame.Name,
-                Description = videogame.Description,
                 Pegi = videogame.Pegi,
+                Code = videogame.Code,
+                Description = videogame.Description,
+                Requisitos1 = videogame.Requisitos1,
+                Requisitos2 = videogame.Requisitos2,
                 Stock = videogame.Stock,
-                Available = videogame.Available,
-                PlatformId = videogame.PlatformId,
+                Available =videogame.Available,
+                GenderId =videogame.GenderId,
+                PlatformId =videogame.PlatformId,
                 Price = videogame.Price,
                 ImageURL = videogame.ImageURL,
-                ListVideogameGender = videogame.ListVideogameGender
-                    .Where(bo => bo != null && bo.Gender != null)
-                    .Select(bo => new VideogameGenderDTO
-                    {
-                        GenderId = bo.GenderId
-                    }).ToList()
             };
-
             return videogameDto;
         }
         else
         {
-            return null; // Devuelve null si no se encuentra la obra
+            return null;
         }
-
     }
 
     public void Update(Videogame videogame)
-    {
-        var existingVideogame = _context.Videogames.Find(videogame.VideogameId);
+{
+    var existingVideogame = _context.Videogames.Find(videogame.VideogameId);
 
-        if (existingVideogame != null)
+    if (existingVideogame != null)
+    {
+        // Verifica si el nuevo PlatformId existe en la tabla Platforms
+        if (!_context.Platforms.Any(p => p.PlatformId == videogame.PlatformId))
         {
-            _context.Entry(existingVideogame).CurrentValues.SetValues(videogame);
-            _context.SaveChanges();
+            throw new Exception("El PlatformId proporcionado no existe.");
         }
+
+        // Asegúrate de que el PlatformId no sea NULL
+        if (videogame.PlatformId == null)
+        {
+            throw new Exception("El PlatformId no puede ser nulo.");
+        }
+
+        _context.Entry(existingVideogame).CurrentValues.SetValues(videogame);
+        _context.SaveChanges();
     }
+    else
+    {
+        throw new KeyNotFoundException("Videogame not found.");
+    }
+}
+
 
     public void Delete(int id)
     {
