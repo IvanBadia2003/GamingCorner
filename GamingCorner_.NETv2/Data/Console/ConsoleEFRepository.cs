@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Data;
 using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 public class ConsoleEFRepository : IConsoleRepository
 {
@@ -26,16 +27,15 @@ public class ConsoleEFRepository : IConsoleRepository
 
         if (consoles != null)
         {
-            var consoleDto = consoles.Select(v => new ConsoleDTO
+            var consoleDto = consoles.Select(c => new ConsoleDTO
             {
-                ConsoleId = v.ConsoleId,
-                Name = v.Name,
-                Specifications = v.Specifications,
-                Stock = v.Stock,
-                Available = v.Available,
-                PlatformId = v.PlatformId,
-                Price = v.Price,
-                ImageURL = v.ImageURL,
+                ConsoleId = c.ConsoleId,
+                Name = c.Name,
+                Specifications = c.Specifications,
+                Price = c.Price,
+                Stock = c.Stock,
+                Available = c.Available,
+                ImageURL = c.ImageURL,
             }).ToList();
             return consoleDto;
         }
@@ -51,16 +51,12 @@ public class ConsoleEFRepository : IConsoleRepository
         SaveChanges();
     }
 
-
     public ConsoleDTO Get(int id)
     {
         var console = _context.Consoles
-            .Where(c => c.ConsoleId == id)
+            // .Include(p => p.Platform)
+            .Where(console => console.ConsoleId == id)
             .FirstOrDefault();
-            // .Include(vg => vg.ListVideogameGender)
-            //     .ThenInclude(g => g.Gender)
-            // .Where(videogame => videogame.VideogameId == id)
-            // .FirstOrDefault();
 
         if (console != null)
         {
@@ -69,36 +65,41 @@ public class ConsoleEFRepository : IConsoleRepository
                 ConsoleId = console.ConsoleId,
                 Name = console.Name,
                 Specifications = console.Specifications,
-                Stock = console.Stock,
-                Available = console.Available,
                 PlatformId = console.PlatformId,
                 Price = console.Price,
+                Stock = console.Stock,
+                Available = console.Available,
                 ImageURL = console.ImageURL,
-                // ListVideogameGender = videogame.ListVideogameGender
-                //     .Where(bo => bo != null && bo.Gender != null)
-                //     .Select(bo => new VideogameGenderDTO
-                //     {
-                //         GenderId = bo.GenderId
-                //     }).ToList()
-            };
 
+            };
             return consoleDto;
         }
         else
         {
-            return null; // Devuelve null si no se encuentra la obra
+            return null;
         }
-
     }
 
     public void Update(Console_ console)
     {
         var existingConsole = _context.Consoles.Find(console.ConsoleId);
-
         if (existingConsole != null)
         {
+
+            if (!_context.Platforms.Any(p => p.PlatformId == console.PlatformId))
+            {
+                throw new Exception("El PlatformId proporcionado no existe.");
+            }
+
+            // Asegúrate de que el PlatformId no sea NULL
+            if (console.PlatformId == null)
+            {
+                throw new Exception("El PlatformId no puede ser nulo.");
+            }
+
             _context.Entry(existingConsole).CurrentValues.SetValues(console);
             _context.SaveChanges();
+
         }
     }
 

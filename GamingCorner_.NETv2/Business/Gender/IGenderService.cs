@@ -9,5 +9,6 @@ public interface IGenderService
     // GetAll(int id);
     void Add(GenderCreateDTO genderCreateDTO);
     GenderDTO Get(int id);
+    List<VideogameDTO> GetVideogamesByGender(int id);
     void Delete(int id);
 }

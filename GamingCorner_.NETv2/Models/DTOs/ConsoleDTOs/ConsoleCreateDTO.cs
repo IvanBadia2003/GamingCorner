@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 using System.Diagnostics.Contracts;
 using System.Reflection.Metadata;
 
@@ -21,15 +20,14 @@ public class ConsoleCreateDTO
 
     [Required]
     public bool Available { get; set; }
-
-    [Required]
+    
     public int PlatformId { get; set; }
+    
     [Required]
     public decimal Price { get; set; }
+    
     [Required]
-    public string ImageURL { get; set; }
-
-
-    // public List<Order> Orders { get; set; } = new List<Order>();
+    public string? ImageURL { get; set; }
+ 
 
 }

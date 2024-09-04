@@ -18,16 +18,12 @@ var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseKestrel(options =>
-{
-    options.ListenAnyIP(5000); // Puerto que desees, por ejemplo, 8000
-});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          policy.WithOrigins("http://tickett.retocsv.es:80")
+                          policy.WithOrigins("*")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                       });
@@ -44,10 +40,6 @@ builder.Services.AddCors(options =>
 // var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 var connectionString = builder.Configuration.GetConnectionString("ServerDB");
 
-// builder.Services.AddScoped<IObraService, ObraService>();
-// builder.Services.AddScoped<IObraService, ObraService>();
-// builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
-
 builder.Services.AddScoped<IVideogameService, VideogameService>();
 builder.Services.AddScoped<IVideogameRepository, VideogameEFRepository>();
 
@@ -57,14 +49,20 @@ builder.Services.AddScoped<IGenderRepository, GenderEFRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 
-builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
-builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductEFRepository>();
+
+// builder.Services.AddScoped<IVideogameGenderService, VideogameGenderService>();
+// builder.Services.AddScoped<IVideogameGenderRepository, VideogameGenderEFRepository>();
 
 builder.Services.AddScoped<IPlatformService, PlatformService>();
 builder.Services.AddScoped<IPlatformRepository, PlatformEFRepository>();
 
 builder.Services.AddScoped<IConsoleService, ConsoleService>();
 builder.Services.AddScoped<IConsoleRepository, ConsoleEFRepository>();
+
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ITransactionRepository, TransactionEFRepository>();
 
 
 // builder.Services.AddScoped<IIngredienteService, IngredienteService>();

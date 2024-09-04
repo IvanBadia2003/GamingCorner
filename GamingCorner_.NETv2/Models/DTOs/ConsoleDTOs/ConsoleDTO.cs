@@ -15,22 +15,24 @@ public class ConsoleDTO
 
     [Required]
     public string? Specifications { get; set; }
-  
+
     [Required]
     public int Stock { get; set; }
-
-    [Required]
-    public bool Available { get; set; }
-
+    
     [Required]
     public int PlatformId { get; set; }
 
     [Required]
+    public bool Available { get; set; }
+  
+    [Required]
     public decimal Price { get; set; }
-
+        
     [Required]
     public string? ImageURL { get; set; }
 
+    // public List<ConsoleDTO> Consoles { get; set; }Ç
+ 
 
      public Console_ ToConsole()
     {
@@ -39,10 +41,11 @@ public class ConsoleDTO
             ConsoleId = this.ConsoleId,
             Name = this.Name,
             Specifications = this.Specifications,
+            PlatformId = this.PlatformId,
             Stock = this.Stock,
             Available = this.Available,
-            PlatformId = this.PlatformId,
-            ImageURL = this.ImageURL,
+            Price = this.Price,
+            ImageURL = this.ImageURL
         };
     }
 }

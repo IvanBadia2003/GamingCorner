@@ -11,51 +11,52 @@ public class Videogame
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int VideogameId { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
-    [Required]
     public int Pegi { get; set; }
+    
+    public string? Code { get; set; }
 
-    [Required]
     public string Description { get; set; }
 
-    [Required]
     public int Stock { get; set; }
 
-    [Required]
     public bool Available { get; set; }
 
-    [Required]
+    public string? Requisitos1 { get; set; }
+    public string? Requisitos2 { get; set; }
+
     public int PlatformId { get; set; }
 
     public Platform Platform { get; set; }
-    [Required]
-    public int UserId { get; set; }
+    
+    public int GenderId { get; set; }
 
-    public User User { get; set; }
+    public Gender Gender { get; set; }
+    
+    public int? UserId { get; set; }
 
-    public Product Product { get; set;}
+    public User? User { get; set; }
 
-    [Required]
     public decimal Price { get; set; }
 
-    [Required]
     public string ImageURL { get; set; }
-
-    public List<VideogameGender> ListVideogameGender { get; set; }
-
+    public List<Transaction> Transactions { get; set; }
 
     public Videogame() { }
 
-    public Videogame(string name, int pegi, string description, int stock, bool available, int platformId, decimal price, string imageURL)
+    public Videogame(string name, int pegi, string description, int stock, bool available, int platformId, int genderId, decimal price, string imageURL, string code, string requisitos1, string requisitos2)
     {
         Name = name;
         Pegi = pegi;
+        Code = code;
         Description = description;
+        Requisitos1 = requisitos1;
+        Requisitos2 = requisitos2;
         Stock = stock;
         Available = available;
         PlatformId = platformId;
+        GenderId = genderId;
         Price = price;
         ImageURL = imageURL;
     }
@@ -72,10 +73,14 @@ public class Videogame
         {
             Name = videogameCreateDTO.Name,
             Pegi = videogameCreateDTO.Pegi,
+            Code = videogameCreateDTO.Code,
             Description = videogameCreateDTO.Description,
+            Requisitos1 = videogameCreateDTO.Requisitos1,
+            Requisitos2 = videogameCreateDTO.Requisitos2,
             Stock = videogameCreateDTO.Stock,
             Available = videogameCreateDTO.Available,
             PlatformId = videogameCreateDTO.PlatformId,
+            GenderId = videogameCreateDTO.GenderId,
             Price = videogameCreateDTO.Price,
             ImageURL = videogameCreateDTO.ImageURL
         };

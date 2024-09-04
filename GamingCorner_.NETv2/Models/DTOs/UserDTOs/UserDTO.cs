@@ -14,6 +14,9 @@ public class UserDTO
     public string? Name { get; set; }
 
     [Required]
+    public string? Address { get; set; }
+
+    [Required]
     public string? Email { get; set; }
 
     [Required]
@@ -21,25 +24,25 @@ public class UserDTO
 
     [Required]
     public string PhoneNumber { get; set; }
-  
+
     [Required]
     public bool Admin { get; set; }
-        
-    [Required]
-    public string? ImageURL { get; set; }
- 
 
-     public User ToUser()
+    public List<VideogameDTO> Videogames { get; set; }
+    public List<TransactionDTO> Transactions { get; set; }
+
+    public User ToUser()
     {
         return new User
         {
             UserId = this.UserId,
             Name = this.Name,
+            Address = this.Address,
             Email = this.Email,
             Password = this.Password,
             PhoneNumber = this.PhoneNumber,
             Admin = this.Admin,
-            ImageURL = this.ImageURL
+
         };
     }
 }

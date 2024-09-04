@@ -27,6 +27,49 @@ using GamingCorner.Models;
         var platform = _platformRepository.Get(id);
         return platform;
     }
+    
+    public List<VideogameDTO> GetVideogamesByPlatform(int id)
+    {
+        var videogames = _platformRepository.GetVideogamesByPlatform(id);
+
+        if (videogames == null || !videogames.Any())
+        {
+            return null;
+        }
+
+        return videogames.Select(v => new VideogameDTO
+        {
+            VideogameId = v.VideogameId,
+            Name = v.Name,
+            PlatformId = v.PlatformId,
+            Price = v.Price,
+            Stock = v.Stock,
+            Description = v.Description,
+            Requisitos1 = v.Requisitos1,
+            Requisitos2 = v.Requisitos2,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
+    public List<ConsoleDTO> GetConsolesByPlatform(int id)
+    {
+        var consoles = _platformRepository.GetConsolesByPlatform(id);
+
+        if (consoles == null || !consoles.Any())
+        {
+            return null;
+        }
+
+        return consoles.Select(v => new ConsoleDTO
+        {
+            ConsoleId = v.ConsoleId,
+            Name = v.Name,
+            Specifications = v.Specifications,
+            Price = v.Price,
+            Stock = v.Stock,
+            Available = v.Available,
+            ImageURL = v.ImageURL
+        }).ToList();
+    }
 
 
     public void Add(PlatformCreateDTO platformCreateDTO)
@@ -36,20 +79,6 @@ using GamingCorner.Models;
         _platformRepository.Add(mappedPlatform);
     }
 
-    // public void Update(int id, VideogameUpdateDTO videogameUpdateDTO)
-    // {
-    //     var videogameDto = _genderRepository.Get(id);
-    //     if(videogameDto == null)
-    //     {
-    //         throw new KeyNotFoundException($"Videogame con Id {id} no encontrada.");
-    //     }
-
-    //     var videogame = videogameDto.ToVideogame();
-    //     videogame.Stock = videogameDto.Stock;
-    //     videogame.Available = videogameDto.Available;
-    //     videogame.Price = videogameDto.Price;
-    //     _genderRepository.Update(videogame);
-    // }
 
     public void Delete(int id)
     {

@@ -2,7 +2,6 @@ using GamingCorner.Business;
 using GamingCorner.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace GamingCorner.Controllers;
 
 [ApiController]
@@ -10,16 +9,14 @@ namespace GamingCorner.Controllers;
 public class PlatformController : ControllerBase
 {
     private readonly IPlatformService _platformService;
+
     public PlatformController(IPlatformService platformService)
     {
         _platformService = platformService;
     }
 
     [HttpGet]
-    public ActionResult<List<PlatformDTO>> GetAll() =>
-    _platformService.GetAll();
-
-
+    public ActionResult<List<PlatformDTO>> GetAll() => _platformService.GetAll();
 
     [HttpGet]
     [Route("{id}")]
@@ -27,15 +24,44 @@ public class PlatformController : ControllerBase
     {
         var platform = _platformService.Get(id);
 
-        if (platform == null){
+        if (platform == null)
+        {
             return NotFound();
-        }else{
+        }
+        else
+        {
             return platform;
         }
     }
 
+    [HttpGet]
+    [Route("{id}/videogames")]
+    public ActionResult<List<VideogameDTO>> GetVideogamesByPlatform(int id)
+    {
+        var videogames = _platformService.GetVideogamesByPlatform(id);
+
+        if (videogames == null || videogames.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(videogames);
 
 
+    }
+    [HttpGet]
+    [Route("{id}/consoles")]
+    public ActionResult<List<ConsoleDTO>> GetConsolesByPlatform(int id)
+    {
+        var consoles = _platformService.GetConsolesByPlatform(id);
+
+        if (consoles == null || consoles.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(consoles);
+
+
+    }
 
     [HttpPost]
     public IActionResult Create([FromBody] PlatformCreateDTO platformCreateDTO)
@@ -47,28 +73,6 @@ public class PlatformController : ControllerBase
         _platformService.Add(platformCreateDTO);
         return Ok();
     }
-
-
-
-
-    // [HttpPut("{id}")]
-    // public IActionResult Update(int id, [FromBody] VideogameUpdateDTO videogameUpdateDTO)
-    // {
-    //     if (!ModelState.IsValid) { return BadRequest(ModelState); }
-
-    //     try
-    //     {
-    //         _genderService.Update(id, videogameUpdateDTO);
-    //         return NoContent();
-    //     }
-    //     catch (KeyNotFoundException)
-    //     {
-    //         return NotFound();
-    //     }
-    // }
-
-
-
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
@@ -82,4 +86,10 @@ public class PlatformController : ControllerBase
 
         return NoContent();
     }
+
 }
+
+
+
+
+

@@ -10,4 +10,8 @@ public interface IConsoleRepository
     ConsoleDTO Get(int id);
     void Update(Console_ console);
     void Delete(int id);
+
+    // Task AddUserAsync (User user);
+    // Task<User>GetUserAsync(int id);
+
 }
