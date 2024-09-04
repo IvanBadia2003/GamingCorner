@@ -22,6 +22,7 @@ public class ProductEFRepository : IProductRepository
     public List<ProductDTO> GetAll()
     {
         var products = _context.Products
+            .Where(p => p.Available == true)
             .ToList();
 
         if (products != null)
@@ -31,7 +32,7 @@ public class ProductEFRepository : IProductRepository
                 ProductId = p.ProductId,
                 Name = p.Name,
                 Description = p.Description,
-                Available = true,
+                Available = p.Available,
                 Price = p.Price,
                 ImageURL = p.ImageURL,
             }).ToList();
@@ -53,6 +54,7 @@ public class ProductEFRepository : IProductRepository
     {
         var product = _context.Products
             .Where(product => product.ProductId == id)
+            .Where(p => p.Available == true)
             .FirstOrDefault();
 
         if (product != null)
@@ -62,7 +64,7 @@ public class ProductEFRepository : IProductRepository
                 ProductId = product.ProductId,
                 Name = product.Name,
                 Description = product.Description,
-                Available =true,
+                Available =product.Available,
                 Price = product.Price,
                 ImageURL = product.ImageURL,
             };
