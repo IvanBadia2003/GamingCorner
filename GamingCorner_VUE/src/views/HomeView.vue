@@ -14,11 +14,11 @@ GameStore.fetchGames();
     <span class="section__title">TOP VENTAS</span>
     <div class="section__content">
       <span>JUEGOS</span>
-      <Carousel />
+      <Carousel :isGame="true"/>
     </div>
     <div class="section__content">
       <span>CONSOLAS</span>
-      <Carousel />
+      <Carousel :isGame="false"/>
     </div>
   </section>
 
@@ -26,11 +26,11 @@ GameStore.fetchGames();
     <span class="section__title">MEJOR VALORADOS</span>
     <div class="section__content">
       <span>JUEGOS</span>
-      <Carousel />
+      <Carousel :isGame="true"/>
     </div>
     <div class="section__content">
       <span>CONSOLAS</span>
-      <Carousel />
+      <Carousel :isGame="false"/>
     </div>
   </section>
 

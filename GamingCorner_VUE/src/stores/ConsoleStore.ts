@@ -78,7 +78,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     async function fetchConsolesById (id: number) {
         try {
-            debugger
+            
             const response = await fetch('http://localhost:5000/Console/' + id);
             console.log("Fetch de una consola hecho desde ConsoleStore.ts");
 
@@ -130,7 +130,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     // editar juego
     async function editConsole(id: number, Console: editedConsole) {
-        debugger
+        
         try {
             const response = await fetch('http://localhost:5000/Console/' + id, {
                 method: 'PUT',

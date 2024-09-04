@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import GridView from '../views/GridView.vue'
+import GridProductsView from '../views/GridProductsView.vue'
 import LoginView from '../views/LoginView.vue'
 import DescriptionGameView from '../views/DescriptionGameView.vue'
 import DescriptionConsoleView from '../views/DescriptionConsoleView.vue'
+import DescriptionProductView from '../views/DescriptionProductView.vue'
 import AdminView from '../views/AdminView.vue'
 import CartView from '../views/CartView.vue'
 import ProfileView from '../views/ProfileView.vue'
@@ -26,6 +28,11 @@ const router = createRouter({
       component: GridView
     },
     {
+      path: '/grid-segunda-mano',
+      name: 'grid-segunda-mano',
+      component: GridProductsView
+    },
+    {
       path: '/login',
       name: 'login',
       component: LoginView
@@ -39,6 +46,11 @@ const router = createRouter({
       path: '/description-game/:id',
       name: 'description-game',
       component: DescriptionGameView
+    },
+    {
+      path: '/description-product/:id',
+      name: 'description-product',
+      component: DescriptionProductView
     },
     {
       path: '/admin',

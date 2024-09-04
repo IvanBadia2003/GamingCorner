@@ -1,5 +1,6 @@
 <script setup>
 import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
 import Tarjet from '@/components/Tarjet.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
@@ -8,6 +9,15 @@ import { ref } from 'vue';
 const GameStore = useGameStore();
 GameStore.fetchGames();
 
+const ConsoleStore = useConsoleStore();
+ConsoleStore.fetchConsoles();
+
+const props = defineProps({
+    isGame: {
+        type: Boolean
+    }
+
+});
 const slidesPerView = ref(2);
 
 const breakpoints = {
@@ -41,8 +51,11 @@ function onSlideChange() {
         :loop="true"
         :breakpoints="breakpoints"
         :navigation="true">
-        <swiper-slide v-for="game in GameStore.games" :key="game.videogameId">
-            <Tarjet :idGame="game.videogameId" :name="game.name" :price="game.price" :image="game.imageURL" :is-grid="true"></Tarjet>
+        <swiper-slide v-if="isGame" v-for="game in GameStore.games" :key="game.videogameId">
+            <Tarjet :idGame="game.videogameId" :name="game.name" :price="game.price" :image="game.imageURL" :is-grid="true" :isGame="props.isGame"></Tarjet>
+        </swiper-slide>
+        <swiper-slide v-else v-for="console in ConsoleStore.consoles" :key="console.consoleId">
+            <Tarjet :idGame="console.consoleId" :name="console.name" :price="console.price" :image="console.imageURL" :is-grid="true" :isGame="props.isGame"></Tarjet>
         </swiper-slide>
     </swiper>
 </template>

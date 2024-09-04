@@ -39,9 +39,17 @@ interface Game {
     imageURL: string;
 }
 
+interface Product {
+    productId: number;
+    name: string;
+    description: string;
+    price: number;
+    available: boolean;
+    imageURL: string;
+}
 
 defineProps<{
-    product: Game | Console;
+    product: Game | Console | Product;
     isGame: boolean;
 }>()
 
