@@ -31,7 +31,7 @@ public class ProductEFRepository : IProductRepository
                 ProductId = p.ProductId,
                 Name = p.Name,
                 Description = p.Description,
-                Available = p.Available,
+                Available = true,
                 Price = p.Price,
                 ImageURL = p.ImageURL,
             }).ToList();
@@ -62,7 +62,7 @@ public class ProductEFRepository : IProductRepository
                 ProductId = product.ProductId,
                 Name = product.Name,
                 Description = product.Description,
-                Available =product.Available,
+                Available =true,
                 Price = product.Price,
                 ImageURL = product.ImageURL,
             };
