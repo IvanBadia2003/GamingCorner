@@ -5,8 +5,10 @@ import IconVisa from '@/components/icons/IconVisa.vue';
 import router from '@/router';
 import { ref } from 'vue';
 import { useCartStore } from '@/stores/CartStore';
+import { useGameStore } from '@/stores/GameStore';
 
 const cartStore = useCartStore();
+const gameStore = useGameStore();
 
 // Función de pago
 function payFunction() {
@@ -32,7 +34,7 @@ const opcionSeleccionada = ref('paypal');
             <div>
                 <h2>Productos Seleccionados</h2>
                 <div style="display: flex;">
-                    <div v-for="product in cartStore.cartItems" :key="product.videogameId" class="product">
+                    <div v-for="product in gameStore.cartItems" :key="product.videogameId" class="product">
                         <img :src="product.imageURL" :alt="product.name">
                     </div>
                 </div>

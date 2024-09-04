@@ -26,20 +26,29 @@ interface Console {
     available: boolean;
     price: number;
     imageURL: string;
+    videogameId: number | null;
+    pegi: number | null;
+    platform: number | null;
 }
 
+
 interface Game {
-    videogameId: number;
-    name: string;
-    pegi: number;
-    description: string;
-    category: string;
-    stock: number;
-    available: boolean;
-    platform: string;
-    price: number;
-    imageURL: string;
+  videogameId: number;
+  name: string;
+  pegi: number;
+  description: string;
+  category: string;
+  stock: number;
+  available: boolean;
+  requisitos1: string;
+  requisitos2: string;
+  platform: string;
+  price: number;
+  imageURL: string;
+  code: string | null;
+  consoleId: number | null
 }
+
 
 interface Product {
     productId: number;
@@ -48,6 +57,9 @@ interface Product {
     price: number;
     available: boolean;
     imageURL: string;
+    pegi: number | null;
+    platform: number | null;
+    stock: number;
 }
 
 defineProps<{
@@ -62,17 +74,16 @@ const cartStore = useCartStore();
 
 const game = computed(() => gameStore.game);
 
-/* const addToCart = () => {
+const addToCart = () => {
     if (game.value) {
-        cartStore.addToCart({
+        gameStore.addToCart({
             videogameId: game.value.videogameId,
             name: game.value.name,
             price: game.value.price,
-            quantity: 1,
             imageURL: game.value.imageURL
         });
     }
-}; */
+}; 
 
 
 </script>

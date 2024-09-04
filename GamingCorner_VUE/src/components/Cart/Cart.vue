@@ -2,14 +2,15 @@
 import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import { useCartStore } from '@/stores/CartStore';
+import { useGameStore } from '@/stores/GameStore';
 import { computed } from 'vue';
 
 const cartStore = useCartStore();
+const gameStore = useGameStore();
 
 const removeFromCart = (gameId: number) => {
-  cartStore.removeFromCart(gameId);
-  delete cartStore.quantities[gameId]; // Elimina la cantidad asociada al producto
-};
+  gameStore.removeFromCart(gameId);
+}; 
 </script>
 
 <template>
@@ -19,8 +20,8 @@ const removeFromCart = (gameId: number) => {
         <h3>Carrito</h3>
       </div>
       <div class="cart__product">
-        <div v-if="cartStore.cartItems.length > 0">
-          <div v-for="product in cartStore.cartItems" :key="product.videogameId" class="product">
+        <div v-if="gameStore.cartItems.length > 0">
+          <div v-for="product in gameStore.cartItems" :key="product.videogameId" class="product">
             <div class="product__img">
               <img :src="product.imageURL" :alt="product.name">
             </div>
@@ -37,18 +38,8 @@ const removeFromCart = (gameId: number) => {
                 </div>
               </div>
               <div class="info__down">
-                <div class="quantity">
-                  <select
-                    name="quantity"
-                    id="quantity"
-                    v-model="cartStore.quantities[product.videogameId]"
-                    @change="cartStore.quantities[product.videogameId] = parseInt($event.target.value)"
-                  >
-                    <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-                  </select>
-                </div>
                 <div class="price">
-                  <h2>{{ product.price * (cartStore.quantities[product.videogameId] || 1) }}€</h2>
+                  <h2>{{ product.price }}€</h2>
                 </div>
               </div>
             </div>

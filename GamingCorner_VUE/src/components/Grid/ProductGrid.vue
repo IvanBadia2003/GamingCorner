@@ -10,6 +10,9 @@ import { useFilterStore } from '@/stores/FilterStore';
 interface Product {
   price: number;
   name: string;
+  videogameId: number | null
+  consoleId: number | null
+  imageURL: string | null
 }
 
 const GameStore = useGameStore();
@@ -31,7 +34,7 @@ const props = defineProps<Props>();
 const currentPage = ref(1);
 const itemsPerPage = ref(6);
 
-const selectedGameId = ref<number | null>(null);
+const selectedGameId = ref<any>(null);
 
 // Lógica para ordenar elementos por precio
 const sortItems = (items: Product[]): Product[] => {
@@ -90,25 +93,25 @@ const handleCardClick = (id: number) => {
   <div class="product-grid">
     <Tarjet v-if="props.type === 'game'"
       v-for="game in paginatedGames" 
-      :key="game.videogameId" 
-      :idGame="game.videogameId" 
+      :key="(game.videogameId as number)" 
+      :idGame="(game.videogameId as number)" 
       :name="game.name"
       :price="game.price" 
-      :image="game.imageURL"
+      :image="(game.imageURL as string)"
       :isGrid="isGrid"
       :isGame="true"
-      @click="handleCardClick(game.videogameId)" 
+      @click="handleCardClick(game.videogameId as number)" 
     />
     <Tarjet v-if="props.type === 'console'"
       v-for="console in paginatedConsoles" 
-      :key="console.consoleId" 
-      :idGame="console.consoleId" 
+      :key="(console.consoleId as number)" 
+      :idGame="(console.consoleId as number)" 
       :name="console.name"
       :price="console.price" 
-      :image="console.imageURL"
+      :image="(console.imageURL as string)"
       :isGrid="isGrid"
       :isGame="false"
-      @click="handleCardClick(console.consoleId)" 
+      @click="handleCardClick(console.consoleId as number)" 
     />
   </div>
 
@@ -117,7 +120,7 @@ const handleCardClick = (id: number) => {
     <button @click="nextPage" :disabled="props.type === 'game' ? currentPage === totalPagesGames : currentPage === totalPagesConsoles">></button>
   </div>
 
-  <Modal v-if="selectedGameId" v-model:modelValue="selectedGameId" title="Código del juego">
+  <Modal v-if="selectedGameId"  v-model="selectedGameId" title="Código del juego">
     <template #default>
       <h3>ID del Juego: {{ selectedGameId }}</h3>
     </template>

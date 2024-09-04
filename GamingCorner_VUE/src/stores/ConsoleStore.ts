@@ -11,6 +11,9 @@ interface Console {
     available: boolean;
     price: number;
     imageURL: string;
+    videogameId: number | null;
+    pegi: number | null;
+    platform: number | null;
 }
 
 interface editedConsole {
@@ -35,6 +38,9 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
         available: false,
         price: 0,
         imageURL: '',
+        videogameId: 0,
+        pegi: 0,
+        platform: 0
 
       });
     

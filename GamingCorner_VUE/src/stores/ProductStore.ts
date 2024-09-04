@@ -9,6 +9,9 @@ interface Product {
     price: number;
     available: boolean;
     imageURL: string;
+    pegi: number | null;
+    platform: number | null;
+    stock: number;
 }
 
 interface editedProduct {
@@ -30,6 +33,9 @@ export const useProductStore = defineStore('ProductStore', () => {
         available: false,
         price: 0,
         imageURL: '',
+        pegi: 0,
+        platform: 0,
+        stock: 0
     });
 
     // Getter

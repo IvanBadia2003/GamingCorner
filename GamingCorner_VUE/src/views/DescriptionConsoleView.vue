@@ -9,8 +9,8 @@ import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
 import Specifications from '@/components/Description/Specifications.vue';
-import Carousel from '@/components/Home/Carousel.vue';
-
+/* import Carousel from '../components/Home/Carousel.vue';
+ */
 
 const route = useRoute();
 const consoleStore = useConsoleStore();
