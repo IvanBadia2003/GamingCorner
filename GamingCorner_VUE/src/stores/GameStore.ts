@@ -1,227 +1,290 @@
 import { defineStore } from 'pinia';
-import type { ListFormat } from 'typescript';
 import { computed, reactive, ref } from 'vue';
 
-interface Gender {
-    genderId: number,
-    videogameId: number
-}
-
 interface Game {
-    videogameId: number;
-    name: string;
-    pegi: number;
-    description: string;
-    category: string;
-    stock: number;
-    available: boolean;
-    requisitos1: string;
-    requisitos2: string;
-    platform: string;
-    price: number;
-    imageURL: string;
-    code: string;
+  videogameId: number;
+  name: string;
+  pegi: number;
+  description: string;
+  category: string;
+  stock: number;
+  available: boolean;
+  requisitos1: string;
+  requisitos2: string;
+  platform: string;
+  price: number;
+  imageURL: string;
+  code: string | null;
+  consoleId: number | null
 }
 
 interface editedGame {
-    videogameId: number;
-    name: string;
-    stock: number;
-    available: boolean;
-    price: number;
+  videogameId: number;
+  stock: number;
+  available: boolean;
+  price: number;
+}
 
+// Define el tipo de datos para los juegos en el carrito
+interface CartGame {
+  videogameId: number;
+  name: string;
+  price: number;
+  imageURL: string;
 }
 
 export const useGameStore = defineStore('GameStore', () => {
-    // State
-    const games = reactive(new Array<Game>);
-    const selectedGameId = ref<number>(-1); // Inicializa con un valor que represente que no hay ninguna obra seleccionada
-    const game = reactive<Game>({
-        videogameId: 0,
-        name: '',
-        pegi: 0,
-        description: '',
-        category: '',
-        stock: 0,
-        available: false,
-        requisitos1: '',
-        requisitos2: '',
-        platform: '',
-        price: 0,
-        imageURL: '',
-        code: ''
-    });
+  // State
+  const games = reactive<Game[]>([]);
+  const cart = reactive<CartGame[]>([]);
+  const selectedGameId = ref<number>(-1);
+  const game = reactive<Game>({
+    videogameId: 0,
+    name: '',
+    pegi: 0,
+    description: '',
+    category: '',
+    stock: 0,
+    available: false,
+    requisitos1: '',
+    requisitos2: '',
+    platform: '',
+    price: 0,
+    imageURL: '',
+    code: '',
+    consoleId: 0
+  });
 
-    // Getter
-    // calcula la cantidad de funciones que hay
-    const calcularCantidad = computed(() => games.length);
-    const requisitos1Array = computed(() => game.requisitos1.split(';'));
-    const requisitos2Array = computed(() => game.requisitos2.split(';'));
-    // Getter para obtener la obra seleccionada
-    const selectedGame = computed(() => {
-        if (selectedGameId.value !== null) {
-            return games.find(func => func.videogameId === selectedGameId.value);
-        }
-        return null;
-    });
-
-
-
-
-    // Action
-    // saca de la api todas los juegos que hay
-    async function fetchGames() {
-
-        try {
-            const response = await fetch('http://localhost:5000/Videogame');
-            console.log("Fetch de grid de juegos hecho desde GameStore.ts");
-
-            const data = await response.json();
-            games.splice(0, games.length)
-            games.push(...data);
-            // Actualiza la lista de posteos con los datos de la api
-        } catch (error) {
-            console.error('Error al obtener los posteos:', error);
-        }
+  // Getter
+  const calcularCantidad = computed(() => games.length);
+  const requisitos1Array = computed(() => game.requisitos1.split(';'));
+  const requisitos2Array = computed(() => game.requisitos2.split(';'));
+  const selectedGame = computed(() => {
+    if (selectedGameId.value !== null) {
+      return games.find(func => func.videogameId === selectedGameId.value);
     }
+    return null;
+  });
 
-    // busca en la api la funcion por id
-    function searchGamesPerId(id: number) {
-        selectedGameId.value = id; // Almacena el ID de la obra buscada
-        return games.find(i => i.videogameId === id);
+  // Getter para obtener los juegos en el carrito
+  const cartItems = computed(() => cart);
+
+  // Getter para obtener el total de precios en el carrito
+  const totalPrice = computed(() => {
+    return cart.reduce((total, item) => total + item.price, 0);
+  });
+
+  // Action
+  async function fetchGames() {
+    try {
+      const response = await fetch('http://localhost:5000/Videogame');
+      console.log("Fetch de grid de juegos hecho desde GameStore.ts");
+      const data = await response.json();
+      games.splice(0, games.length);
+      games.push(...data);
+    } catch (error) {
+      console.error('Error al obtener los juegos:', error);
     }
+  }
 
-    async function fetchGamesById(id: number) {
-        try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id);
-            console.log("Fetch de un juego hecho desde GameStore.ts");
+  function searchGamesPerId(id: number) {
+    selectedGameId.value = id;
+    return games.find(i => i.videogameId === id);
+  }
 
-            const gameData = await response.json();
-
-            // Actualiza el estado del juego
-            Object.assign(game, gameData);
-        } catch (error) {
-            console.error('Error al obtener los detalles del juego:', error);
-        }
-    };
-
-
-
-    // eliminar obra
-    async function deleteGame(id: number, name: string) {
-        try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id, {
-                method: 'DELETE',
-            });
-            console.log("Fetch de eliminar juegos " + id + " hecho desde GameStore.ts");
-            alert(`Juego: ${name} eliminado con éxito`)
-
-        } catch (error) {
-            console.error('Error al eliminar:', error);
-        }
+  async function fetchGamesById(id: number) {
+    try {
+      const response = await fetch('http://localhost:5000/Videogame/' + id);
+      console.log("Fetch de un juego hecho desde GameStore.ts");
+      const gameData = await response.json();
+      Object.assign(game, gameData);
+    } catch (error) {
+      console.error('Error al obtener los detalles del juego:', error);
     }
+  }
 
-    // crear obra
-    async function createGame(game: Game) {
-        try {
-            const response = await fetch('http://tickettback.retocsv.es:80/Obra', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Indica que estás enviando datos en formato JSON
-                },
-                body: JSON.stringify(game), // Convierte el objeto obra a JSON y lo envía en el cuerpo de la solicitud
-
-            });
-            if (response.ok) {
-                console.log('Juego creada exitosamente.');
-            } else {
-                console.error('Error al crear el juego:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error al crear el juego:', error);
-        }
+  async function deleteGame(id: number, name: string) {
+    try {
+      const response = await fetch('http://localhost:5000/Videogame/' + id, {
+        method: 'DELETE',
+      });
+      console.log("Fetch de eliminar juegos " + id + " hecho desde GameStore.ts");
+      alert(`Juego: ${name} eliminado con éxito`);
+    } catch (error) {
+      console.error('Error al eliminar:', error);
     }
+  }
 
-    // editar juego
-    async function editGame(id: number, juego: editedGame) {
-        debugger
-        try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json', // Indica que estás enviando datos en formato JSON
-                },
-                body: JSON.stringify(juego), // Convierte el objeto obra a JSON y lo envía en el cuerpo de la solicitud
-
-            });
-            if (response.ok) {
-                console.log('Juego editado exitosamente.');
-            } else {
-                console.error('Error al editar la obra:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error al editar la obra:', error);
-        }
+  async function createGame(game: Game) {
+    try {
+      const response = await fetch('http://localhost:5000/Videogame', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(game),
+      });
+      if (response.ok) {
+        console.log('Juego creado exitosamente.');
+      } else {
+        console.error('Error al crear el juego:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al crear el juego:', error);
     }
+  }
 
-    // Filtrar funciones por título
-    function filterGamesByTitle(title: string) {
-        console.log('Busco por titulo en la store');
-        if (title.length < 2) {
-            return games;
+  async function editGame(id: number, juego: editedGame) {
+    try {
+      const response = await fetch('http://localhost:5000/Videogame/' + id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(juego),
+      });
+      if (response.ok) {
+        console.log('Juego editado exitosamente.');
+      } else {
+        console.error('Error al editar el juego:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al editar el juego:', error);
+    }
+  }
+
+  async function purchaseGame(id: number) {
+    // Encuentra el juego en la lista de juegos (puedes ajustar esto según cómo estés manejando los datos)
+    const game = games.find(g => g.videogameId === id);
+
+    if (game) {
+      // Calcula el nuevo stock y estado de disponibilidad
+      const newStock = game.stock - 1;
+      const newAvailable = newStock > 0;
+
+      try {
+        const response = await fetch('http://localhost:5000/Videogame/' + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            price: game.price,
+            stock: newStock,
+            available: newAvailable
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Juego editado exitosamente.');
+          // Actualiza el juego en el store (opcional si ya lo manejas en otro lado)
+          game.stock = newStock;
+          game.available = newAvailable;
         } else {
-            const gamesFiltered = games.filter(func => func.name.toLowerCase().includes(title.toLowerCase()));
-            return gamesFiltered
+          console.error('Error al editar el juego:', response.statusText);
         }
+      } catch (error) {
+        console.error('Error al editar el juego:', error);
+      }
+    } else {
+      console.error('Juego no encontrado');
     }
+  }
 
-    async function filterGamesByGenre(id: number) {
-        try {
-            if (id == 0) {
-                fetchGames();
 
-            } else {
-                const response = await fetch(`http://localhost:5000/Gender/${id}/videogames`);
-                console.log("Fetch de grid de juegos por género hecho desde GameStore.ts");
+  function filterGamesByTitle(title: string) {
+    if (title.length < 2) {
+      return games;
+    } else {
+      return games.filter(func => func.name.toLowerCase().includes(title.toLowerCase()));
+    }
+  }
 
-                const data = await response.json();
 
-                // Verificar si `data` es un array
-                if (Array.isArray(data)) {
-                    games.splice(0, games.length);  // Vaciar el array `games`
-                    games.push(...data);  // Insertar nuevos datos
-                } else {
-                    console.error('La respuesta del servidor no es un array:', data);
-                }
-            }
-        } catch (error) {
-            console.error('Error al obtener los videojuegos:', error);
+
+  async function filterGamesByGenre(id: number) {
+    try {
+      if (id === 0) {
+        fetchGames();
+      } else {
+        const response = await fetch(`http://localhost:5000/Gender/${id}/videogames`);
+        console.log("Fetch de grid de juegos por género hecho desde GameStore.ts");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          games.splice(0, games.length);
+          games.push(...data);
+        } else {
+          console.error('La respuesta del servidor no es un array:', data);
         }
+      }
+    } catch (error) {
+      console.error('Error al obtener los videojuegos:', error);
     }
+  }
 
-    async function filterGamesByPlatform(id: number) {
-        try {
-            debugger
-            if (id == 0) {
-                fetchGames();
-            } else {
-                const response = await fetch(`http://localhost:5000/Platform/${id}/videogames`);
-                console.log("Fetch de grid de juegos por plataforma hecho desde GameStore.ts");
-
-                const data = await response.json();
-
-                // Verificar si `data` es un array
-                if (Array.isArray(data)) {
-                    games.splice(0, games.length);  // Vaciar el array `games`
-                    games.push(...data);  // Insertar nuevos datos
-                } else {
-                    console.error('La respuesta del servidor no es un array:', data);
-                }
-            }
-        } catch (error) {
-            console.error('Error al obtener los videojuegos:', error);
+  async function filterGamesByPlatform(id: number) {
+    try {
+      if (id === 0) {
+        fetchGames();
+      } else {
+        const response = await fetch(`http://localhost:5000/Platform/${id}/videogames`);
+        console.log("Fetch de grid de juegos por plataforma hecho desde GameStore.ts");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          games.splice(0, games.length);
+          games.push(...data);
+        } else {
+          console.error('La respuesta del servidor no es un array:', data);
         }
+      }
+    } catch (error) {
+      console.error('Error al obtener los videojuegos:', error);
     }
+  }
 
-    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, filterGamesByTitle, fetchGamesById, filterGamesByGenre,  filterGamesByPlatform, requisitos1Array, requisitos2Array };
+  // Añadir un juego al carrito
+  function addToCart(game: CartGame) {
+    const existingGame = cart.find(item => item.videogameId === game.videogameId);
+    if (!existingGame) {
+      cart.push(game);
+    }
+  }
+
+  // Eliminar un juego del carrito
+  function removeFromCart(videogameId: number) {
+    const index = cart.findIndex(item => item.videogameId === videogameId);
+    if (index !== -1) {
+      cart.splice(index, 1);
+    }
+  }
+
+  // Vaciar el carrito
+  function clearCart() {
+    cart.splice(0, cart.length);
+  }
+
+  return {
+    game,
+    games,
+    cart,
+    calcularCantidad,
+    fetchGames,
+    searchGamesPerId,
+    deleteGame,
+    createGame,
+    editGame,
+    selectedGame,
+    filterGamesByTitle,
+    fetchGamesById,
+    filterGamesByGenre,
+    filterGamesByPlatform,
+    requisitos1Array,
+    requisitos2Array,
+    cartItems,
+    totalPrice,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    purchaseGame
+  };
 });

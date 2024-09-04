@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import type { ListFormat } from 'typescript';
 import { computed, reactive, ref } from 'vue';
 
 interface Product {
@@ -9,6 +8,9 @@ interface Product {
     price: number;
     available: boolean;
     imageURL: string;
+    pegi: number | null;
+    platform: number | null;
+    stock: number;
 }
 
 interface editedProduct {
@@ -16,13 +18,21 @@ interface editedProduct {
     name: string;
     available: boolean;
     price: number;
+}
 
+// Define el tipo de datos para los productos en el carrito
+interface CartProduct {
+    productId: number;
+    name: string;
+    price: number;
+    imageURL: string;
 }
 
 export const useProductStore = defineStore('ProductStore', () => {
     // State
-    const products = reactive(new Array<Product>);
-    const selectedProductId = ref<number>(-1); // Inicializa con un valor que represente que no hay ninguna obra seleccionada
+    const products = reactive<Product[]>([]);
+    const cart = reactive<CartProduct[]>([]);
+    const selectedProductId = ref<number>(-1);
     const product = reactive<Product>({
         productId: 0,
         name: '',
@@ -30,13 +40,13 @@ export const useProductStore = defineStore('ProductStore', () => {
         available: false,
         price: 0,
         imageURL: '',
+        pegi: 0,
+        platform: 0,
+        stock: 0
     });
 
     // Getter
-    // calcula la cantidad de funciones que hay
     const calcularCantidad = computed(() => products.length);
-
-    // Getter para obtener la obra seleccionada
     const selectedGame = computed(() => {
         if (selectedProductId.value !== null) {
             return products.find(func => func.productId === selectedProductId.value);
@@ -44,72 +54,99 @@ export const useProductStore = defineStore('ProductStore', () => {
         return null;
     });
 
+    // Getter para obtener los productos en el carrito
+    const cartItems = computed(() => cart);
 
-
+    // Getter para obtener el total de precios en el carrito
+    const totalPrice = computed(() => {
+        return cart.reduce((total, item) => total + item.price, 0);
+    });
 
     // Action
-    // saca de la api todas los juegos que hay
     async function fetchProducts() {
-
         try {
             const response = await fetch('http://localhost:5000/Product');
-            console.log("Fetch de grid de juegos hecho desde ProductStore.ts");
+            console.log("Fetch de grid de productos hecho desde ProductStore.ts");
 
             const data = await response.json();
-            products.splice(0, products.length)
+            products.splice(0, products.length);
             products.push(...data);
-            // Actualiza la lista de posteos con los datos de la api
         } catch (error) {
-            console.error('Error al obtener los posteos:', error);
+            console.error('Error al obtener los productos:', error);
         }
     }
 
-    // busca en la api la funcion por id
     function searchProductsPerId(id: number) {
-        selectedProductId.value = id; // Almacena el ID de la obra buscada
+        selectedProductId.value = id;
         return products.find(i => i.productId === id);
     }
 
     async function fetchProductsById(id: number) {
         try {
             const response = await fetch('http://localhost:5000/Product/' + id);
-            console.log("Fetch de un juego hecho desde ProductStore.ts");
+            console.log("Fetch de un producto hecho desde ProductStore.ts");
 
             const productData = await response.json();
-
-            // Actualiza el estado del juego
             Object.assign(product, productData);
         } catch (error) {
             console.error('Error al obtener los detalles del producto:', error);
         }
-    };
+    }
 
-
-
-    // eliminar obra
     async function deleteProduct(id: number, name: string) {
         try {
             const response = await fetch('http://localhost:5000/Product/' + id, {
                 method: 'DELETE',
             });
             console.log("Fetch de eliminar producto " + id + " hecho desde ProductStore.ts");
-            alert(`Juego: ${name} eliminado con éxito`)
-
+            alert(`Producto: ${name} eliminado con éxito`);
         } catch (error) {
             console.error('Error al eliminar:', error);
         }
     }
 
-    // crear obra
+    async function purchaseProduct(id: number) {
+        // Encuentra el juego en la lista de juegos (puedes ajustar esto según cómo estés manejando los datos)
+        const product = products.find(g => g.productId === id);
+    
+        if (product) {
+          // Calcula el nuevo stock y estado de disponibilidad
+          const newAvailable = false;
+    
+          try {
+            const response = await fetch('http://localhost:5000/Product/' + id, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                available: newAvailable
+              }),
+            });
+    
+            if (response.ok) {
+                // Actualiza el juego en el store (opcional si ya lo manejas en otro lado)
+                product.available = newAvailable;
+                console.log('Producto editado exitosamente.');
+            } else {
+              console.error('Error al editar el juego:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error al editar el juego:', error);
+          }
+        } else {
+          console.error('Juego no encontrado');
+        }
+      }
+
     async function createProduct(product: Product) {
         try {
             const response = await fetch('http://localhost:5000/Product', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Indica que estás enviando datos en formato JSON
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(product), // Convierte el objeto obra a JSON y lo envía en el cuerpo de la solicitud
-
+                body: JSON.stringify(product),
             });
             if (response.ok) {
                 console.log('Producto creado exitosamente.');
@@ -121,39 +158,72 @@ export const useProductStore = defineStore('ProductStore', () => {
         }
     }
 
-    // editar juego
     async function editProduct(id: number, product: editedProduct) {
-        debugger
         try {
             const response = await fetch('http://localhost:5000/Product/' + id, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json', // Indica que estás enviando datos en formato JSON
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(product), // Convierte el objeto obra a JSON y lo envía en el cuerpo de la solicitud
-
+                body: JSON.stringify(product),
             });
             if (response.ok) {
-                console.log('producto editado exitosamente.');
+                console.log('Producto editado exitosamente.');
             } else {
-                console.error('Error al editar la obra:', response.statusText);
+                console.error('Error al editar el producto:', response.statusText);
             }
         } catch (error) {
-            console.error('Error al editar la obra:', error);
+            console.error('Error al editar el producto:', error);
         }
     }
 
-    // Filtrar funciones por título
     function filterProductsByTitle(title: string) {
-        console.log('Busco por titulo en la store');
         if (title.length < 2) {
             return products;
         } else {
-            const gamesFiltered = products.filter(func => func.name.toLowerCase().includes(title.toLowerCase()));
-            return gamesFiltered
+            return products.filter(func => func.name.toLowerCase().includes(title.toLowerCase()));
         }
     }
 
+    // Añadir un producto al carrito
+    function addToCart(product: CartProduct) {
+        const existingProduct = cart.find(item => item.productId === product.productId);
+        if (!existingProduct) {
+            cart.push(product);
+        }
+    }
 
-    return { product, products, calcularCantidad, fetchProducts, searchProductsPerId, deleteProduct, createProduct, editProduct, selectedGame, filterProductsByTitle, fetchProductsById };
+    // Eliminar un producto del carrito
+    function removeFromCart(productId: number) {
+        const index = cart.findIndex(item => item.productId === productId);
+        if (index !== -1) {
+            cart.splice(index, 1);
+        }
+    }
+
+    // Vaciar el carrito
+    function clearCart() {
+        cart.splice(0, cart.length);
+    }
+
+    return {
+        product,
+        products,
+        cart,
+        calcularCantidad,
+        fetchProducts,
+        searchProductsPerId,
+        deleteProduct,
+        createProduct,
+        editProduct,
+        selectedGame,
+        filterProductsByTitle,
+        fetchProductsById,
+        cartItems,
+        totalPrice,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        purchaseProduct
+    };
 });

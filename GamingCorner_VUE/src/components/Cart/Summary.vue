@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useProductStore } from '@/stores/ProductStore';
+import { computed } from 'vue';
 
-import { useCartStore } from '@/stores/CartStore';
+const gameStore = useGameStore();
+const consoleStore = useConsoleStore();
+const productStore = useProductStore();
 
-const cartStore = useCartStore();
-
-
+const totalPrice = computed(() => {
+  const gameTotal = gameStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const consoleTotal = consoleStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const productTotal = productStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  return gameTotal + consoleTotal + productTotal;
+});
 </script>
+
 
 <template>
     <div class="summaryContainer">
@@ -17,7 +27,7 @@ const cartStore = useCartStore();
                 <div class="buy__info">
                     <div class="fila">
                         <div class="etiqueta">Precio oficial</div>
-                        <div class="valor">149.96€</div>
+                        <div class="valor">{{ totalPrice }}€</div>
                     </div>
                     <div class="fila">
                         <div class="etiqueta">Descuento</div>
@@ -25,7 +35,7 @@ const cartStore = useCartStore();
                     </div>
                     <div class="fila total">
                         <div class="etiqueta">Total</div>
-                        <div class="valor">{{ cartStore.totalPrice }}</div>
+                        <div class="valor">{{ totalPrice }}€</div>
                     </div>
                 </div>
                 <router-link :to="'/purchase'" class="buy__button">
@@ -35,6 +45,7 @@ const cartStore = useCartStore();
         </div>
     </div>
 </template>
+
 
 <style scoped lang="scss">
 .summaryContainer {

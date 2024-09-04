@@ -9,8 +9,8 @@ import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
 import Specifications from '@/components/Description/Specifications.vue';
-import Carousel from '@/components/Home/Carousel.vue';
-
+/* import Carousel from '../components/Home/Carousel.vue';
+ */
 
 const route = useRoute();
 const consoleStore = useConsoleStore();
@@ -58,7 +58,7 @@ onMounted(() => {
         <h2> {{ consoleStore.Console.name }} </h2>
 
         <section class="section first">
-            <BuyComponent :product="consoleStore.Console" :isGame="false" />
+            <BuyComponent :product="consoleStore.Console" :isGame="false" type="console"/>
         </section>
         <section class="section">
             <div class="title-container">

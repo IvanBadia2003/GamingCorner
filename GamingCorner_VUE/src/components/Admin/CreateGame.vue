@@ -4,46 +4,40 @@ import { useGameStore } from '@/stores/GameStore';
 
 const GameStore = useGameStore();
 
-interface Gender    {
-    genderId: number,
-    videogameId: number
-  }
-
 interface Game {
-    videogameId: number;
-    name: string;
-    pegi: number;
-    description: string;
-    category: string;
-    stock: number;
-    available: boolean;
-    platform: string;
-    price: number;
-    imageURL: string;
-    listVideogameGender: Gender
+  videogameId: number;
+  name: string;
+  pegi: number;
+  description: string;
+  category: string;
+  stock: number;
+  available: boolean;
+  requisitos1: string;
+  requisitos2: string;
+  platform: string;
+  price: number;
+  imageURL: string;
+  code: string | null;
+  consoleId: number | null;
 }
 
-
-// inicializo un juego
+// Inicializo un juego
 const game = reactive<Game>({
-    videogameId: 0,
-    name: '',
-    pegi: 0,
-    description: '',
-    category: '',
-    stock: 0,
-    available: false,
-    platform: '',
-    price: 0,
-    imageURL: '',
-    listVideogameGender: {
-        genderId: 0,
-        videogameId: 0
-    }
+  videogameId: 0,
+  name: '',
+  pegi: 0,
+  description: '',
+  category: '',
+  stock: 0,
+  available: false,
+  requisitos1: '',
+  requisitos2: '',
+  platform: '',
+  price: 0,
+  imageURL: '',
+  code: '',
+  consoleId: null
 });
-
-
-
 
 // Variables para almacenar mensajes de error
 const titleError = ref('');
@@ -52,140 +46,134 @@ const genderError = ref('');
 const priceError = ref('');
 const pegiError = ref('');
 const stockError = ref('');
-const stockPlatform = ref('');
+const platformError = ref('');
 
 // Función para validar el título
 const validateName = () => {
-    // Validación: Título no puede estar vacío
-    if (!game.name.trim()) {
-        titleError.value = 'El título es obligatorio';
-    } else {
-        titleError.value = '';
-    }
+  titleError.value = game.name.trim() ? '' : 'El título es obligatorio';
 };
 
 // Función para validar el pegi
 const validatePegi = () => {
-    // Validación: Precio debe ser un número positivo
-    if (game.pegi < 0 || isNaN(game.pegi)) {
-        pegiError.value = 'El Pegi debe ser un número positivo';
-    } else {
-        pegiError.value = '';
-    }
+  pegiError.value = (game.pegi >= 0) ? '' : 'El Pegi debe ser un número positivo';
 };
 
 // Función para validar la descripción
 const validateDescription = () => {
-    // Validación: Descripción no puede estar vacía
-    if (!game.description.trim()) {
-        descriptionError.value = 'La descripción es obligatoria';
-    } else {
-        descriptionError.value = '';
-    }
+  descriptionError.value = game.description.trim() ? '' : 'La descripción es obligatoria';
 };
 
-// Función para validar el genero
+// Función para validar el género
 const validateGender = () => {
-    // Validación: Descripción no puede estar vacía
-    if (!game.category.trim()) {
-        genderError.value = 'El género es obligatorio';
-    } else {
-        genderError.value = '';
-    }
+  genderError.value = game.category.trim() ? '' : 'El género es obligatorio';
 };
 
 // Función para validar el stock
 const validateStock = () => {
-    // Validación: Precio debe ser un número positivo
-    if (game.stock < 0 || isNaN(game.stock)) {
-        stockError.value = 'El stock debe ser un número positivo';
-    } else {
-        stockError.value = '';
-    }
+  stockError.value = (game.stock >= 0) ? '' : 'El stock debe ser un número positivo';
 };
 
-// Función para validar el genero
+// Función para validar la plataforma
 const validatePlatform = () => {
-    // Validación: Descripción no puede estar vacía
-    if (!game.platform.trim()) {
-        stockPlatform.value = 'La plataforma es obligatorio';
-    } else {
-        stockPlatform.value = '';
-    }
+  platformError.value = game.platform.trim() ? '' : 'La plataforma es obligatoria';
 };
 
 // Función para validar el precio
 const validatePrice = () => {
-    // Validación: Precio debe ser un número positivo
-    if (game.price < 0 || isNaN(game.price)) {
-        priceError.value = 'El precio debe ser un número positivo';
-    } else {
-        priceError.value = '';
-    }
+  priceError.value = (game.price >= 0) ? '' : 'El precio debe ser un número positivo';
 };
-
 
 const submitForm = async () => {
+  // Realizar validaciones
+  validateName();
+  validatePegi();
+  validateDescription();
+  validateGender();
+  validateStock();
+  validatePlatform();
+  validatePrice();
 
-    try {
-        validateName();
-        validatePegi();
-        validateDescription();
-        validateGender();
-        validateStock();
-        validatePlatform();
-        validatePrice();
-        // Llamada a createFunction con los datos de la obra
-        await GameStore.createGame(game);
-        console.log('Datos de la nueva obra enviados al servidor.');
-    } catch (error) {
-        console.error('Error al enviar los datos de la obra al servidor:', error);
-    }
+  // Verificar si hay errores antes de enviar el formulario
+  if (titleError.value || descriptionError.value || genderError.value || priceError.value || pegiError.value || stockError.value || platformError.value) {
+    console.log('Errores en el formulario:', {
+      titleError: titleError.value,
+      descriptionError: descriptionError.value,
+      genderError: genderError.value,
+      priceError: priceError.value,
+      pegiError: pegiError.value,
+      stockError: stockError.value,
+      platformError: platformError.value
+    });
+    return;
+  }
+
+  try {
+    // Llamada a createGame con los datos del juego
+    await GameStore.createGame(game);
+    console.log('Juego creado con éxito.');
+  } catch (error) {
+    console.error('Error al crear el juego:', error);
+  }
 };
-
-
 </script>
 
 <template>
-    <form @submit.prevent="submitForm" class="create-form">
-        <div class="form-group">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" v-model="game.name" class="form-control" @input="validateName">
-            <span class="error-message">{{ titleError }}</span>
-        </div>
+  <form @submit.prevent="submitForm" class="create-form">
+    <div class="form-group">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" v-model="game.name" class="form-control" @input="validateName">
+      <span class="error-message">{{ titleError }}</span>
+    </div>
 
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" v-model="game.description" class="form-control"
-                @input="validateDescription"></textarea>
-            <span class="error-message">{{ descriptionError }}</span>
-        </div>
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" v-model="game.description" class="form-control" @input="validateDescription"></textarea>
+      <span class="error-message">{{ descriptionError }}</span>
+    </div>
 
+    <div class="form-group">
+      <label for="genero">Género:</label>
+      <select id="genero" v-model="game.category" class="form-control" @change="validateGender">
+        <option value="">Selecciona un género</option>
+        <option value="Drama">Drama</option>
+        <option value="Romance">Romance</option>
+        <option value="Comedia">Comedia</option>
+        <option value="Musical">Musical</option>
+        <option value="Monologo">Monólogo</option>
+        <option value="Thriller">Thriller</option>
+        <!-- Agrega más opciones según tus necesidades -->
+      </select>
+      <span class="error-message">{{ genderError }}</span>
+    </div>
 
-        <div class="form-group">
-            <label for="genero">Género:</label>
-            <select id="genero" v-model="game.category" class="form-control" @change="validateGender">
-                <option value="">Selecciona un género</option>
-                <option value="Drama">Drama</option>
-                <option value="Romance">Romance</option>
-                <option value="Comedia">Comedia</option>
-                <option value="Musical">Musical</option>
-                <option value="Monologo">Monólogo</option>
-                <option value="Thriller">Thriller</option>
-                <!-- Agrega más opciones según tus necesidades -->
-            </select> <span class="error-message">{{ genderError }}</span>
-        </div>
+    <div class="form-group">
+      <label for="precio">Precio:</label>
+      <input type="number" id="precio" v-model.number="game.price" class="form-control" @input="validatePrice">
+      <span class="error-message">{{ priceError }}</span>
+    </div>
 
+    <div class="form-group">
+      <label for="platform">Plataforma:</label>
+      <input type="text" id="platform" v-model="game.platform" class="form-control" @input="validatePlatform">
+      <span class="error-message">{{ platformError }}</span>
+    </div>
 
-        <div class="form-group">
-            <label for="precio">Precio:</label>
-            <input type="number" id="precio" v-model.number="game.price" class="form-control" @input="validatePrice">
-            <span class="error-message">{{ priceError }}</span>
-        </div>
+    <div class="form-group">
+      <label for="pegi">PEGI:</label>
+      <input type="number" id="pegi" v-model.number="game.pegi" class="form-control" @input="validatePegi">
+      <span class="error-message">{{ pegiError }}</span>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Crear Obra</button>
-    </form>
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" v-model.number="game.stock" class="form-control" @input="validateStock">
+      <span class="error-message">{{ stockError }}</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear Juego</button>
+  </form>
 </template>
+
 
 
 <style scoped lang="scss">

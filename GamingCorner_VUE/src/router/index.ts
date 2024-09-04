@@ -89,6 +89,7 @@ const router = createRouter({
       // Permitir que la navegación continúe según la lógica actual
       next();
   }
+
 });  
 
 export default router

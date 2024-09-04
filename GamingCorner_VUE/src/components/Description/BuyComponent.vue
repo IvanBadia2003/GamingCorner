@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useGameStore } from '@/stores/GameStore';
-import { useCartStore } from '@/stores/CartStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useProductStore } from '@/stores/ProductStore';
+import { useUserStore } from '@/stores/UserStore';
+
 import IconFavorite from '@/components/icons/IconFavorite.vue';
 import IconTick from '@/components/icons/IconTick.vue';
 import IconCross from '@/components/icons/IconCross.vue';
@@ -24,19 +27,26 @@ interface Console {
     available: boolean;
     price: number;
     imageURL: string;
+    videogameId: number | null;
+    pegi: number | null;
+    platform: number | null;
 }
 
 interface Game {
-    videogameId: number;
-    name: string;
-    pegi: number;
-    description: string;
-    category: string;
-    stock: number;
-    available: boolean;
-    platform: string;
-    price: number;
-    imageURL: string;
+  videogameId: number;
+  name: string;
+  pegi: number;
+  description: string;
+  category: string;
+  stock: number;
+  available: boolean;
+  requisitos1: string;
+  requisitos2: string;
+  platform: string;
+  price: number;
+  imageURL: string;
+  code: string | null;
+  consoleId: number | null;
 }
 
 interface Product {
@@ -46,31 +56,46 @@ interface Product {
     price: number;
     available: boolean;
     imageURL: string;
+    pegi: number | null;
+    platform: number | null;
+    stock: number;
 }
 
-defineProps<{
+const props = defineProps<{
     product: Game | Console | Product;
     isGame: boolean;
-}>()
+    type: 'game' | 'console' | 'product';
+}>();
 
+const userStore = useUserStore();
 const gameStore = useGameStore();
-const cartStore = useCartStore();
+const consoleStore = useConsoleStore();
+const productStore = useProductStore();
 
-const game = computed(() => gameStore.game);
-
-/* const addToCart = () => {
-    if (game.value) {
-        cartStore.addToCart({
-            videogameId: game.value.videogameId,
-            name: game.value.name,
-            price: game.value.price,
-            quantity: 1,
-            imageURL: game.value.imageURL
+const addToCart = () => {
+    if (props.type === 'game') {
+        gameStore.addToCart({
+            videogameId: (props.product as Game).videogameId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
+        });
+    } else if (props.type === 'console') {
+        consoleStore.addToCart({
+            consoleId: (props.product as Console).consoleId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
+        });
+    } else if (props.type === 'product') {
+        productStore.addToCart({
+            productId: (props.product as Product).productId,
+            name: props.product.name,
+            price: props.product.price,
+            imageURL: props.product.imageURL
         });
     }
-}; */
-
-
+};
 </script>
 
 <template>
@@ -82,9 +107,6 @@ const game = computed(() => gameStore.game);
     <div class="information">
         <div class="terciary">
             <div class="infoIcons">
-                <div class="infoIcons__favorite">
-                    <IconFavorite class="favorite" />
-                </div>
                 <div class="infoIcons__pegi" v-if="isGame">
                     <IconPegi3 v-if="product.pegi === 3" />
                     <IconPegi7 v-if="product.pegi === 7" />
@@ -117,13 +139,15 @@ const game = computed(() => gameStore.game);
                 <button class="button" style="background-color: #ff6600;" @click="addToCart">
                     CARRITO
                 </button>
-                <router-link :to="{ name: 'cart' }" class="button" style="background-color: orangered;">
+                <router-link :to="userStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button"
+                    style="background-color: orangered;">
                     COMPRAR
                 </router-link>
             </div>
         </div>
     </div>
 </template>
+
 
 
 <style scoped lang="scss">

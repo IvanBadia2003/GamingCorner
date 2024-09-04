@@ -5,8 +5,8 @@ import Cart from '@/components/Cart/Cart.vue';
 import Summary from '@/components/Cart/Summary.vue';
 
 const cartStore = useCartStore();
-const cartItems = computed(() => cartStore.cartItems);
-/* const totalPrice = computed(() => cartStore.totalPrice);
+/* const cartItems = computed(() => cartStore.cartItems);
+ *//* const totalPrice = computed(() => cartStore.totalPrice);
 const totalItems = computed(() => cartStore.totalItems); */
 
 

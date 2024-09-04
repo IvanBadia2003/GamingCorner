@@ -5,12 +5,44 @@ import IconVisa from '@/components/icons/IconVisa.vue';
 import router from '@/router';
 import { ref } from 'vue';
 import { useCartStore } from '@/stores/CartStore';
+import { useGameStore } from '@/stores/GameStore';
+import { useProductStore } from '@/stores/ProductStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useTransactionStore } from '@/stores/TransactionStore';
+import { useUserStore } from '@/stores/UserStore';
 
+const userStore = useUserStore();
 const cartStore = useCartStore();
+const gameStore = useGameStore();
+const productStore = useProductStore();
+const consoleStore = useConsoleStore();
+const transactionStore = useTransactionStore();
 
 // Función de pago
-function payFunction() {
-    alert("Pago realizado con éxito");
+async function payFunction() {
+    const userId = userStore.user.userId;
+
+    try {
+        for (const product of gameStore.cartItems) {
+            if (product.videogameId) {
+                await transactionStore.purchaseGame(product.videogameId, userId);
+            }
+        }
+        for (const product of productStore.cartItems) {
+            if (product.productId) {
+                await transactionStore.purchaseProduct(product.productId, userId);
+            }
+        }
+        for (const product of consoleStore.cartItems) {
+            if (product.consoleId) {
+                await transactionStore.purchaseConsole(product.consoleId, userId);
+            }
+        }
+        alert("Pago realizado con éxito");
+    } catch (error) {
+        console.error("Error al realizar el pago:", error);
+        alert("Hubo un problema al procesar tu compra. Por favor, inténtalo de nuevo.");
+    }
 }
 
 const isValidate = ref<boolean>(false);
@@ -32,7 +64,13 @@ const opcionSeleccionada = ref('paypal');
             <div>
                 <h2>Productos Seleccionados</h2>
                 <div style="display: flex;">
-                    <div v-for="product in cartStore.cartItems" :key="product.videogameId" class="product">
+                    <div v-for="product in gameStore.cartItems" :key="product.videogameId" class="product">
+                        <img :src="product.imageURL" :alt="product.name">
+                    </div>
+                    <div v-for="product in productStore.cartItems" :key="product.productId" class="product">
+                        <img :src="product.imageURL" :alt="product.name">
+                    </div>
+                    <div v-for="product in consoleStore.cartItems" :key="product.consoleId" class="product">
                         <img :src="product.imageURL" :alt="product.name">
                     </div>
                 </div>

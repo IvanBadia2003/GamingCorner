@@ -52,7 +52,7 @@ onMounted(() => {
         <h2> {{ productStore.product.name }} </h2>
 
         <section class="section first">
-            <BuyComponent :product="productStore.product" :isGame="false"/>
+            <BuyComponent :product="productStore.product" :isGame="false" type="product"/>
         </section>
         <section class="section">
             <div class="title-container">

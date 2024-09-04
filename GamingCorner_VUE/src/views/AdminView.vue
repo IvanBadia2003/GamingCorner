@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import GameAdmin from '../components/Admin/GameAdmin.vue';
 import CreateGame from '../components/Admin/CreateGame.vue';
-import Graphics from '@/components/Admin/Graphics.vue';
-/* import { useUserStore } from '@/stores/UserStore';
+/* import Graphics from '../components/Admin/Graphics.vue';
+ *//* import { useUserStore } from '@/stores/UserStore';
 
 const loginStore = useUserStore();
  */
@@ -39,9 +39,9 @@ const opcionSeleccionada = ref('opcion1'); // Valor por defecto
             <GameAdmin />
         </div>
 
-        <div id="menuOpcion3" class="menu" v-show="opcionSeleccionada === 'opcion3'">
+<!--         <div id="menuOpcion3" class="menu" v-show="opcionSeleccionada === 'opcion3'">
             <Graphics />
-        </div>
+        </div> -->
 
     </div>
 

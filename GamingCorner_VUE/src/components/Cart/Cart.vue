@@ -1,16 +1,33 @@
 <script setup lang="ts">
 import IconSteam from '@/components/icons/platform/IconSteam.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
-import { useCartStore } from '@/stores/CartStore';
+import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useProductStore } from '@/stores/ProductStore';
 import { computed } from 'vue';
 
-const cartStore = useCartStore();
+const gameStore = useGameStore();
+const consoleStore = useConsoleStore();
+const productStore = useProductStore();
 
-const removeFromCart = (gameId: number) => {
-  cartStore.removeFromCart(gameId);
-  delete cartStore.quantities[gameId]; // Elimina la cantidad asociada al producto
+const removeFromCart = (id: number, type: string) => {
+  if (type === 'game') {
+    gameStore.removeFromCart(id);
+  } else if (type === 'console') {
+    consoleStore.removeFromCart(id);
+  } else if (type === 'product') {
+    productStore.removeFromCart(id);
+  }
 };
+
+const totalPrice = computed(() => {
+  const gameTotal = gameStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const consoleTotal = consoleStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const productTotal = productStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  return gameTotal + consoleTotal + productTotal;
+});
 </script>
+
 
 <template>
   <div class="cartContainer">
@@ -19,8 +36,8 @@ const removeFromCart = (gameId: number) => {
         <h3>Carrito</h3>
       </div>
       <div class="cart__product">
-        <div v-if="cartStore.cartItems.length > 0">
-          <div v-for="product in cartStore.cartItems" :key="product.videogameId" class="product">
+        <div v-if="gameStore.cartItems.length > 0">
+          <div v-for="product in gameStore.cartItems" :key="product.videogameId" class="product">
             <div class="product__img">
               <img :src="product.imageURL" :alt="product.name">
             </div>
@@ -32,23 +49,63 @@ const removeFromCart = (gameId: number) => {
                 <div class="title">
                   <p>{{ product.name }}</p>
                 </div>
-                <div class="delete" @click="removeFromCart(product.videogameId)">
+                <div class="delete" @click="removeFromCart(product.videogameId, 'game')">
                   <IconDelete />
                 </div>
               </div>
               <div class="info__down">
-                <div class="quantity">
-                  <select
-                    name="quantity"
-                    id="quantity"
-                    v-model="cartStore.quantities[product.videogameId]"
-                    @change="cartStore.quantities[product.videogameId] = parseInt($event.target.value)"
-                  >
-                    <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-                  </select>
-                </div>
                 <div class="price">
-                  <h2>{{ product.price * (cartStore.quantities[product.videogameId] || 1) }}€</h2>
+                  <h2>{{ product.price }}€</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="consoleStore.cartItems.length > 0">
+          <div v-for="product in consoleStore.cartItems" :key="product.consoleId" class="product">
+            <div class="product__img">
+              <img :src="product.imageURL" :alt="product.name">
+            </div>
+            <div class="product__info">
+              <div class="info__up">
+                <div class="platform">
+                  <IconSteam />
+                </div>
+                <div class="title">
+                  <p>{{ product.name }}</p>
+                </div>
+                <div class="delete" @click="removeFromCart(product.consoleId, 'console')">
+                  <IconDelete />
+                </div>
+              </div>
+              <div class="info__down">
+                <div class="price">
+                  <h2>{{ product.price }}€</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="productStore.cartItems.length > 0">
+          <div v-for="product in productStore.cartItems" :key="product.productId" class="product">
+            <div class="product__img">
+              <img :src="product.imageURL" :alt="product.name">
+            </div>
+            <div class="product__info">
+              <div class="info__up">
+                <div class="platform">
+                  <IconSteam />
+                </div>
+                <div class="title">
+                  <p>{{ product.name }}</p>
+                </div>
+                <div class="delete" @click="removeFromCart(product.productId, 'product')">
+                  <IconDelete />
+                </div>
+              </div>
+              <div class="info__down">
+                <div class="price">
+                  <h2>{{ product.price }}€</h2>
                 </div>
               </div>
             </div>
@@ -62,11 +119,12 @@ const removeFromCart = (gameId: number) => {
       </div>
 
       <div class="totalPrice">
-        <h2>Total: {{ cartStore.totalPrice }}€</h2>
+        <h2>Total: {{ totalPrice }}€</h2>
       </div>
     </div>
   </div>
 </template>
+
 
 
 

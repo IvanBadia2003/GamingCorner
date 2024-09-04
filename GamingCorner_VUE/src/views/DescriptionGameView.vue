@@ -7,8 +7,8 @@ import BuyComponent from '../components/Description/BuyComponent.vue';
 import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
-import Carousel from '@/components/Home/Carousel.vue';
-
+/* import Carousel from '../components/Home/Carousel.vue';
+ */
 const route = useRoute();
 const gameStore = useGameStore();
 const cartStore = useCartStore();
@@ -24,7 +24,7 @@ onMounted(() => {
         <h2>{{ gameStore.game.name }}</h2>
 
         <section class="section first">
-            <BuyComponent :product="gameStore.game" :isGame="true"/>
+            <BuyComponent :product="gameStore.game" :isGame="true" type="game"/>
         </section>
         <section class="section">
             <div class="title-container">
