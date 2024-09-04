@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue';
 import { useGameStore } from '@/stores/GameStore';
 import { useCartStore } from '@/stores/CartStore';
+import { useUserStore } from '@/stores/UserStore';
+
 import IconFavorite from '@/components/icons/IconFavorite.vue';
 import IconTick from '@/components/icons/IconTick.vue';
 import IconCross from '@/components/icons/IconCross.vue';
@@ -53,6 +55,8 @@ defineProps<{
     isGame: boolean;
 }>()
 
+
+const UserStore = useUserStore();
 const gameStore = useGameStore();
 const cartStore = useCartStore();
 
@@ -82,9 +86,7 @@ const game = computed(() => gameStore.game);
     <div class="information">
         <div class="terciary">
             <div class="infoIcons">
-                <div class="infoIcons__favorite">
-                    <IconFavorite class="favorite" />
-                </div>
+
                 <div class="infoIcons__pegi" v-if="isGame">
                     <IconPegi3 v-if="product.pegi === 3" />
                     <IconPegi7 v-if="product.pegi === 7" />
@@ -117,7 +119,8 @@ const game = computed(() => gameStore.game);
                 <button class="button" style="background-color: #ff6600;" @click="addToCart">
                     CARRITO
                 </button>
-                <router-link :to="{ name: 'cart' }" class="button" style="background-color: orangered;">
+                <router-link :to="UserStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button"
+                    style="background-color: orangered;">
                     COMPRAR
                 </router-link>
             </div>
