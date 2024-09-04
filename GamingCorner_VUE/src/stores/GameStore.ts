@@ -15,7 +15,8 @@ interface Game {
     category: string;
     stock: number;
     available: boolean;
-    requisitos: string;
+    requisitos1: string;
+    requisitos2: string;
     platform: string;
     price: number;
     imageURL: string;
@@ -43,7 +44,8 @@ export const useGameStore = defineStore('GameStore', () => {
         category: '',
         stock: 0,
         available: false,
-        requisitos: '',
+        requisitos1: '',
+        requisitos2: '',
         platform: '',
         price: 0,
         imageURL: '',
@@ -53,7 +55,8 @@ export const useGameStore = defineStore('GameStore', () => {
     // Getter
     // calcula la cantidad de funciones que hay
     const calcularCantidad = computed(() => games.length);
-
+    const requisitos1Array = computed(() => game.requisitos1.split(';'));
+    const requisitos2Array = computed(() => game.requisitos2.split(';'));
     // Getter para obtener la obra seleccionada
     const selectedGame = computed(() => {
         if (selectedGameId.value !== null) {
@@ -220,5 +223,5 @@ export const useGameStore = defineStore('GameStore', () => {
         }
     }
 
-    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, filterGamesByTitle, fetchGamesById, filterGamesByGenre,  filterGamesByPlatform };
+    return { game, games, calcularCantidad, fetchGames, searchGamesPerId, deleteGame, createGame, editGame, selectedGame, filterGamesByTitle, fetchGamesById, filterGamesByGenre,  filterGamesByPlatform, requisitos1Array, requisitos2Array };
 });

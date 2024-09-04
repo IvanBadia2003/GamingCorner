@@ -31,7 +31,7 @@ onMounted(() => {
                 <h2>Requisitos</h2>
             </div>
             <div class="content">
-                <Requirements :product="gameStore.game.requisitos"/>
+                <Requirements :productMin="gameStore.requisitos1Array" :productMax="gameStore.requisitos2Array"/>
             </div>
         </section>
         <section class="section">

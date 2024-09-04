@@ -2,7 +2,8 @@
 import { useGameStore } from '@/stores/GameStore';
 
 defineProps<{
-    product: string;
+    productMin: string[];
+    productMax: string[];
 }>()
 </script>
 
@@ -14,9 +15,29 @@ defineProps<{
             </div>
             <table>
                 <tr>
-                        {{ product }}
+                    <th>OS:</th>
+                    <td>{{ productMin[0] }}</td>
                 </tr>
-                
+                <tr>
+                    <th>Procesador:</th>
+                    <td>{{ productMin[1] }}</td>
+                </tr>
+                <tr>
+                    <th>Memoria:</th>
+                    <td>{{ productMin[2] }}</td>
+                </tr>
+                <tr>
+                    <th>Gráfica:</th>
+                    <td>{{ productMin[3] }}</td>
+                </tr>
+                <tr>
+                    <th>Almacenamiento:</th>
+                    <td>{{ productMin[4] }}</td>
+                </tr>
+                <tr>
+                    <th>DirectX:</th>
+                    <td>{{ productMin[5] }}</td>
+                </tr>
             </table>
         </div>
 
@@ -27,27 +48,27 @@ defineProps<{
             <table>
                 <tr>
                     <th>OS:</th>
-                    <td>Windows 10 (64-bit)</td>
+                    <td>{{ productMax[0] }}</td>
                 </tr>
                 <tr>
                     <th>Procesador:</th>
-                    <td>Intel Core i5-4670 (quad-core) / AMD FX-Series FX-4350 (quad-core)</td>
+                    <td>{{ productMax[1] }}</td>
                 </tr>
                 <tr>
                     <th>Memoria:</th>
-                    <td>8 GB RAM</td>
+                    <td>{{ productMax[2] }}</td>
                 </tr>
                 <tr>
                     <th>Gráfica:</th>
-                    <td>NVIDIA GeForce GTX 1050 (2 GB) / AMD Radeon RX-460 (4 GB)</td>
+                    <td>{{ productMax[3] }}</td>
                 </tr>
                 <tr>
                     <th>Almacenamiento:</th>
-                    <td>15GB</td>
+                    <td>{{ productMax[4] }}</td>
                 </tr>
                 <tr>
                     <th>DirectX:</th>
-                    <td>Version 12</td>
+                    <td>{{ productMax[5] }}</td>
                 </tr>
             </table>
         </div>
