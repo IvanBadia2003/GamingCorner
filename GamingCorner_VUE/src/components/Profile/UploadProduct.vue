@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useTransactionStore } from '@/stores/TransactionStore';
 import { useUserStore } from '@/stores/UserStore';
 
@@ -48,7 +48,7 @@ const validateForm = () => {
   return formErrors.value.length === 0;
 };
 
-const uploadProduct = () => {
+const uploadProduct = async () => {
   if (validateForm()) {
     console.log('Producto válido, subiendo...');
     await TransactionStore.saleProduct(UserStore.user.userId, product);

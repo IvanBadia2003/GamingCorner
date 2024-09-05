@@ -139,7 +139,7 @@ const addToCart = () => {
                 <button class="button" style="background-color: #ff6600;" @click="addToCart">
                     CARRITO
                 </button>
-                <router-link :to="userStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button"
+                <router-link :to="userStore.user.isAuthenticated ? { name: 'cart' } : { name: 'login' }" class="button" @click="addToCart"
                     style="background-color: orangered;">
                     COMPRAR
                 </router-link>
