@@ -74,6 +74,19 @@ using GamingCorner.Models;
         _transactionRepository.Delete(id);
     }
 
+    public int CountTransactionsByVideogameId()
+    {
+        return _transactionRepository.CountTransactionsByVideogameId();
+    }
+    public int CountTransactionsByProductId()
+    {
+        return _transactionRepository.CountTransactionsByProductId();
+    }
+    public int CountTransactionsByConsoleId()
+    {
+        return _transactionRepository.CountTransactionsByConsoleId();
+    }
+
 }
 
 

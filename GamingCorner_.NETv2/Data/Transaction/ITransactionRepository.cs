@@ -11,4 +11,8 @@ public interface ITransactionRepository
     void Update(Transaction transaction);
     void Delete(int id);
 
+    int CountTransactionsByVideogameId();
+    int CountTransactionsByProductId();
+    int CountTransactionsByConsoleId();
+
 }

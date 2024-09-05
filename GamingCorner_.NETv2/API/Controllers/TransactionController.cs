@@ -105,6 +105,25 @@ public class TransactionController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("counTransactionsByVideogameId")]
+    public IActionResult CountTransactionsByVideogameId()
+    {
+        var count = _transactionService.CountTransactionsByVideogameId();
+        return Ok(count);
+    }
+    [HttpGet("CountTransactionsByProductId")]
+    public IActionResult CountTransactionsByProductId()
+    {
+        var count = _transactionService.CountTransactionsByProductId();
+        return Ok(count);
+    }
+    [HttpGet("CountTransactionsByConsoleId")]
+    public IActionResult CountTransactionsByConsoleId()
+    {
+        var count = _transactionService.CountTransactionsByConsoleId();
+        return Ok(count);
+    }
+
 }
 
 

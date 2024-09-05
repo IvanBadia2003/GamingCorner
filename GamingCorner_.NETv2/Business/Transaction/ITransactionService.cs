@@ -14,5 +14,8 @@ public interface ITransactionService
     void RegisterPurchaseProduct(int userId, int productId);
     void SellProduct(int userId, Product product);
     void Delete(int id);
+    int CountTransactionsByVideogameId();
+    int CountTransactionsByProductId();
+    int CountTransactionsByConsoleId();
 
 }
