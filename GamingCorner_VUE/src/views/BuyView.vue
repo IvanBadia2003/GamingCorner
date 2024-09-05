@@ -10,6 +10,7 @@ import { useProductStore } from '@/stores/ProductStore';
 import { useConsoleStore } from '@/stores/ConsoleStore';
 import { useTransactionStore } from '@/stores/TransactionStore';
 import { useUserStore } from '@/stores/UserStore';
+import { computed } from 'vue';
 
 const userStore = useUserStore();
 const cartStore = useCartStore();
@@ -18,6 +19,14 @@ const productStore = useProductStore();
 const consoleStore = useConsoleStore();
 const transactionStore = useTransactionStore();
 
+
+
+const totalPrice = computed(() => {
+  const gameTotal = gameStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const consoleTotal = consoleStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  const productTotal = productStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+  return gameTotal + consoleTotal + productTotal;
+});
 // Función de pago
 async function payFunction() {
     const userId = userStore.user.userId;
@@ -63,7 +72,7 @@ const opcionSeleccionada = ref('paypal');
             </div>
             <div>
                 <h2>Productos Seleccionados</h2>
-                <div style="display: flex;">
+                <div style="display: flex;justify-content: center;gap: 30px;">
                     <div v-for="product in gameStore.cartItems" :key="product.videogameId" class="product">
                         <img :src="product.imageURL" :alt="product.name">
                     </div>
@@ -78,7 +87,7 @@ const opcionSeleccionada = ref('paypal');
             <div>
                 <h2>Importe Total</h2>
                 <div>
-                    <h3>{{ cartStore.totalPrice }}€</h3>
+                    <h3>{{ totalPrice }}€</h3>
                 </div>
             </div>
         </div>

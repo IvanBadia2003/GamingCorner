@@ -1,13 +1,116 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import { useUserStore } from '@/stores/UserStore';
+
 const UserStore = useUserStore();
-
-
 const showLogin = ref(true);
 const showRegister = ref(true);
 const containerLeft = ref('0px');
 
+interface createUser {
+    name: string;
+    address: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    admin: boolean;
+}
+const user = reactive<createUser>({
+    name: '',
+    address: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    admin: true,
+});
+
+const repeatPassword = ref('');
+
+// Validaciones
+const errorsLogin = ref<{ email: string; password: string }>({ email: '', password: '' });
+const errorsRegister = ref<{ name: string; email: string; phoneNumber: string; password: string; address: string; repeatPassword: string }>({
+  name: '',
+  email: '',
+  phoneNumber: '',
+  password: '',
+  address: '',
+  repeatPassword: ''
+});
+
+// Función para validar un email
+const validateEmail = (email: string): boolean => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};
+
+// Validar formulario de login
+const validateLogin = (): boolean => {
+  errorsLogin.value.email = '';
+  errorsLogin.value.password = '';
+
+  if (!UserStore.user.email) {
+    errorsLogin.value.email = 'El correo es obligatorio';
+  } else if (!validateEmail(UserStore.user.email)) {
+    errorsLogin.value.email = 'El correo no es válido';
+  }
+
+  if (!UserStore.user.password) {
+    errorsLogin.value.password = 'La contraseña es obligatoria';
+  }
+
+  return !errorsLogin.value.email && !errorsLogin.value.password;
+};
+
+// Validar formulario de registro
+const validateRegister = (): boolean => {
+  errorsRegister.value.name = '';
+  errorsRegister.value.email = '';
+  errorsRegister.value.phoneNumber = '';
+  errorsRegister.value.password = '';
+  errorsRegister.value.address = '';
+  errorsRegister.value.repeatPassword = '';
+
+  if (!user.name) {
+    errorsRegister.value.name = 'El nombre es obligatorio';
+  }
+
+  if (!user.email) {
+    errorsRegister.value.email = 'El correo es obligatorio';
+  } else if (!validateEmail(user.email)) {
+    errorsRegister.value.email = 'El correo no es válido';
+  }
+
+  if (!user.phoneNumber) {
+    errorsRegister.value.phoneNumber = 'El teléfono es obligatorio';
+  }
+
+  if (!user.address) {
+    errorsRegister.value.address = 'La dirección es obligatoria';
+  }
+
+  if (!user.password) {
+    errorsRegister.value.password = 'La contraseña es obligatoria';
+  } else if (user.password.length < 6) {
+    errorsRegister.value.password = 'La contraseña debe tener al menos 6 caracteres';
+  }
+
+  if (!repeatPassword.value) {
+    errorsRegister.value.repeatPassword = 'Debes repetir la contraseña';
+  } else if (repeatPassword.value !== user.password) {
+    errorsRegister.value.repeatPassword = 'Las contraseñas no coinciden';
+  }
+
+  return (
+    !errorsRegister.value.name &&
+    !errorsRegister.value.email &&
+    !errorsRegister.value.phoneNumber &&
+    !errorsRegister.value.address &&
+    !errorsRegister.value.password &&
+    !errorsRegister.value.repeatPassword
+  );
+};
+
+// Funciones para manejar el ancho de la página y mostrar formularios
 const anchoPage = () => {
   if (window.innerWidth > 1050) {
     showLogin.value = true;
@@ -31,18 +134,30 @@ const register = () => {
   containerLeft.value = window.innerWidth > 850 ? '410px' : '0px';
 };
 
+// Escuchar cambios de tamaño de ventana
 onMounted(() => {
   anchoPage();
   window.addEventListener('resize', anchoPage);
 });
 
-// Limpieza del evento de resize cuando el componente se desmonte
-import { onUnmounted } from 'vue';
 onUnmounted(() => {
   window.removeEventListener('resize', anchoPage);
 });
-</script>
 
+// Submit del formulario de login
+const submitLogin = () => {
+  if (validateLogin()) {
+    UserStore.login(UserStore.user.email, UserStore.user.password);
+  }
+};
+
+// Submit del formulario de registro
+const submitRegister = () => {
+  if (validateRegister()) {
+    UserStore.register(user);
+  }
+};
+</script>
 
 <template>
   <div class="container">
@@ -63,24 +178,45 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="contenedor__login-register" :style="{ left: containerLeft }">
-        <form v-if="showLogin" class="formulario__login" @submit.prevent="UserStore.login(UserStore.user.email, UserStore.user.password)">
+        <!-- Formulario de login -->
+        <form v-if="showLogin" class="formulario__login" @submit.prevent="submitLogin">
           <h2>Iniciar Sesión</h2>
           <input type="text" placeholder="Correo Electrónico" v-model="UserStore.user.email" />
+          <span v-if="errorsLogin.email" class="error-message">{{ errorsLogin.email }}</span>
           <input type="password" placeholder="Contraseña" v-model="UserStore.user.password"/>
+          <span v-if="errorsLogin.password" class="error-message">{{ errorsLogin.password }}</span>
           <button>Entrar</button>
         </form>
-        <form v-if="showRegister" class="formulario__register" @submit.prevent="UserStore.register(UserStore.user.email, UserStore.user.password, UserStore.user.phoneNumber, UserStore.user.password)">
+
+        <!-- Formulario de registro -->
+        <form v-if="showRegister" class="formulario__register" @submit.prevent="submitRegister">
           <h2>Registrarse</h2>
-          <input type="text" placeholder="Nombre completo"  v-model="UserStore.user.name"/>
-          <input type="text" placeholder="Correo Electrónico"  v-model="UserStore.user.email"/>
-          <input type="text" placeholder="Teléfono"  v-model="UserStore.user.phoneNumber"/>
-          <input type="password" placeholder="Contraseña"  v-model="UserStore.user.password"/>
+          <input type="text" placeholder="Nombre completo" v-model="user.name" />
+          <span v-if="errorsRegister.name" class="error-message">{{ errorsRegister.name }}</span>
+          <input type="text" placeholder="Correo Electrónico" v-model="user.email" />
+          <span v-if="errorsRegister.email" class="error-message">{{ errorsRegister.email }}</span>
+          <input type="text" placeholder="Teléfono" v-model="user.phoneNumber" />
+          <span v-if="errorsRegister.phoneNumber" class="error-message">{{ errorsRegister.phoneNumber }}</span>
+          <input type="text" placeholder="Dirección" v-model="user.address"/>
+          <span v-if="errorsRegister.address" class="error-message">{{ errorsRegister.address }}</span>
+          <input type="password" placeholder="Contraseña" v-model="user.password"/>
+          <span v-if="errorsRegister.password" class="error-message">{{ errorsRegister.password }}</span>
+          <input type="password" placeholder="Repetir Contraseña" v-model="repeatPassword"/>
+          <span v-if="errorsRegister.repeatPassword" class="error-message">{{ errorsRegister.repeatPassword }}</span>
           <button>Registrarse</button>
         </form>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+</style>
 
 
 
@@ -214,6 +350,12 @@ onUnmounted(() => {
     top: -240px;
 
   }
+
+  .error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
 
 
   @media screen and (max-width: 950px) {

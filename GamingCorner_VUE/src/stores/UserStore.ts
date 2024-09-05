@@ -15,6 +15,15 @@ interface User {
     isAuthenticated: boolean;
 }
 
+interface createUser {
+    name: string;
+    address: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    admin: boolean;
+}
+
 interface Transaction {
     transactionId: number,
     userId: number,
@@ -67,18 +76,18 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
-    async function register(name: string, email: string, password: string, phoneNumber: string) {
+    async function register(user: createUser) {
         try {
             const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, email, password, phoneNumber })
+                body: JSON.stringify(user)
             });
     
             if (response.ok) {
-                alert("Usuario registrado con éxito");
+                console.log("Usuario registrado con éxito");
             } else {
                 const errorData = await response.json();
                 alert(`Error al registrar el usuario: ${errorData.message}`);
