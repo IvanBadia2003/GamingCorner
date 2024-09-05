@@ -15,6 +15,14 @@ interface Transaction {
   date: Date // Mantén como string para simplificar el manejo de fechas
 }
 
+interface saleProduct{
+  name: string,
+  description: string,
+  available: boolean,
+  price: number,
+  imageURL: string
+}
+
 export const useTransactionStore = defineStore('TransactionStore', () => {
   const transactions = reactive(new Array<Transaction>);
   const gameStore = useGameStore();
@@ -110,5 +118,24 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
     }
 }
 
-  return { fetchTransactions, transactionsByMonth, transactions, purchaseGame, purchaseProduct, purchaseConsole };
+async function saleProduct(idUser: number, product: saleProduct) {
+  debugger
+  const response = await fetch('http://gamingcornerapi.retocsv.es/Transaction/sell/user/'+idUser+'/product', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product),
+
+  });
+
+  if (response.ok) {
+    console.log('venta del producto realizada con exito')
+
+  } else {
+      const errorData = await response.json();
+  }
+}
+
+  return { fetchTransactions, transactionsByMonth, transactions, purchaseGame, purchaseProduct, purchaseConsole, saleProduct };
 });

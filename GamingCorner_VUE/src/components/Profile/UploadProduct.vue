@@ -1,59 +1,57 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useTransactionStore } from '@/stores/TransactionStore';
+import { useUserStore } from '@/stores/UserStore';
 
-const productName = ref('');
-const productDescription = ref('');
-const productPrice = ref<number | null>(null);
-const productCategory = ref('');
-const productImages = ref<File[]>([]);
+const TransactionStore = useTransactionStore();
+
+const UserStore = useUserStore();
+
+interface saleProduct{
+  name: string,
+  description: string,
+  available: boolean,
+  price: number,
+  imageURL: string
+}
+
+const product = reactive<saleProduct>({
+  name: '',
+  description: '',
+  available: true,
+  price: 0,
+  imageURL: ''
+});
+
+
 const formErrors = ref<string[]>([]);
-
-const categories = ['Videojuego', 'Consola'];
 
 const validateForm = () => {
   formErrors.value = [];
 
-  if (!productName.value) {
+  if (!product.name) {
     formErrors.value.push('El nombre del producto es obligatorio.');
   }
 
-  if (!productDescription.value) {
+  if (!product.description) {
     formErrors.value.push('La descripción del producto es obligatoria.');
   }
 
-  if (!productPrice.value || productPrice.value <= 0) {
+  if (!product.price || product.price <= 0) {
     formErrors.value.push('El precio del producto debe ser mayor que 0.');
   }
 
-  if (!productCategory.value) {
-    formErrors.value.push('Por favor, selecciona una categoría para el producto.');
-  }
-
-  if (productImages.value.length === 0) {
+  if (!product.imageURL) {
     formErrors.value.push('Por favor, sube al menos una imagen del producto.');
   }
 
   return formErrors.value.length === 0;
 };
 
-const handleImageUpload = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (target.files) {
-    productImages.value = Array.from(target.files);
-  }
-};
-
 const uploadProduct = () => {
   if (validateForm()) {
-    // Aquí enviarías los datos del producto al backend
     console.log('Producto válido, subiendo...');
-    console.log({
-      name: productName.value,
-      description: productDescription.value,
-      price: productPrice.value,
-      category: productCategory.value,
-      images: productImages.value,
-    });
+    await TransactionStore.saleProduct(UserStore.user.userId, product);
   } else {
     console.log('Errores en el formulario, no se puede subir el producto.');
   }
@@ -66,31 +64,22 @@ const uploadProduct = () => {
     <form @submit.prevent="uploadProduct" class="upload-form">
       <div class="form-field">
         <label for="productName">Nombre del Producto:</label>
-        <input type="text" id="productName" v-model="productName" required />
+        <input type="text" id="productName" v-model="product.name" required />
       </div>
 
       <div class="form-field">
         <label for="productDescription">Descripción:</label>
-        <textarea id="productDescription" v-model="productDescription" required></textarea>
+        <textarea id="productDescription" v-model="product.description" required></textarea>
       </div>
 
       <div class="form-field">
         <label for="productPrice">Precio (€):</label>
-        <input type="number" id="productPrice" v-model="productPrice" min="0" step="0.01" required />
-      </div>
-
-      <div class="form-field">
-        <label for="productCategory">Categoría:</label>
-        <select id="productCategory" v-model="productCategory" required>
-          <option value="" disabled selected>Selecciona una categoría</option>
-          <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
-        </select>
+        <input type="number" id="productPrice" v-model="product.price" min="0" step="0.01" required />
       </div>
 
       <div class="form-field">
         <label for="productImages">Imágenes del Producto:</label>
-        <input type="file" id="productImages" @change="handleImageUpload" multiple accept="image/*" required />
-        <small>Puedes subir hasta 5 imágenes.</small>
+        <input type="text" id="productImages" v-model="product.imageURL"  required />
       </div>
 
       <div v-if="formErrors.length" class="form-errors">
