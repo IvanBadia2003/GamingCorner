@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
 import DeleteGame from './DeleteGame.vue';
 import EditGame from './EditGame.vue';
 import { ref } from 'vue';
+import DeleteConsole from './DeleteConsole.vue';
+import EditConsole from './EditConsole.vue';
 
 const GameStore = useGameStore();
+const ConsoleStore = useConsoleStore();
 GameStore.fetchGames();
+ConsoleStore.fetchConsoles();
 const editar = ref(false); 
 const borrar = ref(false); 
 
@@ -24,17 +29,38 @@ const openDelete = () => {
     <div class="container">
         <button @click="openEdit">{{ editar ? 'Cancelar' : 'Editar' }}</button>
         <button @click="openDelete">{{ borrar ? 'Cancelar' : 'Borrar' }}</button>
-        <div v-for="game in GameStore.games" :key="game.videogameId" class="function">
-            <div class="info">
-                <h3>{{ game.name }}</h3>
-            </div>
+        <div class="products">
+            <div>
 
-            <div class="actions" v-if="borrar">
-                <DeleteGame :videogame-id="game.videogameId" :name="game.name"/>
+                <div v-for="game in GameStore.games" :key="game.videogameId" class="function">
+                    <div class="info">
+                        <h3>{{ game.name }}</h3>
+                    </div>
+                    
+                    <div class="actions" v-if="borrar">
+                        <DeleteGame :videogame-id="game.videogameId" :name="game.name"/>
+                    </div>
+                    
+                    <div class="menu" v-if="editar"> 
+                        <EditGame  :stock="game.stock"  :price="game.price" :available="game.available" :videogame-id="game.videogameId" :name="game.name"/>
+                    </div>
+                </div>
             </div>
+            <div>
 
-            <div class="menu" v-if="editar"> 
-                <EditGame  :stock="game.stock"  :price="game.price" :available="game.available" :videogame-id="game.videogameId" :name="game.name"/>
+                <div v-for="Console in ConsoleStore.consoles" :key="Console.consoleId" class="function">
+                    <div class="info">
+                        <h3>{{ Console.name }}</h3>
+                    </div>
+                    
+                    <div class="actions" v-if="borrar">
+                        <DeleteConsole :consoleId="Console.consoleId" :name="Console.name"/>
+                    </div>
+                    
+                    <div class="menu" v-if="editar"> 
+                        <EditConsole  :stock="Console.stock"  :price="Console.price" :available="Console.available" :consoleId="Console.consoleId" :name="Console.name"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,38 +88,43 @@ const openDelete = () => {
         margin-bottom: 30px;
     }
 
-}
-
-.function {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.products{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 400px;
-    max-width: 400px;
+    gap: 50px;
+}
 
-    .info {
-        flex-grow: 1;
-        text-align: left;
-
-        h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            color: #333;
-        }
-
-        p {
-            color: #666;
-        }
-    }
-
-    .actions {
+    .function {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
         display: flex;
+        justify-content: center;
         align-items: center;
-
+        min-width: 400px;
+        max-width: 400px;
+    
+        .info {
+            flex-grow: 1;
+            text-align: left;
+    
+            h3 {
+                margin-bottom: 10px;
+                font-size: 1.5em;
+                color: #333;
+            }
+    
+            p {
+                color: #666;
+            }
+        }
+    
+        .actions {
+            display: flex;
+            align-items: center;
+    
+        }
     }
 }
+
 </style>

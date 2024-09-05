@@ -72,24 +72,27 @@ const router = createRouter({
       name: 'purchase',
       component: BuyView
     }
-    ]
+  ]
 })
 
-  router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  
+
   // Verificar si la ruta es la página de inicio de sesión y si el usuario está autenticado
   if (to.name === 'login' && userStore.user.isAuthenticated) {
-      // Si el usuario ya está autenticado y trata de acceder a la página de inicio de sesión, redirigir a la página de administración
-      next('/profile');
+    // Si el usuario ya está autenticado y trata de acceder a la página de inicio de sesión, redirigir a la página de administración
+    next('/profile');
   } else if (to.name === 'profile' && !userStore.user.isAuthenticated) {
-      // Si el usuario no está autenticado y trata de acceder a la página de administración, redirigir a la página de inicio de sesión
-      next('/login');
+    // Si el usuario no está autenticado y trata de acceder a la página de administración, redirigir a la página de inicio de sesión
+    next('/login');
+  } else if (to.name === 'admin' && !userStore.user.admin) {
+    // Si el usuario no está autenticado y trata de acceder a la página de administración, redirigir a la página de inicio de sesión
+    next('/');
   } else {
-      // Permitir que la navegación continúe según la lógica actual
-      next();
+    // Permitir que la navegación continúe según la lógica actual
+    next();
   }
 
-});  
+});
 
 export default router

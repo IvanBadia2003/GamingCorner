@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { reactive, ref } from 'vue';
-import { useGameStore } from '@/stores/GameStore';
+import { useConsoleStore } from '@/stores/ConsoleStore';
 
 const props = defineProps<{
     name: string
-    videogameId: number
+    consoleId: number
     available: boolean
     price: number
     stock: number
 }>();
 
-const FunctionStore = useGameStore();
+const ConsoleStore = useConsoleStore();
 
-interface editedGame {
-    videogameId: number;
+interface editedConsole {
+    consoleId: number;
     stock: number;
     available: boolean;
     price: number;
 }
 
 
-const editedGame = reactive<editedGame>({
-    videogameId: props.videogameId,
+const editedConsole = reactive<editedConsole>({
+    consoleId: props.consoleId,
     stock: props.stock,
     available: props.available,
     price: props.price
@@ -37,7 +37,7 @@ const stockError = ref('');
 // Función para validar el stock
 const validateStock = () => {
     // Validación: Precio debe ser un número positivo
-    if (editedGame.stock <= 0 || isNaN(editedGame.stock)) {
+    if (editedConsole.stock <= 0 || isNaN(editedConsole.stock)) {
         stockError.value = 'El stock debe ser un número positivo';
     } else {
         stockError.value = '';
@@ -47,7 +47,7 @@ const validateStock = () => {
 // Función para validar el precio
 const validatePrice = () => {
     // Validación: Precio debe ser un número positivo
-    if (editedGame.price < 0 || isNaN(editedGame.price)) {
+    if (editedConsole.price < 0 || isNaN(editedConsole.price)) {
         priceError.value = 'El precio debe ser un número positivo';
     } else {
         priceError.value = '';
@@ -67,28 +67,28 @@ const submitForm = () => {
     }
 
     // Si no hay errores, enviar el formulario
-    console.log('Datos editados:', editedGame);
-    FunctionStore.editGame(props.videogameId, editedGame);
+    console.log('Datos editados:', editedConsole);
+    ConsoleStore.editConsole(props.consoleId, editedConsole);
     alert("Juego " + props.name + " editado con éxito")
 };
 </script>
 
 <template>
     <form @submit.prevent="submitForm" class="edit-form">
-        <input type="hidden" name="obraId" v-model="editedGame.videogameId" />
+        <input type="hidden" name="obraId" v-model="editedConsole.consoleId" />
         <div class="form-group">
             <label for="stock">Stock:</label>
-            <input type="number" id="stock" v-model="editedGame.stock" class="form-control"></input>
+            <input type="number" id="stock" v-model="editedConsole.stock" class="form-control"></input>
             <span class="error-message">{{ stockError }}</span>
         </div>
         <div class="form-group">
             <label for="price">Precio:</label>
-            <input type="number" id="price" v-model.number="editedGame.price" class="form-control" />
+            <input type="number" id="price" v-model.number="editedConsole.price" class="form-control" />
             <span class="error-message">{{ priceError }}</span>
         </div>
         <div class="form-group">
             <label for="available">Disponible:</label>
-            <input type="checkbox" id="available" v-model="editedGame.available" class="form-control" />
+            <input type="checkbox" id="available" v-model="editedConsole.available" class="form-control" />
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar cambios</button>

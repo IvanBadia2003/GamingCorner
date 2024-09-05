@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import GameAdmin from '../components/Admin/GameAdmin.vue';
 import CreateGame from '../components/Admin/CreateGame.vue';
+import CreateConsole from '@/components/Admin/CreateConsole.vue';
 /* import Graphics from '../components/Admin/Graphics.vue';
  *//* import { useUserStore } from '@/stores/UserStore';
 
@@ -33,6 +34,7 @@ const opcionSeleccionada = ref('opcion1'); // Valor por defecto
 
         <div id="menuOpcion1" class="menu" v-show="opcionSeleccionada === 'opcion1'">
             <CreateGame />
+            <CreateConsole />
         </div>
 
         <div id="menuOpcion2" class="menu" v-show="opcionSeleccionada === 'opcion2'">
@@ -52,15 +54,9 @@ const opcionSeleccionada = ref('opcion1'); // Valor por defecto
     margin-top: 100px;
     min-height: 70vh;
 
-    .divLogout {
-        padding: 20px;
-
-        .logout {
-            color: white;
-            background-color: red;
-            padding: 15px;
-            border-radius: 10px;
-        }
+    .menu{
+        display: flex;
+        justify-content: center;
     }
 }
 </style>

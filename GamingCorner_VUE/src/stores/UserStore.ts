@@ -14,10 +14,22 @@ interface User {
     orders: Array<number>;
     isAuthenticated: boolean;
 }
+
+interface Transaction {
+    transactionId: number,
+    userId: number,
+    productId: number | null,
+    videogameId: number | null,
+    consoleId: number | null,
+    type: string,
+    date: Date
+}
 export const useUserStore = defineStore('userStore', () => {
 
     // State
     const router = useRouter(); // Obtén el router
+    const transactions = reactive<Transaction[]>([]);
+
 
     const user = reactive<User>({
         userId: 0,
@@ -95,6 +107,27 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
+    async function UserTransaction(id: number) {
+        try {
+            debugger
+            const response = await fetch('http://localhost:5000/User/'+id+'/transactions');
+            console.log("Fetch de transacciones por usuario hecho desde UserStore.ts");
+            const transaccionData = await response.json();
+            Object.assign(transactions, transaccionData);
+        } catch (error) {
+            console.error('Error al obtener las transacciones:', error);
+        }
+    }
+
+    const buys = computed(() => {
+        return transactions.filter(transaction => transaction.type == 'Compra');
+      });
+    
+      const sales = computed(() => {
+        return transactions.filter(transaction => transaction.type == 'Venta');
+      });
+    
+
     function logout() {
         user.userId = 0;
         user.name = "";
@@ -110,5 +143,5 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
 
-    return { user, login, logout, register, update }
+    return { user, login, logout, register, update, UserTransaction, transactions, buys, sales }
 })

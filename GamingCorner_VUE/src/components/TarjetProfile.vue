@@ -1,68 +1,61 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useConsoleStore } from '@/stores/ConsoleStore';
+import { useGameStore } from '@/stores/GameStore';
+import { useProductStore } from '@/stores/ProductStore';
+
 
 const props = defineProps<{
-  idGame: number,
-  name: string,
-  price: number,
-  image: string,
-  isGrid: boolean
-  isGame?: boolean  
+  id: number,
+  type: string
 }>()
 
+const consoleStore = useConsoleStore();
+const gameStore = useGameStore();
+const productStore = useProductStore();
 
-const isSelected = ref(false)
-
+onMounted(() => {
+  if (props.type === 'game') {
+    gameStore.fetchGamesById(props.id);
+  } else if (props.type === 'console') {
+    consoleStore.fetchConsolesById(props.id);
+  }else{
+    productStore.fetchProductsById(props.id);
+  }
+});
 
 </script>
 
 
 <template>
-  <router-link v-if="props.isGrid && props.isGame == true" :to="{
-    name: 'description-game',
-    params: {
-      id: props.idGame
-    }
-  }">
-    <article class="card">
+    <article class="card" v-if="type == 'game'">
       <div class="card__img">
-        <img :src="props.image" alt="">
+        <img :src="gameStore.game.imageURL" alt="">
       </div>
       <div class="card__info">
-        <span class="card__title">{{ props.name }}</span>
-        <span class="card__price">{{ props.price }}€</span>
+        <span class="card__title">{{ gameStore.game.name }}</span>
+        <span class="card__price">{{ gameStore.game.price }}€</span>
       </div>
     </article>
-  </router-link>
+    <article class="card" v-if="type == 'console'">
+      <div class="card__img">
+        <img :src="consoleStore.Console.imageURL" alt="">
+      </div>
+      <div class="card__info">
+        <span class="card__title">{{ consoleStore.Console.name }}</span>
+        <span class="card__price">{{ consoleStore.Console.price }}€</span>
+      </div>
+    </article>
+    <article class="card" v-if="type == 'product'">
+      <div class="card__img">
+        <img :src="productStore.product.imageURL" alt="">
+      </div>
+      <div class="card__info">
+        <span class="card__title">{{ productStore.product.name }}</span>
+        <span class="card__price">{{ productStore.product.price }}€</span>
+      </div>
+    </article>
 
-  <router-link v-if="props.isGrid && props.isGame == false" :to="{
-    name: 'description-console',
-    params: {
-      id: props.idGame
-    }
-  }">
-    <article class="card">
-      <div class="card__img">
-        <img :src="props.image" alt="">
-      </div>
-      <div class="card__info">
-        <span class="card__title">{{ props.name }}</span>
-        <span class="card__price">{{ props.price }}€</span>
-      </div>
-    </article>
-  </router-link>
-  <div v-if="props.isGame == undefined">
-    <article class="card">
-      <div class="card__img">
-        <img :src="props.image" alt="">
-
-      </div>
-      <div class="card__info">
-        <span class="card__title">{{ props.name }}</span>
-        <span class="card__price">{{ props.price }}€</span>
-      </div>
-    </article>
-  </div>
 </template>
 
 

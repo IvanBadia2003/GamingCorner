@@ -7,6 +7,7 @@ import Buys from '../components/Profile/Buys.vue';
 import UploadProduct from '../components/Profile/UploadProduct.vue';
 
 const UserStore = useUserStore();
+UserStore.UserTransaction(UserStore.user.userId);
 
 const toogleMenu = ref(false);
 const activeTab = ref('profile');

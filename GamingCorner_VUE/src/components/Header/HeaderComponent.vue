@@ -36,6 +36,9 @@ const toggleMenu = ref<boolean>(false);
                 <router-link class="item" :to="'/profile'">
                     <IconUser/>
                 </router-link>
+                <router-link v-if="UserStore.user.admin == true" class="item" :to="'/admin'">
+                    Menú Admin
+                </router-link>
 
             </div>
 

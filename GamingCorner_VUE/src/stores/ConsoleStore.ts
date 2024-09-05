@@ -15,9 +15,18 @@ interface Console {
     platform: number | null;
 }
 
+interface createConsole {
+    name: string,
+    specifications: string,
+    stock: number,
+    available: boolean,
+    platformId: number,
+    price: number,
+    imageURL: string
+}
+
 interface editedConsole {
     consoleId: number;
-    name: string;
     stock: number;
     available: boolean;
     price: number;
@@ -87,40 +96,40 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
     async function purchaseConsole(id: number) {
         // Encuentra el juego en la lista de juegos (puedes ajustar esto según cómo estés manejando los datos)
         const Console = consoles.find(g => g.consoleId === id);
-    
+
         if (Console) {
-          // Calcula el nuevo stock y estado de disponibilidad
-          const newStock = Console.stock - 1;
-          const newAvailable = newStock > 0;
-    
-          try {
-            const response = await fetch('http://localhost:5000/Console/' + id, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                price: Console.price,
-                stock: newStock,
-                available: newAvailable
-              }),
-            });
-    
-            if (response.ok) {
-              console.log('Console editado exitosamente.');
-              // Actualiza el juego en el store (opcional si ya lo manejas en otro lado)
-              Console.stock = newStock;
-              Console.available = newAvailable;
-            } else {
-              console.error('Error al editar el juego:', response.statusText);
+            // Calcula el nuevo stock y estado de disponibilidad
+            const newStock = Console.stock - 1;
+            const newAvailable = newStock > 0;
+
+            try {
+                const response = await fetch('http://localhost:5000/Console/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        price: Console.price,
+                        stock: newStock,
+                        available: newAvailable
+                    }),
+                });
+
+                if (response.ok) {
+                    console.log('Console editado exitosamente.');
+                    // Actualiza el juego en el store (opcional si ya lo manejas en otro lado)
+                    Console.stock = newStock;
+                    Console.available = newAvailable;
+                } else {
+                    console.error('Error al editar el juego:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error al editar el juego:', error);
             }
-          } catch (error) {
-            console.error('Error al editar el juego:', error);
-          }
         } else {
-          console.error('Juego no encontrado');
+            console.error('Juego no encontrado');
         }
-      }
+    }
 
     async function fetchConsolesById(id: number) {
         try {
@@ -145,7 +154,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
         }
     }
 
-    async function createConsole(Console: Console) {
+    async function createConsole(Console: createConsole) {
         try {
             const response = await fetch('http://localhost:5000/Console', {
                 method: 'POST',

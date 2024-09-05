@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useGameStore } from '@/stores/GameStore';
 import { useConsoleStore } from '@/stores/ConsoleStore';
 import Tarjet from '@/components/Tarjet.vue';
@@ -32,7 +32,7 @@ const breakpoints = {
   },
 };
 
-function onSwiper(swiper) {
+function onSwiper(swiper: any) {
   console.log(swiper);
 }
 
