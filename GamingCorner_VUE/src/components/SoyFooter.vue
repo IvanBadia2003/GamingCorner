@@ -23,9 +23,9 @@ import IconLogo from './icons/IconLogo.vue';
         </div>
         <div class="footer-section">
           <h4>Contacto</h4>
-          <p>Dirección: Calle Falsa 123</p>
-          <p>Teléfono: (555) 123-4567</p>
-          <p>Email: info@empresa.com</p>
+          <p>Dirección: C/ Violeta Parra, 9</p>
+          <p>Teléfono: +34 976451200</p>
+          <p>Email: info@gamingcorner.com</p>
         </div>
       </div>
     </div>

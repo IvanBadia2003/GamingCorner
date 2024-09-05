@@ -90,6 +90,13 @@ public class UserEFRepository : IUserRepository
                            .Where(u => u.UserId == id)
                            .ToList();    
         }
+    
+    public List<Transaction> GetSellTransactionsByUser (int id)
+        {
+            return _context.Transactions
+                           .Where(u => u.UserId == id && u.Type == "Venta" )
+                           .ToList();    
+        }
 
     public void Update(User user)
     {

@@ -210,8 +210,14 @@ body {
     background-color: #f9f9f9;
     text-align: left;
 
-    img{
-        max-width: 30%;
+    &__img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    
+    img {
+      width: 100%;
+      border-radius: 10px 10px 0px 0px;
     }
 
     .menu {
@@ -249,5 +255,6 @@ body {
     .pago label img {
         width: 30%;
     }
+}
 }
 </style>

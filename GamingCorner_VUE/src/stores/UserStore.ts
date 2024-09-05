@@ -38,6 +38,7 @@ export const useUserStore = defineStore('userStore', () => {
     // State
     const router = useRouter(); // Obtén el router
     const transactions = reactive<Transaction[]>([]);
+    const Selltransactions = reactive<Transaction[]>([]);
 
 
     const user = reactive<User>({
@@ -57,7 +58,7 @@ export const useUserStore = defineStore('userStore', () => {
     // Función para enviar las credenciales de inicio de sesión al backend
     async function login(email: string, password: string) {
         debugger
-        const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/login', {
+        const response = await fetch('http://gamingcornerapi.retocsv.es/User/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,7 +79,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     async function register(user: createUser) {
         try {
-            const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User', {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/User', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -99,7 +100,7 @@ export const useUserStore = defineStore('userStore', () => {
     
 
     async function update(id:number, name:string, email: string, password: string, phoneNumber: string, imageURL: string) {
-        const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/'+ id, {
+        const response = await fetch('http://gamingcornerapi.retocsv.es/User/'+ id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,12 +120,24 @@ export const useUserStore = defineStore('userStore', () => {
     async function UserTransaction(id: number) {
         try {
             debugger
-            const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/'+id+'/transactions');
+            const response = await fetch('http://gamingcornerapi.retocsv.es/User/'+id+'/transactions');
             console.log("Fetch de transacciones por usuario hecho desde UserStore.ts");
             const transaccionData = await response.json();
             Object.assign(transactions, transaccionData);
         } catch (error) {
             console.error('Error al obtener las transacciones:', error);
+        }
+    }
+    
+    async function UserSellTransaction(id: number) {
+        try {
+            debugger
+            const response = await fetch('http://gamingcornerapi.retocsv.es/User/'+id+'/selltransactions');
+            console.log("Fetch de transacciones de venta por usuario hecho desde UserStore.ts");
+            const transaccionData = await response.json();
+            Object.assign(Selltransactions, transaccionData);
+        } catch (error) {
+            console.error('Error al obtener las transacciones de venta:', error);
         }
     }
 
@@ -152,5 +165,5 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
 
-    return { user, login, logout, register, update, UserTransaction, transactions, buys, sales }
+    return { user, login, logout, register, update, UserTransaction, UserSellTransaction, transactions,Selltransactions, buys, sales }
 })

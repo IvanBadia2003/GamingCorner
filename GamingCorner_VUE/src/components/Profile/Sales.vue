@@ -7,8 +7,8 @@ import { useUserStore } from '@/stores/UserStore';
 const UserStore = useUserStore();
 
 // Asegúrate de que UserStore.buys esté bien inicializado
-console.log(UserStore.transactions);
-console.log(UserStore.sales);
+console.log(UserStore.Selltransactions);
+console.log(UserStore.Selltransactions);
 
 // Filtra juegos y consolas
 const games = computed(() =>
@@ -27,7 +27,7 @@ const products = computed(() =>
 <template>
     <div class="container">
         <h2>VENTAS</h2>
-        <div class="product-grid" v-if="UserStore.sales.length > 0">
+        <div class="product-grid" v-if="UserStore.Selltransactions.length > 0">
             <!-- Mostrar juegos -->
             <TarjetProfile v-for="(game, index) in games" :key="index" :id="(game.videogameId as number)" type="game" />
 

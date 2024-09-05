@@ -81,6 +81,11 @@ const isSelected = ref(false)
     width: 100%;
     height: auto;
     position: relative;
+    
+    img {
+      width: 100%;
+      border-radius: 10px 10px 0px 0px;
+    }
 
 
     .discount {

@@ -72,6 +72,26 @@ public class UserService : IUserService
             Date = v.Date,
         }).ToList();
     }
+    
+    public List<TransactionDTO> GetSellTransactionsByUser(int id)
+    {
+        var transactions = _userRepository.GetSellTransactionsByUser(id);
+
+        if (transactions == null || !transactions.Any())
+        {
+            return null;
+        }
+
+        return transactions.Select(v => new TransactionDTO
+        {
+            TransactionId = v.TransactionId,
+            VideogameId = v.VideogameId,
+            ConsoleId = v.ConsoleId,
+            ProductId = v.ProductId,
+            Type = v.Type,
+            Date = v.Date,
+        }).ToList();
+    }
 
 
     public void Add(UserCreateDTO userCreateDTO)

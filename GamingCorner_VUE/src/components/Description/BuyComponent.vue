@@ -125,9 +125,6 @@ const addToCart = () => {
                         <IconTick v-if="product.stock > 0" />
                         <IconCross v-else />
                     </div>
-                    <div class="valorations">
-                        5
-                    </div>
                 </div>
             </div>
         </div>
