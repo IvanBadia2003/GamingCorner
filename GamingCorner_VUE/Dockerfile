@@ -10,6 +10,10 @@ RUN npm run build
 
 # Etapa de producción
 FROM nginx:alpine AS production
+
+# Copiar el archivo de configuración de Nginx personalizado
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 COPY --from=build-vue /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

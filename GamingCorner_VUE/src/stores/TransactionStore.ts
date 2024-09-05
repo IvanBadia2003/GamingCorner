@@ -23,7 +23,7 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
 
   async function fetchTransactions() {
     try {
-      const response = await fetch('http://localhost:5000/Transaction');
+      const response = await fetch('http://gamingcornerapi.retocsv.es/Transaction');
       console.log("Fetch de transacciones hecho desde TransactionStore.ts");
       
       const data = await response.json();
@@ -58,7 +58,7 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
 
   async function purchaseGame(idGame: number, idUser: number) {
     debugger
-    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/videgame/'+idGame, {
+    const response = await fetch('http://gamingcornerapi.retocsv.es/Transaction/compra/user/'+idUser+'/videgame/'+idGame, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
 
   async function purchaseProduct(idProducto: number, idUser: number) {
     debugger
-    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/product/'+idProducto, {
+    const response = await fetch('http://gamingcornerapi.retocsv.es/Transaction/compra/user/'+idUser+'/product/'+idProducto, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
 
   async function purchaseConsole(idConsole: number, idUser: number) {
     debugger
-    const response = await fetch('http://localhost:5000/Transaction/compra/user/'+idUser+'/console/'+idConsole, {
+    const response = await fetch('http://gamingcornerapi.retocsv.es/Transaction/compra/user/'+idUser+'/console/'+idConsole, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

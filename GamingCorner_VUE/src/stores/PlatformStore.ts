@@ -32,7 +32,7 @@ export const usePlatformStore = defineStore('PlatformStore', () => {
     // saca de la api todas los juegos que hay
     async function fetchPlatforms() {
         try {
-            const response = await fetch('http://localhost:5000/Platform');
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Platform');
             console.log("Fetch de géneros hecho desde Gendertore.ts");
             
             const data = await response.json();

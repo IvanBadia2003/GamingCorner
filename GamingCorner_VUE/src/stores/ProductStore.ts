@@ -65,7 +65,7 @@ export const useProductStore = defineStore('ProductStore', () => {
     // Action
     async function fetchProducts() {
         try {
-            const response = await fetch('http://localhost:5000/Product');
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product');
             console.log("Fetch de grid de productos hecho desde ProductStore.ts");
 
             const data = await response.json();
@@ -83,7 +83,7 @@ export const useProductStore = defineStore('ProductStore', () => {
 
     async function fetchProductsById(id: number) {
         try {
-            const response = await fetch('http://localhost:5000/Product/' + id);
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product/' + id);
             console.log("Fetch de un producto hecho desde ProductStore.ts");
 
             const productData = await response.json();
@@ -95,7 +95,7 @@ export const useProductStore = defineStore('ProductStore', () => {
 
     async function deleteProduct(id: number, name: string) {
         try {
-            const response = await fetch('http://localhost:5000/Product/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product/' + id, {
                 method: 'DELETE',
             });
             console.log("Fetch de eliminar producto " + id + " hecho desde ProductStore.ts");
@@ -114,7 +114,7 @@ export const useProductStore = defineStore('ProductStore', () => {
           const newAvailable = false;
     
           try {
-            const response = await fetch('http://localhost:5000/Product/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product/' + id, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export const useProductStore = defineStore('ProductStore', () => {
 
     async function createProduct(product: Product) {
         try {
-            const response = await fetch('http://localhost:5000/Product', {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export const useProductStore = defineStore('ProductStore', () => {
 
     async function editProduct(id: number, product: editedProduct) {
         try {
-            const response = await fetch('http://localhost:5000/Product/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Product/' + id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

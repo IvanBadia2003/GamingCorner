@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Carousel from '../components/Home/Carousel.vue';
-import Gender from '../components/Home/Gender.vue'; 
+// import Gender from '@/components/Home/Gender.vue';
 import { useGameStore } from '@/stores/GameStore';
 
 const GameStore = useGameStore();

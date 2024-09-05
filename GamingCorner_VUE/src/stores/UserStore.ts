@@ -48,7 +48,7 @@ export const useUserStore = defineStore('userStore', () => {
     // Función para enviar las credenciales de inicio de sesión al backend
     async function login(email: string, password: string) {
         debugger
-        const response = await fetch('http://localhost:5000/User/login', {
+        const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     async function register(name: string, email: string, password: string, phoneNumber: string) {
         try {
-            const response = await fetch('http://localhost:5000/User', {
+            const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ export const useUserStore = defineStore('userStore', () => {
     
 
     async function update(id:number, name:string, email: string, password: string, phoneNumber: string, imageURL: string) {
-        const response = await fetch('http://localhost:5000/User/'+ id, {
+        const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/'+ id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ export const useUserStore = defineStore('userStore', () => {
     async function UserTransaction(id: number) {
         try {
             debugger
-            const response = await fetch('http://localhost:5000/User/'+id+'/transactions');
+            const response = await fetch('http://a112e8cc0151f4fe198ff67fdefe1979-1689887635.us-east-1.elb.amazonaws.com/User/'+id+'/transactions');
             console.log("Fetch de transacciones por usuario hecho desde UserStore.ts");
             const transaccionData = await response.json();
             Object.assign(transactions, transaccionData);

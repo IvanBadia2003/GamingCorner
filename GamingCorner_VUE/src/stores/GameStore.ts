@@ -92,7 +92,7 @@ export const useGameStore = defineStore('GameStore', () => {
     // Action
     async function fetchGames() {
         try {
-            const response = await fetch('http://localhost:5000/Videogame');
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame');
             console.log("Fetch de grid de juegos hecho desde GameStore.ts");
             const data = await response.json();
             games.splice(0, games.length);
@@ -109,7 +109,7 @@ export const useGameStore = defineStore('GameStore', () => {
 
     async function fetchGamesById(id: number) {
         try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id);
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame/' + id);
             console.log("Fetch de un juego hecho desde GameStore.ts");
             const gameData = await response.json();
             Object.assign(game, gameData);
@@ -120,7 +120,7 @@ export const useGameStore = defineStore('GameStore', () => {
 
     async function deleteGame(id: number, name: string) {
         try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame/' + id, {
                 method: 'DELETE',
             });
             console.log("Fetch de eliminar juegos " + id + " hecho desde GameStore.ts");
@@ -132,7 +132,7 @@ export const useGameStore = defineStore('GameStore', () => {
 
     async function createGame(game: createGame) {
         try {
-            const response = await fetch('http://localhost:5000/Videogame', {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ export const useGameStore = defineStore('GameStore', () => {
 
     async function editGame(id: number, juego: editedGame) {
         try {
-            const response = await fetch('http://localhost:5000/Videogame/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame/' + id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export const useGameStore = defineStore('GameStore', () => {
             const newAvailable = newStock > 0;
 
             try {
-                const response = await fetch('http://localhost:5000/Videogame/' + id, {
+                const response = await fetch('http://gamingcornerapi.retocsv.es/Videogame/' + id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ export const useGameStore = defineStore('GameStore', () => {
             if (id === 0) {
                 fetchGames();
             } else {
-                const response = await fetch(`http://localhost:5000/Gender/${id}/videogames`);
+                const response = await fetch(`http://gamingcornerapi.retocsv.es/Gender/${id}/videogames`);
                 console.log("Fetch de grid de juegos por género hecho desde GameStore.ts");
                 const data = await response.json();
                 if (Array.isArray(data)) {
@@ -242,7 +242,7 @@ export const useGameStore = defineStore('GameStore', () => {
             if (id === 0) {
                 fetchGames();
             } else {
-                const response = await fetch(`http://localhost:5000/Platform/${id}/videogames`);
+                const response = await fetch(`http://gamingcornerapi.retocsv.es/Platform/${id}/videogames`);
                 console.log("Fetch de grid de juegos por plataforma hecho desde GameStore.ts");
                 const data = await response.json();
                 if (Array.isArray(data)) {

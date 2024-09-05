@@ -78,7 +78,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
     // Action
     async function fetchConsoles() {
         try {
-            const response = await fetch('http://localhost:5000/Console');
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Console');
             console.log("Fetch de grid de consolas hecho desde ConsoleStore.ts");
             const data = await response.json();
             consoles.splice(0, consoles.length);
@@ -103,7 +103,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
             const newAvailable = newStock > 0;
 
             try {
-                const response = await fetch('http://localhost:5000/Console/' + id, {
+                const response = await fetch('http://gamingcornerapi.retocsv.es/Console/' + id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     async function fetchConsolesById(id: number) {
         try {
-            const response = await fetch('http://localhost:5000/Console/' + id);
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Console/' + id);
             console.log("Fetch de una consola hecho desde ConsoleStore.ts");
             const consoleData = await response.json();
             Object.assign(Console, consoleData);
@@ -144,7 +144,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     async function deleteConsole(id: number, name: string) {
         try {
-            const response = await fetch('http://localhost:5000/Console/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Console/' + id, {
                 method: 'DELETE',
             });
             console.log("Fetch de eliminar consolas " + id + " hecho desde ConsoleStore.ts");
@@ -156,7 +156,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     async function createConsole(Console: createConsole) {
         try {
-            const response = await fetch('http://localhost:5000/Console', {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Console', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
 
     async function editConsole(id: number, Console: editedConsole) {
         try {
-            const response = await fetch('http://localhost:5000/Console/' + id, {
+            const response = await fetch('http://gamingcornerapi.retocsv.es/Console/' + id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
