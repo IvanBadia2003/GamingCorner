@@ -10,7 +10,6 @@ public interface IUserService
     void Add(UserCreateDTO userCreateDTO);
     UserDTO Get(int id);
     List<TransactionDTO> GetTransactionsByUser(int id);
-    List<TransactionDTO> GetSellTransactionsByUser(int id);
     void Update(int id, UserUpdateDTO userUpdateDTO);
     void Delete(int id);
     UserDTO Login(string email, string password);

@@ -9,7 +9,6 @@ public interface IUserRepository
     void Add(User user);
     UserDTO Get(int id);
     List<Transaction> GetTransactionsByUser(int id);
-    List<Transaction> GetSellTransactionsByUser(int id);
     void Update(User user);
     void Delete(int id);
     UserDTO Login(string email, string password);

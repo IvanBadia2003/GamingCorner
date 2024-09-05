@@ -128,18 +128,7 @@ export const useUserStore = defineStore('userStore', () => {
             console.error('Error al obtener las transacciones:', error);
         }
     }
-    
-    async function UserSellTransaction(id: number) {
-        try {
-            debugger
-            const response = await fetch('http://gamingcornerapi.retocsv.es/User/'+id+'/selltransactions');
-            console.log("Fetch de transacciones de venta por usuario hecho desde UserStore.ts");
-            const transaccionData = await response.json();
-            Object.assign(Selltransactions, transaccionData);
-        } catch (error) {
-            console.error('Error al obtener las transacciones de venta:', error);
-        }
-    }
+
 
     const buys = computed(() => {
         return transactions.filter(transaction => transaction.type == 'Compra');
@@ -165,5 +154,5 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
 
-    return { user, login, logout, register, update, UserTransaction, UserSellTransaction, transactions,Selltransactions, buys, sales }
+    return { user, login, logout, register, update, UserTransaction, transactions, buys, sales }
 })
