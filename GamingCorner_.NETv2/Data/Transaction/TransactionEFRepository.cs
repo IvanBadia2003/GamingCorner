@@ -112,4 +112,17 @@ public class TransactionEFRepository : ITransactionRepository
             _context.SaveChanges();
         }
 
+        public int CountTransactionsByVideogameId()
+        {
+            return _context.Transactions.Count(t => t.VideogameId.HasValue && t.Type == "Compra");
+        }
+        public int CountTransactionsByProductId()
+        {
+            return _context.Transactions.Count(t => t.ProductId.HasValue && t.Type == "Compra");
+        }
+        public int CountTransactionsByConsoleId()
+        {
+            return _context.Transactions.Count(t => t.ConsoleId.HasValue && t.Type == "Compra");
+        }
+
     }

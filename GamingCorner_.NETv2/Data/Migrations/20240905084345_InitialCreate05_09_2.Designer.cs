@@ -4,6 +4,7 @@ using GamingCorner.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamingCorner.Data.Migrations
 {
     [DbContext(typeof(GamingCornerContext))]
-    partial class GamingCornerContextModelSnapshot : ModelSnapshot
+    [Migration("20240905084345_InitialCreate05_09_2")]
+    partial class InitialCreate05_09_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,7 +325,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 1,
-                            Date = new DateTime(2024, 9, 5, 10, 45, 36, 765, DateTimeKind.Local).AddTicks(1047),
+                            Date = new DateTime(2024, 9, 5, 10, 43, 44, 645, DateTimeKind.Local).AddTicks(8451),
                             ProductId = 1,
                             Type = "Compra",
                             UserId = 1
@@ -331,7 +333,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 2,
-                            Date = new DateTime(2024, 9, 5, 10, 45, 36, 765, DateTimeKind.Local).AddTicks(1080),
+                            Date = new DateTime(2024, 9, 5, 10, 43, 44, 645, DateTimeKind.Local).AddTicks(8497),
                             ProductId = 2,
                             Type = "Compra",
                             UserId = 2
@@ -339,7 +341,7 @@ namespace GamingCorner.Data.Migrations
                         new
                         {
                             TransactionId = 3,
-                            Date = new DateTime(2024, 9, 5, 10, 45, 36, 765, DateTimeKind.Local).AddTicks(1082),
+                            Date = new DateTime(2024, 9, 5, 10, 43, 44, 645, DateTimeKind.Local).AddTicks(8501),
                             ProductId = 3,
                             Type = "Compra",
                             UserId = 3
@@ -737,7 +739,7 @@ namespace GamingCorner.Data.Migrations
                             Code = "code15",
                             Description = "God of War es un juego de acción y aventura desarrollado por Santa Monica Studio y publicado por Sony Interactive Entertainment. Lanzado en 2018, es una reinvención de la serie y sigue a Kratos, el dios de la guerra, en una nueva etapa de su vida en la mitología nórdica. Acompañado por su hijo Atreus, Kratos debe enfrentarse a poderosos enemigos y criaturas míticas mientras lidia con sus propios demonios internos y enseña a su hijo a sobrevivir en un mundo hostil. El juego combina combates intensos con una narrativa emocional, explorando temas de paternidad, redención y autodescubrimiento. Con su innovador sistema de combate, impresionantes gráficos y un mundo abierto lleno de secretos, God of War ha sido aclamado como uno de los mejores videojuegos de la historia.",
                             GenderId = 5,
-                            ImageURL = "https://image.api.playstation.com/vulcan/img/rnd/202010/2217/p3pYq0QxntZQREXRVdAzmn1w.png",
+                            ImageURL = "https://images.igdb.com/igdb/image/upload/t_cover_small/co4n26.png",
                             Name = "God of War",
                             Pegi = 12,
                             PlatformId = 2,
