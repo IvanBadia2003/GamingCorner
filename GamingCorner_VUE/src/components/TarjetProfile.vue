@@ -64,7 +64,9 @@ onMounted(() => {
 * {
   text-decoration: none;
 }
-
+a{
+    font-family: 'Montserrat';
+  }
 .card {
   width: auto;
   height: auto;

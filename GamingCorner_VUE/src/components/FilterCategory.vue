@@ -22,6 +22,13 @@ const handleFilterChange = () => {
         FilterStore.setSortOption(selectedOption.value);
     }
 };
+const selectedPriceRange = ref(0);
+
+// Función para manejar el filtro de precios
+const handlePriceFilterChange = () => {
+    FilterStore.setPriceRange(Number(selectedPriceRange.value)); // Actualiza el rango de precios en el FilterStore
+};
+
 // Nueva función para manejar la entrada de la búsqueda
 const handleSearchInput = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -34,24 +41,28 @@ const handleSearchInput = (event: Event) => {
     <div class="category-container">
         <div class="category-name">{{ props.title }}</div>
         <div v-if="$props.title == 'Género'" class="category-filters">
-            <select v-model="genderSelected" name="genders" id="genders" class="custom-select" @change="GameStore.filterGamesByGenre(genderSelected)">
+            <select v-model="genderSelected" name="genders" id="genders" class="custom-select"
+                @change="GameStore.filterGamesByGenre(genderSelected)">
                 <option value="0">Selecciona una opción...</option>
-                <option v-for="gender in GenderStore.genders" :key="gender.genderId" :value="gender.genderId">{{ gender.name }}</option>
+                <option v-for="gender in GenderStore.genders" :key="gender.genderId" :value="gender.genderId">{{
+                    gender.name }}</option>
             </select>
         </div>
         <div v-if="$props.title == 'Plataforma'" class="category-filters">
-            <select v-model="platformSelected" name="genders" id="genders" class="custom-select" @change="GameStore.filterGamesByPlatform(platformSelected)">
+            <select v-model="platformSelected" name="genders" id="genders" class="custom-select"
+                @change="GameStore.filterGamesByPlatform(platformSelected)">
                 <option value="0">Selecciona una opción...</option>
-                <option v-for="platform in PlatformStore.paltforms" :key="platform.platformId" :value="platform.platformId">{{ platform.name }}</option>
+                <option v-for="platform in PlatformStore.paltforms" :key="platform.platformId"
+                    :value="platform.platformId">{{ platform.name }}</option>
             </select>
         </div>
         <div v-if="$props.title == 'Precio'" class="category-filters">
-            <select  name="genders" id="genders" class="custom-select">
-                <option value="">Selecciona una opción...</option>
-                <option value="price-asc">Hasta 10€</option>
-                <option value="price-desc">Hasta 25€</option>                
-                <option value="price-asc">Hasta 50€</option>
-                <option value="price-desc">Hasta 80€</option>
+            <select v-model="selectedPriceRange" @change="handlePriceFilterChange" class="custom-select">
+                <option value="0">Selecciona una opción...</option>
+                <option value="20">Hasta 20€</option>
+                <option value="50">Hasta 50€</option>
+                <option value="150">Hasta 150€</option>
+                <option value="300">Hasta 300€</option>
             </select>
         </div>
 
@@ -80,7 +91,9 @@ const handleSearchInput = (event: Event) => {
     &:last-child {
         border-bottom: none;
     }
-
+    a{
+    font-family: 'Montserrat';
+  }
     .category-name {
         font-size: 1.2rem;
         font-weight: 600;

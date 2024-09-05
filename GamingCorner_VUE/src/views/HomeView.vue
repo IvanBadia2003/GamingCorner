@@ -14,11 +14,11 @@ GameStore.fetchGames();
     <span class="section__title">TOP VENTAS</span>
     <div class="section__content">
       <span>JUEGOS</span>
-      <Carousel :isGame="true"/>
+      <Carousel :isGame="true" />
     </div>
     <div class="section__content">
       <span>CONSOLAS</span>
-      <Carousel :isGame="false"/>
+      <Carousel :isGame="false" />
     </div>
   </section>
 
@@ -26,11 +26,11 @@ GameStore.fetchGames();
     <span class="section__title">MEJOR VALORADOS</span>
     <div class="section__content">
       <span>JUEGOS</span>
-      <Carousel :isGame="true"/>
+      <Carousel :isGame="true" />
     </div>
     <div class="section__content">
       <span>CONSOLAS</span>
-      <Carousel :isGame="false"/>
+      <Carousel :isGame="false" />
     </div>
   </section>
 
@@ -41,30 +41,22 @@ GameStore.fetchGames();
         <span class="lastPrice">60€</span>
         <span class="newPrice">30€</span>
       </div>
-      <button class="info__btn">COMPRAR</button>
-    </div>
-  </section>
-
-  <section class="section">
-    <span class="section__title">CATEGORÍAS</span>
-    <div class="section__grid">
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
-      <Gender />
+      <router-link :to="{
+        name: 'description-game',
+        params: {
+          id: 19
+        }
+      }" class="info__btn" style="text-decoration: none;">COMPRAR</router-link>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
+* {
+  font-family: 'Montserrat';
+
+}
+
 .irregular-div {
   width: 100%;
   height: 400px;
@@ -175,6 +167,7 @@ GameStore.fetchGames();
     @media (min-width: 900px) {
       grid-template-columns: repeat(3, 1fr);
     }
+
     @media (min-width: 1500px) {
       grid-template-columns: repeat(4, 1fr);
     }

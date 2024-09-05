@@ -23,6 +23,12 @@ body {
   margin: 0;
   position: relative;
   background-color: rgb(46, 46, 46);
+  min-height: 100vh;
+
+  *{
+  font-family: 'Montserrat';
+
+}
 }
 
 

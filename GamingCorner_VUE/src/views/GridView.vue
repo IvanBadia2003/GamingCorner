@@ -29,6 +29,8 @@ const FilterStore = useFilterStore();
     height: auto;
     padding-top: 100px;
     padding-bottom: 100px;
+    min-height: calc(100vh - 100px);
+    gap: 50px;
 
     @media screen and (min-width: 720px) {
         display: flex;

@@ -55,14 +55,15 @@ defineProps<{
 <style scoped lang="scss">
 .description-container {
     position: relative;
-    max-width: 90%;
+    max-width: 70%;
     margin: 20px auto;
     padding: 20px;
     background-color: #f7f7f7;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-
+    font-family: 'Montserrat';
+  
     p {
         margin: 0;
         font-size: calc(0.5em + 1.5vw) ;

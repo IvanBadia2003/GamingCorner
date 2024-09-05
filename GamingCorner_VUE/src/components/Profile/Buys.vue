@@ -52,8 +52,11 @@ const products = computed(() =>
     flex-direction: column;
     .product-grid{
         display: flex;
-        width: 100%;
+        width: 20%;
 
     }
+    a{
+    font-family: 'Montserrat';
+  }
 }
 </style>

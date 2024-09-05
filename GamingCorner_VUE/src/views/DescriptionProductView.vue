@@ -62,14 +62,7 @@ onMounted(() => {
                 <Description :product="productStore.product.description" :isGame="false"/>
             </div>
         </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Multimedia</h2>
-            </div>
-            <div class="content">
-                <Multimedia />
-            </div>
-        </section>
+
 
     </div>
 </template>

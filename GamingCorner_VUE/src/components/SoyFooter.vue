@@ -39,7 +39,9 @@ import IconLogo from './icons/IconLogo.vue';
   background-color: orange;
   color: #fff;
   padding: 20px 0;
-
+  a{
+    font-family: 'Montserrat';
+  }
   .container {
     display: flex;
     flex-wrap: wrap;

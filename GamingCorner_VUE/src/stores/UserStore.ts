@@ -89,6 +89,7 @@ export const useUserStore = defineStore('userStore', () => {
     
             if (response.ok) {
                 console.log("Usuario registrado con éxito");
+                router.push('/');
             } else {
                 const errorData = await response.json();
                 alert(`Error al registrar el usuario: ${errorData.message}`);

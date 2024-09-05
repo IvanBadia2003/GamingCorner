@@ -34,7 +34,9 @@ defineProps<{
 
   }
 }
-
+a{
+    font-family: 'Montserrat';
+  }
 .icons {
   width: 100%;
   height: auto;

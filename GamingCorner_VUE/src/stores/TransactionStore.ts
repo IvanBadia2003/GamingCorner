@@ -42,6 +42,31 @@ export const useTransactionStore = defineStore('TransactionStore', () => {
     }
   }
 
+  
+  async function fetchTransactionsCount() {
+    const dataConsoleCount = ref();
+    const dataProductCount = ref();
+    const dataVideogameCount = ref();
+    try {
+      const responseConsole = await fetch('http://gamingcornerapi.retocsv.es/Transaction/CountTransactionsByConsoleId');
+      const responseProduct = await fetch('http://gamingcornerapi.retocsv.es/Transaction/CountTransactionsByProductId');
+      const responseVideogame = await fetch('http://gamingcornerapi.retocsv.es/Transaction/CountTransactionsByVideogametId');
+      console.log("Fetch de transacciones hecho desde TransactionStore.ts");
+      
+      const dataConsole = await responseConsole.json();
+      const dataProduct = await responseProduct.json();
+      const dataVideogame = await responseVideogame.json();
+
+      dataConsoleCount.value = dataConsole
+      dataProductCount.value = dataProduct
+      dataVideogameCount.value = dataVideogame
+
+    } catch (error) {
+      console.error('Error al obtener las transacciones:', error);
+    }
+    return {dataConsoleCount, dataProductCount, dataVideogameCount}
+  }
+
   const transactionsByMonth = computed(() => {
     const videogameCounts: { [key: string]: number } = {};
     const consoleCounts: { [key: string]: number } = {};
@@ -137,5 +162,5 @@ async function saleProduct(idUser: number, product: saleProduct) {
   }
 }
 
-  return { fetchTransactions, transactionsByMonth, transactions, purchaseGame, purchaseProduct, purchaseConsole, saleProduct };
+  return { fetchTransactions, transactionsByMonth, transactions, purchaseGame, purchaseProduct, purchaseConsole, saleProduct, fetchTransactionsCount };
 });

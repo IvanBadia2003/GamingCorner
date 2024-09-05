@@ -44,7 +44,10 @@ const toggleMenu = () => {
 
 
 <style scoped lang="scss">
+*{
+  font-family: 'Montserrat';
 
+}
 
 .todo {
   margin-top: 100px;

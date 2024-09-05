@@ -7,8 +7,8 @@ import BuyComponent from '../components/Description/BuyComponent.vue';
 import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
-/* import Carousel from '../components/Home/Carousel.vue';
- */
+import Carousel from '../components/Home/Carousel.vue';
+ 
 const route = useRoute();
 const gameStore = useGameStore();
 const cartStore = useCartStore();
@@ -31,15 +31,7 @@ onMounted(() => {
                 <h2>Requisitos</h2>
             </div>
             <div class="content">
-                <Requirements :productMin="gameStore.requisitos1Array" :productMax="gameStore.requisitos2Array"/>
-            </div>
-        </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Multimedia</h2>
-            </div>
-            <div class="content">
-                <Multimedia />
+                <Requirements :productMin="gameStore.requisitos1Limpias" :productMax="gameStore.requisitos2Limpias"/>
             </div>
         </section>
         <section class="section">
@@ -75,7 +67,7 @@ onMounted(() => {
     color: white;
 
     .section {
-        width: 90%;
+        width: 70%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -96,7 +88,7 @@ onMounted(() => {
         }
 
         .content {
-            width: 100%;
+            width: 80%;
             display: flex;
             flex-direction: column;
             align-items: center;

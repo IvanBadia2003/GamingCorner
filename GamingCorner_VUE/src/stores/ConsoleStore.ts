@@ -44,6 +44,15 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
     const consoles = reactive<Console[]>([]);
     const cart = reactive<CartConsole[]>([]);
     const selectedConsoleId = ref<number>(-1);
+    const especificacionesArray = computed(() => Console.specifications.split(';'));
+    const especificacionesLimpias = computed(() => 
+        especificacionesArray.value.map(especificacion => {
+          const parts = especificacion.split(':');
+          return parts.length > 1 ? parts[1].trim() : especificacion.trim();
+        })
+      );
+      
+
     const Console = reactive<Console>({
         consoleId: 0,
         name: '',
@@ -239,6 +248,8 @@ export const useConsoleStore = defineStore('ConsoleStore', () => {
         addToCart,
         removeFromCart,
         clearCart,
-        purchaseConsole
+        purchaseConsole,
+        cart,
+        especificacionesLimpias
     };
 });

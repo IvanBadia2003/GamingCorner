@@ -7,6 +7,8 @@ export const useFilterStore = defineStore('FilterStore', () => {
   const sortOption = ref<string>('');
   const titleMenuFilter = ref<string | null>(null);
   const searchTerm = ref<string>(''); // Estado para el término de búsqueda
+  const priceRange = ref<number>(0); // Estado para el rango de precios seleccionado
+
 
   // Funciones
   const toggleSubMenu = (menuItem: string): void => {
@@ -27,6 +29,11 @@ export const useFilterStore = defineStore('FilterStore', () => {
     return searchTerm.value.toLowerCase();
   });
 
+    // Función para actualizar el rango de precios
+    const setPriceRange = (range: number): void => {
+      priceRange.value = range;
+    };
+
   return {
     toggleFilter,
     sortOption,
@@ -36,5 +43,7 @@ export const useFilterStore = defineStore('FilterStore', () => {
     setSearchTerm,
     filteredItems,
     toggleSubMenu,
+    priceRange,
+    setPriceRange
   };
 });

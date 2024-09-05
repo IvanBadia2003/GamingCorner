@@ -25,14 +25,6 @@ const totalPrice = computed(() => {
             </div>
             <div class="summary__buy">
                 <div class="buy__info">
-                    <div class="fila">
-                        <div class="etiqueta">Precio oficial</div>
-                        <div class="valor">{{ totalPrice }}€</div>
-                    </div>
-                    <div class="fila">
-                        <div class="etiqueta">Descuento</div>
-                        <div class="valor descuento">-82.54€</div>
-                    </div>
                     <div class="fila total">
                         <div class="etiqueta">Total</div>
                         <div class="valor">{{ totalPrice }}€</div>

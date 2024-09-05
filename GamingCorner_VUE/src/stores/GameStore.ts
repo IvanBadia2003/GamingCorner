@@ -16,6 +16,7 @@ interface Game {
     imageURL: string;
     code: string | null;
     consoleId: number | null
+    
 }
 
 interface createGame {
@@ -73,7 +74,19 @@ export const useGameStore = defineStore('GameStore', () => {
     // Getter
     const calcularCantidad = computed(() => games.length);
     const requisitos1Array = computed(() => game.requisitos1.split(';'));
+    const requisitos1Limpias = computed(() => 
+        requisitos1Array.value.map(especificacion => {
+          const parts = especificacion.split(':');
+          return parts.length > 1 ? parts[1].trim() : especificacion.trim();
+        })
+      );
     const requisitos2Array = computed(() => game.requisitos2.split(';'));
+    const requisitos2Limpias = computed(() => 
+        requisitos2Array.value.map(especificacion => {
+          const parts = especificacion.split(':');
+          return parts.length > 1 ? parts[1].trim() : especificacion.trim();
+        })
+      );
     const selectedGame = computed(() => {
         if (selectedGameId.value !== null) {
             return games.find(func => func.videogameId === selectedGameId.value);
@@ -219,7 +232,8 @@ export const useGameStore = defineStore('GameStore', () => {
 
     async function filterGamesByGenre(id: number) {
         try {
-            if (id === 0) {
+            debugger
+            if (id == 0) {
                 fetchGames();
             } else {
                 const response = await fetch(`http://gamingcornerapi.retocsv.es/Gender/${id}/videogames`);
@@ -293,8 +307,8 @@ export const useGameStore = defineStore('GameStore', () => {
         fetchGamesById,
         filterGamesByGenre,
         filterGamesByPlatform,
-        requisitos1Array,
-        requisitos2Array,
+        requisitos1Limpias,
+        requisitos2Limpias,
         cartItems,
         totalPrice,
         addToCart,

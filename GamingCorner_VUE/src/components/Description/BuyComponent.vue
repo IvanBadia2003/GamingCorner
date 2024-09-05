@@ -29,36 +29,28 @@ interface Console {
     imageURL: string;
     videogameId: number | null;
     pegi: number | null;
-    platform: number | null;
 }
 
 interface Game {
-  videogameId: number;
-  name: string;
-  pegi: number;
-  description: string;
-  category: string;
-  stock: number;
-  available: boolean;
-  requisitos1: string;
-  requisitos2: string;
-  platform: string;
-  price: number;
-  imageURL: string;
-  code: string | null;
-  consoleId: number | null;
+    videogameId: number;
+    name: string;
+    pegi: number;
+    description: string;
+    category: string;
+    stock: number;
+    available: boolean;
+    requisitos1: string;
+    requisitos2: string;
+    platform: string;
+    price: number;
+    imageURL: string;
+    code: string | null;
+    consoleId: number | null
 }
 
+
 interface Product {
-    productId: number;
-    name: string;
-    description: string;
-    price: number;
-    available: boolean;
-    imageURL: string;
-    pegi: number | null;
-    platform: number | null;
-    stock: number;
+    productId: number; name: string; description: string; price: number; available: boolean; imageURL: string; pegi: number | null; platform: number | null; stock: number;
 }
 
 const props = defineProps<{
@@ -115,12 +107,6 @@ const addToCart = () => {
                     <IconPegi18 v-if="product.pegi === 18" />
                 </div>
                 <div class="infoIcons__others">
-                    <div class="platform" v-if="isGame">
-                        <IconSteam v-if="product.platform === 'Steam'" />
-                        <IconPS v-if="product.platform === 'PS'" />
-                        <IconXbox v-if="product.platform === 'Xbox'" />
-                        <IconNintendo v-if="product.platform === 'Nintendo'" />
-                    </div>
                     <div class="stock">
                         <IconTick v-if="product.stock > 0" />
                         <IconCross v-else />
@@ -167,7 +153,9 @@ const addToCart = () => {
 
 .principal {
     @include content(100%, auto);
-
+    a{
+    font-family: 'Montserrat';
+  }
     div {
         display: flex;
         flex-direction: column;

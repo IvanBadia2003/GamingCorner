@@ -152,7 +152,9 @@ function toggleEdit() {
     display: flex;
     flex-direction: column;
 
-
+    a{
+    font-family: 'Montserrat';
+  }
     .titulo {
         text-align: center;
         font-size: 2rem;

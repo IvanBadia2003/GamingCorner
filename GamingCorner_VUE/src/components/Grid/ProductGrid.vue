@@ -55,15 +55,22 @@ const filterItems = (items: Product[]): Product[] => {
 const totalPagesGames = computed(() => Math.ceil(GameStore.games.length / itemsPerPage.value));
 const totalPagesConsoles = computed(() => Math.ceil(ConsoleStore.consoles.length / itemsPerPage.value));
 
+const filterItemsByPrice = (items: Product[]): Product[] => {
+  if (FilterStore.priceRange > 0) {
+    return items.filter(item => item.price <= FilterStore.priceRange);
+  }
+  return items;
+};
+
 const paginatedGames = computed(() => {
-  const sortedGames = sortItems(filterItems(GameStore.games));
+  const sortedGames = sortItems(filterItems(filterItemsByPrice(GameStore.games)));
   const start = (currentPage.value - 1) * itemsPerPage.value;
   const end = start + itemsPerPage.value;
   return sortedGames.slice(start, end);
 });
 
 const paginatedConsoles = computed(() => {
-  const sortedConsoles = sortItems(filterItems(ConsoleStore.consoles));
+  const sortedConsoles = sortItems(filterItems(filterItemsByPrice(ConsoleStore.consoles)));
   const start = (currentPage.value - 1) * itemsPerPage.value;
   const end = start + itemsPerPage.value;
   return sortedConsoles.slice(start, end);
@@ -89,9 +96,9 @@ const handleCardClick = (id: number) => {
 </script>
 
 <template>
-  <h2>{{ props.title }}</h2>
-  <div class="product-grid">
-    <Tarjet v-if="props.type === 'game'"
+    <h2 class="title">{{ props.title }}</h2>
+    <div class="product-grid" >
+      <Tarjet v-if="props.type === 'game'"
       v-for="game in paginatedGames" 
       :key="(game.videogameId as number)" 
       :idGame="(game.videogameId as number)" 
@@ -101,8 +108,8 @@ const handleCardClick = (id: number) => {
       :isGrid="isGrid"
       :isGame="true"
       @click="handleCardClick(game.videogameId as number)" 
-    />
-    <Tarjet v-if="props.type === 'console'"
+      />
+      <Tarjet v-if="props.type === 'console'"
       v-for="console in paginatedConsoles" 
       :key="(console.consoleId as number)" 
       :idGame="(console.consoleId as number)" 
@@ -112,19 +119,13 @@ const handleCardClick = (id: number) => {
       :isGrid="isGrid"
       :isGame="false"
       @click="handleCardClick(console.consoleId as number)" 
-    />
-  </div>
-
-  <div class="pagination">
-    <button @click="prevPage" :disabled="currentPage === 1"><</button>
-    <button @click="nextPage" :disabled="props.type === 'game' ? currentPage === totalPagesGames : currentPage === totalPagesConsoles">></button>
-  </div>
-
-  <Modal v-if="selectedGameId"  v-model="selectedGameId" title="Código del juego">
-    <template #default>
-      <h3>ID del Juego: {{ selectedGameId }}</h3>
-    </template>
-  </Modal>
+      />
+    </div>
+    
+    <div class="pagination">
+      <button @click="prevPage" :disabled="currentPage === 1"><</button>
+      <button @click="nextPage" :disabled="props.type === 'game' ? currentPage === totalPagesGames : currentPage === totalPagesConsoles">></button>
+    </div>
 </template>
 
 
@@ -137,7 +138,14 @@ const handleCardClick = (id: number) => {
     gap: 32px;
     margin: 0 20px;
 }
+a{
+    font-family: 'Montserrat';
+  }
 
+  .title{
+    font-size: clamp(1.2rem, 2vw, 5rem);
+
+  }
 .pagination {
   display: flex;
   justify-content: center;

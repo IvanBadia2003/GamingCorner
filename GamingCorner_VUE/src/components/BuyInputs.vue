@@ -144,7 +144,9 @@ $secondFont: 'Montserrat';
 $thirdFont: 'Merryweather';
 
 div {
-
+    a{
+    font-family: 'Montserrat';
+  }
     margin: 5px;
     display: flex;
     flex-direction: column;

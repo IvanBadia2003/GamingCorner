@@ -80,7 +80,7 @@ const handleCardClick = (id: number) => {
 
 <template>
   <h2>{{ props.title }}</h2>
-  <div class="product-grid">
+  <div class="product-grid" v-if="paginatedProducts.length > 0">
     <TarjetProduct 
       v-for="product in paginatedProducts" 
       :key="product.productId" 
@@ -93,8 +93,9 @@ const handleCardClick = (id: number) => {
       @click="handleCardClick(product.productId)" 
     />
   </div>
+  <p v-else>No hay productos de segunda mano para comprar</p>
 
-  <div class="pagination">
+  <div class="pagination" v-if="paginatedProducts.length > 0">
     <button @click="prevPage" :disabled="currentPage === 1"><</button>
     <button @click="nextPage" :disabled="currentPage === totalPagesProducts">></button>
   </div>
@@ -107,7 +108,9 @@ const handleCardClick = (id: number) => {
     gap: 32px;
     margin: 0 20px;
 }
-
+a{
+    font-family: 'Montserrat';
+  }
 .pagination {
   display: flex;
   justify-content: center;

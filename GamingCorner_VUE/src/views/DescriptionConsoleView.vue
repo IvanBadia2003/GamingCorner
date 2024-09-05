@@ -9,8 +9,8 @@ import Requirements from '../components/Description/Requirements.vue';
 import Multimedia from '../components/Description/Multimedia.vue';
 import Description from '../components/Description/Description.vue';
 import Specifications from '@/components/Description/Specifications.vue';
-/* import Carousel from '../components/Home/Carousel.vue';
- */
+import Carousel from '../components/Home/Carousel.vue';
+ 
 
 const route = useRoute();
 const consoleStore = useConsoleStore();
@@ -65,15 +65,7 @@ onMounted(() => {
                 <h2>Especificaciones</h2>
             </div>
             <div class="content">
-                <Specifications :product="consoleStore.Console.specifications" />
-            </div>
-        </section>
-        <section class="section">
-            <div class="title-container">
-                <h2>Multimedia</h2>
-            </div>
-            <div class="content">
-                <Multimedia />
+                <Specifications :especificacionesArray="consoleStore.especificacionesLimpias" />
             </div>
         </section>
         <section class="section">
@@ -102,7 +94,7 @@ onMounted(() => {
     color: white;
 
     .section {
-        width: 90%;
+        width: 70%;
         height: auto;
         display: flex;
         flex-direction: column;

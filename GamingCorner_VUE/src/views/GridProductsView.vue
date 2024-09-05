@@ -26,12 +26,12 @@ const FilterStore = useFilterStore();
     height: auto;
     padding-top: 100px;
     padding-bottom: 100px;
+    min-height: 100vh;
 
     @media screen and (min-width: 720px) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
     }
 
     .filterButton {

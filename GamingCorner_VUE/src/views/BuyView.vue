@@ -22,11 +22,13 @@ const transactionStore = useTransactionStore();
 
 
 const totalPrice = computed(() => {
-  const gameTotal = gameStore.cartItems.reduce((sum, item) => sum + item.price, 0);
-  const consoleTotal = consoleStore.cartItems.reduce((sum, item) => sum + item.price, 0);
-  const productTotal = productStore.cartItems.reduce((sum, item) => sum + item.price, 0);
-  return gameTotal + consoleTotal + productTotal;
+    const gameTotal = gameStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+    const consoleTotal = consoleStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+    const productTotal = productStore.cartItems.reduce((sum, item) => sum + item.price, 0);
+    return gameTotal + consoleTotal + productTotal;
 });
+
+
 // Función de pago
 async function payFunction() {
     const userId = userStore.user.userId;
@@ -47,7 +49,11 @@ async function payFunction() {
                 await transactionStore.purchaseConsole(product.consoleId, userId);
             }
         }
-        alert("Pago realizado con éxito");
+
+        gameStore.cartItems.splice(0, gameStore.cartItems.length);
+        consoleStore.cartItems.splice(0, consoleStore.cartItems.length);
+        productStore.cartItems.splice(0, productStore.cartItems.length);
+        router.push('/');
     } catch (error) {
         console.error("Error al realizar el pago:", error);
         alert("Hubo un problema al procesar tu compra. Por favor, inténtalo de nuevo.");
@@ -68,7 +74,7 @@ const opcionSeleccionada = ref('paypal');
     <div class="content">
         <div class="info">
             <div>
-                <h2>Detalles de la Compra</h2>
+                <h2 style="font-size: 3rem;">Detalles de la Compra</h2>
             </div>
             <div>
                 <h2>Productos Seleccionados</h2>
@@ -96,13 +102,13 @@ const opcionSeleccionada = ref('paypal');
             <div style="display: flex; align-items: center;">
                 <input type="radio" id="paypal" name="opciones" value="paypal" checked v-model="opcionSeleccionada">
                 <label for="paypal">
-                    <IconPaypal />
+                    <IconPaypal style="max-width: 320px; margin-left: 7px;"/>
                 </label>
             </div>
             <div style="display: flex; align-items: center;">
                 <input type="radio" id="visa" name="opciones" value="visa" v-model="opcionSeleccionada">
                 <label for="visa">
-                    <IconVisa />
+                    <IconVisa style="max-width: 300px;"/>
                 </label>
             </div>
 
@@ -126,8 +132,8 @@ const opcionSeleccionada = ref('paypal');
         </div>
 
         <div class="buttons">
-            <RouterLink :to="'/'">CANCELAR</RouterLink>
-            <button @click="payFunction" :disabled="!isValidate">PAGAR</button>
+            <RouterLink :to="'/'" style="font-size: 15px;">CANCELAR</RouterLink>
+            <button @click="payFunction" :disabled="!isValidate" style="padding: 15px !important;">PAGAR</button>
         </div>
     </div>
 </template>
@@ -137,7 +143,7 @@ const opcionSeleccionada = ref('paypal');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Merryweather');
 
-$primaryColor: #ba1313;
+$primaryColor: orange;
 $primaryFont: 'Bebas Neue';
 $secondFont: 'Montserrat';
 $thirdFont: 'Merryweather';
@@ -162,7 +168,7 @@ $thirdFont: 'Merryweather';
     font-weight: bold;
     border: 2px solid $primaryColor;
     border-radius: 50px;
-    padding: 15px;
+    padding: 7px;
     margin: 30px;
     font-family: $secondFont;
     color: $primaryColor;
@@ -210,14 +216,8 @@ body {
     background-color: #f9f9f9;
     text-align: left;
 
-    &__img {
-    width: 100%;
-    height: auto;
-    position: relative;
-    
-    img {
-      width: 100%;
-      border-radius: 10px 10px 0px 0px;
+    img{
+        max-width: 30%;
     }
 
     .menu {
@@ -226,8 +226,7 @@ body {
 }
 
 .buttons {
-    margin-top: 20px;
-    padding-bottom: 50px;
+
 
     button, a {
         @include button();
@@ -255,6 +254,5 @@ body {
     .pago label img {
         width: 30%;
     }
-}
 }
 </style>

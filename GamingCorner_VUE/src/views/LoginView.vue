@@ -21,7 +21,7 @@ const user = reactive<createUser>({
     email: '',
     password: '',
     phoneNumber: '',
-    admin: true,
+    admin: false,
 });
 
 const repeatPassword = ref('');

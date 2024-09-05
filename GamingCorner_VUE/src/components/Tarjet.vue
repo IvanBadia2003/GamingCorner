@@ -71,7 +71,9 @@ const isSelected = ref(false)
 * {
   text-decoration: none;
 }
-
+a{
+    font-family: 'Montserrat';
+  }
 .card {
   width: auto;
   height: auto;

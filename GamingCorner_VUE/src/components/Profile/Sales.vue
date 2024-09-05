@@ -52,8 +52,12 @@ const products = computed(() =>
 
     .product-grid {
         display: flex;
-        width: 100%;
+        width: 20%;
 
     }
+
+    a{
+    font-family: 'Montserrat';
+  }
 }
 </style>

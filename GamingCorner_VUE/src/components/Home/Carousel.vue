@@ -62,6 +62,8 @@ function onSlideChange() {
 
 <style scoped>
 /* Puedes agregar estilos personalizados aquí */
+
+
 .swiper {
     width: 90%;
     height: 100%;

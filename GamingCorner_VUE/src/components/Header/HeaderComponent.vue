@@ -52,6 +52,10 @@ const toggleMenu = ref<boolean>(false);
     box-sizing: border-box;
 }
 
+a{
+    font-family: 'Montserrat';
+  }
+
 header {
     width: 100%;
     position: fixed;
@@ -67,12 +71,13 @@ header {
     animation-range: 0 200px;
     backdrop-filter: blur(3px);
     z-index: 10;
+    border-bottom: 2px solid black;
 
     .logo {
         max-width: 70px;
 
         @media (min-width: 764px) {
-            max-width: 150px;
+            max-width: 100px;
         }
     }
 }
@@ -118,7 +123,7 @@ header {
     text-decoration: none;
 
     &:hover {
-        color: orange;
+        color: orangered;
     }
 
     @media (min-width: 764px) {
